@@ -1,36 +1,138 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SuccessBoard
+
+SuccessBoard is a modern Customer Success dashboard built with Next.js 15, TypeScript, TailwindCSS, and shadcn/ui.  
+It is designed as a backend-agnostic and brand-agnostic frontend that can integrate with multiple data sources.
+
+For this proof of concept, SuccessBoard consumes the public APIs and microservices of the **Spring Petclinic Microservices** project. Petclinic provides realistic entities such as owners, pets, and visits, which we reinterpret for Customer Success use cases:
+
+- **Owners → Customers / Accounts**
+- **Pets → Products / Subscriptions**
+- **Visits → Interactions / Touchpoints**
+
+This allows SuccessBoard to demonstrate real API integration, error handling, routing, component design, and dashboard architecture.
+
+---
+
+## About Spring Petclinic (Upstream Project Credit)
+
+SuccessBoard uses the **Spring Petclinic Microservices** project as a proof-of-concept backend during development.
+
+**Spring Petclinic** is an open-source sample application built by the Spring team at VMware.  
+Its goal is to demonstrate best practices in building Java microservices using Spring Boot, Spring Cloud, and related technologies.
+
+Petclinic provides several microservices such as:
+
+- Customers Service
+- Vets Service
+- Visits Service
+- API Gateway
+- Discovery Server (Eureka)
+
+These services expose real REST APIs and form a fully functional distributed backend.  
+SuccessBoard consumes these APIs only for educational and demonstration purposes.
+
+### License and Attribution
+
+Spring Petclinic Microservices is licensed under the **Apache License 2.0**.  
+Project source: https://github.com/spring-petclinic/spring-petclinic-microservices
+
+SuccessBoard is **not affiliated** with VMware, the Spring team, or the Petclinic project.  
+All credit for the backend architecture and data model used in this proof of concept belongs to the Petclinic authors.
+
+---
+
+## Customer Success Data (Mocks)
+
+Petclinic does not provide metrics normally required in Customer Success workflows, such as:
+
+- Health scores
+- Usage analytics
+- Churn risk
+- Subscription tiers (MRR / ARR)
+- Engagement metrics
+
+For these areas, SuccessBoard currently uses **frontend mocks**, cleanly separated from Petclinic data models.  
+All mocks are replaceable with a real backend in a future phase.
+
+---
+
+## Goals
+
+- Deliver a clean, modern, production-ready frontend
+- Showcase UI/UX, design systems, and component architecture
+- Provide a realistic Customer Success interface using real APIs
+- Keep the project easily extensible for other companies or backends
+
+---
+
+## Tech Stack
+
+- **Next.js 15 (App Router)**
+- **React 19 + React Compiler**
+- **TypeScript**
+- **TailwindCSS**
+- **shadcn/ui**
+- **Storybook**
+- **Spring Petclinic Microservices API** as proof-of-concept backend
+
+---
 
 ## Getting Started
 
-First, run the development server:
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run the local development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The app will be available at:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Make sure the Petclinic backend is running:
 
-## Learn More
+```bash
+docker compose up
+```
 
-To learn more about Next.js, take a look at the following resources:
+API Gateway (default):
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+http://localhost:8080
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## Project Structure (planned)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+src/
+  app/
+  components/
+    ui/
+    shared/
+  features/
+    customers/
+      api/
+      mocks/
+      components/
+      types.ts
+  lib/
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## Future Work
+
+- Replace Customer Success mocks with a real data source
+- Add multi-brand theming and configuration
+- Introduce authentication, roles, and permissions
+- Add subscription analytics and a customer health scoring engine
