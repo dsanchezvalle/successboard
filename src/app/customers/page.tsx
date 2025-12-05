@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { getCustomersFromPetclinic } from "@/features/customers/api/get-customers-from-petclinic";
 
 export const dynamic = "force-dynamic";
@@ -52,7 +53,12 @@ export default async function Page() {
                   className="border-b last:border-b-0 hover:bg-gray-50"
                 >
                   <td className="px-4 py-2 font-medium text-gray-900">
-                    {customer.name}
+                    <Link
+                      href={`/customers/${customer.id}`}
+                      className="text-blue-600 hover:underline"
+                    >
+                      {customer.name}
+                    </Link>
                   </td>
                   <td className="px-4 py-2 text-gray-700">
                     {customer.city ?? "-"}
