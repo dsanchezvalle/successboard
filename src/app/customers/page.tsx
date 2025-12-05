@@ -1,5 +1,6 @@
-import Link from "next/link";
 import { getCustomersFromPetclinic } from "@/features/customers/api/get-customers-from-petclinic";
+import type { Customer } from "@/modules/customers/types";
+import { CustomersPageClient } from "@/modules/customers/components/CustomersPageClient";
 
 export const dynamic = "force-dynamic";
 
@@ -20,63 +21,30 @@ export default async function Page() {
     );
   }
 
-  if (!customers.length) {
-    return (
-      <main className="min-h-screen w-full flex justify-center px-4 py-8">
-        <div className="w-full max-w-4xl space-y-4">
-          <h1 className="text-2xl font-semibold">Customers</h1>
-          <p className="text-sm text-gray-600">No customers found.</p>
-        </div>
-      </main>
-    );
-  }
+  const typedCustomers = customers as unknown as Customer[];
+
+  const availableCities = Array.from(
+    new Set(
+      typedCustomers
+        .map((c) => c.city)
+        .filter(
+          (c): c is string => typeof c === "string" && c.trim().length > 0
+        )
+    )
+  ).sort((a, b) => a.localeCompare(b));
 
   return (
     <main className="min-h-screen w-full flex justify-center px-4 py-8">
       <div className="w-full max-w-5xl space-y-4">
         <h1 className="text-2xl font-semibold">Customers</h1>
-        <div className="overflow-x-auto rounded-md border bg-white shadow-sm">
-          <table className="min-w-full text-left text-sm">
-            <thead className="border-b bg-gray-50 text-xs font-semibold uppercase tracking-wide text-gray-600">
-              <tr>
-                <th className="px-4 py-3">Name</th>
-                <th className="px-4 py-3">City</th>
-                <th className="px-4 py-3">Address</th>
-                <th className="px-4 py-3">Phone</th>
-                <th className="px-4 py-3">Source</th>
-              </tr>
-            </thead>
-            <tbody>
-              {customers.map((customer) => (
-                <tr
-                  key={customer.id}
-                  className="border-b last:border-b-0 hover:bg-gray-50"
-                >
-                  <td className="px-4 py-2 font-medium text-gray-900">
-                    <Link
-                      href={`/customers/${customer.id}`}
-                      className="text-blue-600 hover:underline"
-                    >
-                      {customer.name}
-                    </Link>
-                  </td>
-                  <td className="px-4 py-2 text-gray-700">
-                    {customer.city ?? "-"}
-                  </td>
-                  <td className="px-4 py-2 text-gray-700">
-                    {customer.address ?? "-"}
-                  </td>
-                  <td className="px-4 py-2 text-gray-700">
-                    {customer.phone ?? "-"}
-                  </td>
-                  <td className="px-4 py-2 text-gray-700">
-                    {customer.createdFrom}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        {typedCustomers.length === 0 ? (
+          <p className="text-sm text-gray-600">No customers found.</p>
+        ) : (
+          <CustomersPageClient
+            customers={typedCustomers}
+            availableCities={availableCities}
+          />
+        )}
       </div>
     </main>
   );
