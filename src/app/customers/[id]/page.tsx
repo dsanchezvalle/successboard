@@ -1,4 +1,6 @@
 import { getCustomerDetail } from "@/modules/customers/get-customer-detail";
+import { getCustomerSuccessMetricsMock } from "@/modules/customers/mocks/getCustomerSuccessMetrics";
+import { CustomerSuccessPanel } from "@/modules/customers/components/CustomerSuccessPanel";
 import { redirect } from "next/navigation";
 
 export const dynamic = "force-dynamic";
@@ -37,9 +39,11 @@ export default async function Page({ params }: PageProps) {
     );
   }
 
+  const metrics = getCustomerSuccessMetricsMock(customer.id);
+
   return (
     <main className="min-h-screen w-full flex justify-center px-4 py-8">
-      <div className="w-full max-w-4xl space-y-6">
+      <div className="w-full max-w-5xl space-y-6">
         <header className="space-y-1">
           <h1 className="text-3xl font-semibold">{customer.fullName}</h1>
           <p className="text-sm text-gray-600">
@@ -47,23 +51,29 @@ export default async function Page({ params }: PageProps) {
           </p>
         </header>
 
-        <section className="rounded-md border bg-white p-4 shadow-sm space-y-2">
-          <h2 className="text-lg font-semibold">Account details</h2>
-          <dl className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2 text-sm">
-            <div>
-              <dt className="font-medium text-gray-700">Address</dt>
-              <dd className="text-gray-900">
-                {customer.address ?? "No address available"}
-              </dd>
-            </div>
-            <div>
-              <dt className="font-medium text-gray-700">Telephone</dt>
-              <dd className="text-gray-900">
-                {customer.telephone ?? "No phone available"}
-              </dd>
-            </div>
-          </dl>
-        </section>
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)]">
+          <section className="rounded-md border bg-white p-4 shadow-sm space-y-2">
+            <h2 className="text-lg font-semibold">Account details</h2>
+            <dl className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2 text-sm">
+              <div>
+                <dt className="font-medium text-gray-700">Address</dt>
+                <dd className="text-gray-900">
+                  {customer.address ?? "No address available"}
+                </dd>
+              </div>
+              <div>
+                <dt className="font-medium text-gray-700">Telephone</dt>
+                <dd className="text-gray-900">
+                  {customer.telephone ?? "No phone available"}
+                </dd>
+              </div>
+            </dl>
+          </section>
+
+          <section className="rounded-md border bg-white p-4 shadow-sm">
+            <CustomerSuccessPanel metrics={metrics} />
+          </section>
+        </div>
 
         <section className="rounded-md border bg-white p-4 shadow-sm space-y-3">
           <h2 className="text-lg font-semibold">Pets</h2>
@@ -83,15 +93,7 @@ export default async function Page({ params }: PageProps) {
           )}
         </section>
 
-        <section className="rounded-md border border-dashed bg-gray-50 p-4 text-sm text-gray-600 space-y-1">
-          <h2 className="text-lg font-semibold text-gray-800">
-            Customer Success metrics
-          </h2>
-          <p>
-            Health score, churn risk, and other CS metrics will appear here in a
-            future iteration.
-          </p>
-        </section>
+        {/* Legacy placeholder removed in favor of CustomerSuccessPanel above */}
       </div>
     </main>
   );
