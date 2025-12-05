@@ -1,6 +1,8 @@
 import { getCustomerDetail } from "@/modules/customers/get-customer-detail";
 import { getCustomerSuccessMetricsMock } from "@/modules/customers/mocks/getCustomerSuccessMetrics";
 import { CustomerSuccessPanel } from "@/modules/customers/components/CustomerSuccessPanel";
+import { getCustomerInteractionsMock } from "@/modules/customers/mocks/getCustomerInteractionsMock";
+import { CustomerInteractionsTimeline } from "@/modules/customers/components/CustomerInteractionsTimeline";
 import { redirect } from "next/navigation";
 
 export const dynamic = "force-dynamic";
@@ -40,6 +42,7 @@ export default async function Page({ params }: PageProps) {
   }
 
   const metrics = getCustomerSuccessMetricsMock(customer.id);
+  const interactions = getCustomerInteractionsMock(customer.id);
 
   return (
     <main className="min-h-screen w-full flex justify-center px-4 py-8">
@@ -93,7 +96,10 @@ export default async function Page({ params }: PageProps) {
           )}
         </section>
 
-        {/* Legacy placeholder removed in favor of CustomerSuccessPanel above */}
+        <section className="space-y-2">
+          <h2 className="text-lg font-semibold">Recent interactions</h2>
+          <CustomerInteractionsTimeline interactions={interactions} />
+        </section>
       </div>
     </main>
   );
