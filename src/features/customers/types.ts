@@ -5,5 +5,6 @@ export interface Customer {
   address?: string;
   phone?: string;
   email?: string;
+  petsCount?: number;
   createdFrom: "petclinic" | "mock";
 }
