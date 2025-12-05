@@ -4,8 +4,7 @@ import Link from "next/link";
 const navItems = [
   { label: "Overview", href: "/" },
   { label: "Customers", href: "/customers" },
-  { label: "Interactions", href: "/interactions" },
-  { label: "Settings", href: "/settings" },
+  { label: "Segmentation", href: "/segmentation" },
 ];
 
 export function Sidebar() {
