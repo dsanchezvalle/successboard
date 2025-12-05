@@ -7,9 +7,9 @@ interface CustomersTableProps {
 
 export function CustomersTable({ customers }: CustomersTableProps) {
   return (
-    <div className="overflow-x-auto rounded-md border bg-white shadow-sm">
-      <table className="min-w-full text-left text-sm">
-        <thead className="border-b bg-gray-50 text-xs font-semibold uppercase tracking-wide text-gray-600">
+    <div className="overflow-x-auto rounded-md border border-slate-800 bg-slate-900/60 shadow-sm">
+      <table className="min-w-full text-left text-sm text-slate-200">
+        <thead className="border-b border-slate-800 bg-slate-900/80 text-xs font-semibold uppercase tracking-wide text-slate-400">
           <tr>
             <th className="px-4 py-3">Name</th>
             <th className="px-4 py-3">City</th>
@@ -22,26 +22,26 @@ export function CustomersTable({ customers }: CustomersTableProps) {
           {customers.map((customer) => (
             <tr
               key={customer.id}
-              className="border-b last:border-b-0 hover:bg-gray-50"
+              className="border-b border-slate-800 last:border-b-0 hover:bg-slate-800/60"
             >
-              <td className="px-4 py-2 font-medium text-gray-900">
+              <td className="px-4 py-2 font-medium text-slate-50">
                 <Link
                   href={`/customers/${customer.id}`}
-                  className="text-blue-600 hover:underline"
+                  className="text-sky-300 hover:text-sky-200 hover:underline"
                 >
                   {customer.name}
                 </Link>
               </td>
-              <td className="px-4 py-2 text-gray-700">
+              <td className="px-4 py-2 text-slate-300">
                 {customer.city ?? "-"}
               </td>
-              <td className="px-4 py-2 text-gray-700">
+              <td className="px-4 py-2 text-slate-300">
                 {customer.address ?? "-"}
               </td>
-              <td className="px-4 py-2 text-gray-700">
+              <td className="px-4 py-2 text-slate-300">
                 {customer.phone ?? "-"}
               </td>
-              <td className="px-4 py-2 text-gray-700">
+              <td className="px-4 py-2 text-slate-400">
                 {customer.createdFrom}
               </td>
             </tr>

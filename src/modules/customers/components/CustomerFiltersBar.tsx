@@ -21,10 +21,10 @@ export function CustomerFiltersBar({
   }
 
   return (
-    <div className="flex flex-col gap-3 rounded-md border bg-white p-3 shadow-sm md:flex-row md:items-end md:justify-between color-gray-700 text-black">
+    <div className="flex flex-col gap-3 rounded-md border border-slate-800 bg-slate-900/60 p-3 shadow-sm md:flex-row md:items-end md:justify-between text-slate-200">
       <div className="flex-1 space-y-1">
         <label
-          className="block text-xs font-medium text-gray-700"
+          className="block text-xs font-medium text-slate-300"
           htmlFor="customers-search"
         >
           Search
@@ -32,7 +32,7 @@ export function CustomerFiltersBar({
         <input
           id="customers-search"
           type="text"
-          className="block w-full rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm shadow-sm focus:border-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400"
+          className="block w-full rounded-md border border-slate-700 bg-slate-900 px-2 py-1.5 text-sm text-slate-100 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500"
           placeholder="Search by name, city, phone..."
           value={value.searchQuery}
           onChange={(e) => update("searchQuery", e.target.value)}
@@ -42,14 +42,14 @@ export function CustomerFiltersBar({
       <div className="flex flex-1 flex-col gap-3 md:flex-row md:justify-end">
         <div className="space-y-1">
           <label
-            className="block text-xs font-medium text-gray-700"
+            className="block text-xs font-medium text-slate-300"
             htmlFor="customers-city"
           >
             City
           </label>
           <select
             id="customers-city"
-            className="block w-full rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm shadow-sm focus:border-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400"
+            className="block w-full rounded-md border border-slate-700 bg-slate-900 px-2 py-1.5 text-sm text-slate-100 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500"
             value={value.city ?? ""}
             onChange={(e) => update("city", e.target.value || null)}
           >
@@ -64,14 +64,14 @@ export function CustomerFiltersBar({
 
         <div className="space-y-1">
           <label
-            className="block text-xs font-medium text-gray-700"
+            className="block text-xs font-medium text-slate-300"
             htmlFor="customers-pets-bucket"
           >
             Pets
           </label>
           <select
             id="customers-pets-bucket"
-            className="block w-full rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm shadow-sm focus:border-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400"
+            className="block w-full rounded-md border border-slate-700 bg-slate-900 px-2 py-1.5 text-sm text-slate-100 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500"
             value={value.petsBucket}
             onChange={(e) =>
               update(

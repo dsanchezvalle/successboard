@@ -3,6 +3,7 @@ import { getCustomerSuccessMetricsMock } from "@/modules/customers/mocks/getCust
 import { CustomerSuccessPanel } from "@/modules/customers/components/CustomerSuccessPanel";
 import { getCustomerInteractionsMock } from "@/modules/customers/mocks/getCustomerInteractionsMock";
 import { CustomerInteractionsTimeline } from "@/modules/customers/components/CustomerInteractionsTimeline";
+import { CustomerDetailCard } from "@/modules/customers/components/CustomerDetailCard";
 import { redirect } from "next/navigation";
 
 export const dynamic = "force-dynamic";
@@ -47,54 +48,54 @@ export default async function Page({ params }: PageProps) {
   return (
     <main className="min-h-screen w-full flex justify-center px-4 py-8">
       <div className="w-full max-w-5xl space-y-6">
-        <header className="space-y-1">
+        <header className="sticky top-16 z-10 space-y-1 bg-slate-950/80 pb-2 pt-1 backdrop-blur">
           <h1 className="text-3xl font-semibold">{customer.fullName}</h1>
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-slate-400">
             {customer.city ?? "Unknown city"}
           </p>
         </header>
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)]">
-          <section className="rounded-md border bg-white p-4 shadow-sm space-y-2">
-            <h2 className="text-lg font-semibold">Account details</h2>
+          <CustomerDetailCard
+            title="Customer Success overview"
+            subtitle="Mocked metrics for development only"
+          >
+            <CustomerSuccessPanel metrics={metrics} />
+          </CustomerDetailCard>
+          <CustomerDetailCard title="Account details">
             <dl className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2 text-sm">
               <div>
-                <dt className="font-medium text-gray-700">Address</dt>
-                <dd className="text-gray-900">
+                <dt className="font-medium text-slate-300">Address</dt>
+                <dd className="text-slate-50">
                   {customer.address ?? "No address available"}
                 </dd>
               </div>
               <div>
-                <dt className="font-medium text-gray-700">Telephone</dt>
-                <dd className="text-gray-900">
+                <dt className="font-medium text-slate-300">Telephone</dt>
+                <dd className="text-slate-50">
                   {customer.telephone ?? "No phone available"}
                 </dd>
               </div>
             </dl>
-          </section>
-
-          <section className="rounded-md border bg-white p-4 shadow-sm">
-            <CustomerSuccessPanel metrics={metrics} />
-          </section>
+          </CustomerDetailCard>
         </div>
 
-        <section className="rounded-md border bg-white p-4 shadow-sm space-y-3">
-          <h2 className="text-lg font-semibold">Pets</h2>
+        <CustomerDetailCard title="Pets">
           {customer.pets.length === 0 ? (
-            <p className="text-sm text-gray-600">No pets registered.</p>
+            <p className="text-sm text-slate-400">No pets registered.</p>
           ) : (
-            <ul className="space-y-1 text-sm">
+            <ul className="space-y-1 text-sm text-slate-50">
               {customer.pets.map((pet) => (
                 <li key={pet.id} className="flex items-baseline gap-2">
-                  <span className="font-medium text-gray-900">{pet.name}</span>
-                  <span className="text-gray-500 text-xs">
+                  <span className="font-medium text-slate-50">{pet.name}</span>
+                  <span className="text-slate-400 text-xs">
                     ({pet.type} · {pet.birthDate})
                   </span>
                 </li>
               ))}
             </ul>
           )}
-        </section>
+        </CustomerDetailCard>
 
         <section className="space-y-2">
           <h2 className="text-lg font-semibold">Recent interactions</h2>
