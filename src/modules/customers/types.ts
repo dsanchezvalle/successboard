@@ -41,3 +41,21 @@ export interface CustomerFilterState {
   city: string | null;
   petsBucket: PetsBucket;
 }
+
+export type InteractionChannel =
+  | "email"
+  | "call"
+  | "meeting"
+  | "qbr"
+  | "ticket"
+  | "note";
+
+export interface CustomerInteraction {
+  id: string;
+  customerId: number;
+  occurredAt: string; // ISO timestamp
+  channel: InteractionChannel;
+  title: string;
+  description?: string;
+  owner?: string;
+}
