@@ -33,47 +33,6 @@ export function HomeOverview() {
           metrics here.
         </p>
       </section>
-
-      <section className="grid gap-4 md:grid-cols-3">
-        <KpiCard
-          label="Total customers"
-          value="--"
-          helper="Petclinic owners will appear here"
-        />
-        <KpiCard
-          label="At-risk accounts"
-          value="--"
-          helper="Churn risk models coming soon"
-        />
-        <KpiCard
-          label="Average health score"
-          value="--"
-          helper="Mock CS metrics to be wired up"
-        />
-      </section>
-
-      <section className="grid gap-4 lg:grid-cols-2">
-        <div className="rounded-xl border border-slate-800 bg-slate-900/60 px-4 py-4">
-          <h2 className="text-sm font-medium text-slate-100">
-            Getting ready for Petclinic data
-          </h2>
-          <p className="mt-2 text-xs text-slate-400">
-            We&apos;ll map Petclinic owners, pets, and visits into customers,
-            subscriptions, and interactions. This panel will eventually show
-            recent touchpoints and key events.
-          </p>
-        </div>
-        <div className="rounded-xl border border-slate-800 bg-slate-900/60 px-4 py-4">
-          <h2 className="text-sm font-medium text-slate-100">
-            What&apos;s next
-          </h2>
-          <ul className="mt-2 space-y-1 text-xs text-slate-400">
-            <li>Connect Petclinic owners as customers</li>
-            <li>Define customer health and churn risk signals</li>
-            <li>Build customers list and detail views</li>
-          </ul>
-        </div>
-      </section>
     </div>
   );
 }
