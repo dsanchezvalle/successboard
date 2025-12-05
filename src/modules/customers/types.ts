@@ -11,3 +11,14 @@ export interface CustomerDetail {
     type: string;
   }>;
 }
+
+export type ChurnRiskLevel = "low" | "medium" | "high";
+
+export type CustomerStage = "onboarding" | "active" | "expanding" | "at-risk";
+
+export interface CustomerSuccessMetrics {
+  healthScore: number; // 0–100
+  churnRisk: ChurnRiskLevel;
+  lifetimeValue: number; // numeric amount, e.g. in USD
+  stage: CustomerStage;
+}
