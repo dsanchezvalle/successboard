@@ -10,6 +10,7 @@ export function mapPetclinicOwnerToCustomer(owner: PetclinicOwner): Customer {
     city: owner.city,
     address: owner.address,
     phone: owner.telephone,
+    petsCount: owner.pets?.length ?? 0,
     // Petclinic owners do not expose email by default; keep undefined.
     email: undefined,
     createdFrom: "petclinic",
