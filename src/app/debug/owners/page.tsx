@@ -1,51 +1,4 @@
-import { fetchJson } from "@/lib/api";
-import type { PetclinicOwnersResponse } from "@/features/customers/api/raw-types";
-
-const OWNER_ENDPOINT_CANDIDATES = [
-  "http://localhost:8080/api/customer/owners",
-  "http://localhost:8080/api/gateway/owners",
-  "http://localhost:8080/api/owners",
-];
-
-async function fetchPetclinicOwners(): Promise<{
-  data?: PetclinicOwnersResponse;
-  error?: string;
-  endpointTried: string[];
-}> {
-  const tried: string[] = [];
-
-  for (const url of OWNER_ENDPOINT_CANDIDATES) {
-    tried.push(url);
-
-    try {
-      const data = await fetchJson<PetclinicOwnersResponse>(url, {
-        // Ensure this is a server-side request and not cached indefinitely.
-        cache: "no-store",
-      });
-
-      console.log(
-        "[debug/owners] Successfully fetched Petclinic owners from",
-        url
-      );
-      console.log(
-        "[debug/owners] Sample response shape:",
-        data &&
-          ("_embedded" in data
-            ? Object.keys(data._embedded ?? {})
-            : Object.keys(data ?? {}))
-      );
-
-      return { data, endpointTried: tried };
-    } catch (error) {
-      console.error("[debug/owners] Failed fetching from", url, error);
-    }
-  }
-
-  return {
-    error: "Unable to fetch Petclinic owners from any known endpoint.",
-    endpointTried: tried,
-  };
-}
+import { fetchPetclinicOwners } from "@/features/customers/api/petclinic-owners-fetch";
 
 export const dynamic = "force-dynamic";
 
@@ -66,7 +19,7 @@ export default async function Page() {
               <div>
                 <p className="font-medium">Endpoints tried:</p>
                 <ul className="list-disc list-inside">
-                  {result.endpointTried.map((u) => (
+                  {result.endpointTried.map((u: string) => (
                     <li key={u}>{u}</li>
                   ))}
                 </ul>

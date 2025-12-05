@@ -36,6 +36,7 @@ export interface PetclinicOwnersPageInfo {
 
 export interface PetclinicOwnersEmbeddedWrapper {
   owners?: PetclinicOwner[];
+  ownerList?: PetclinicOwner[];
 }
 
 export interface PetclinicOwnersResponseHalLinksSelf {
@@ -47,9 +48,11 @@ export interface PetclinicOwnersResponseHalLinks {
   [rel: string]: PetclinicOwnersResponseHalLinksSelf | undefined;
 }
 
-export interface PetclinicOwnersResponse {
-  _embedded?: PetclinicOwnersEmbeddedWrapper;
-  _links?: PetclinicOwnersResponseHalLinks;
-  page?: PetclinicOwnersPageInfo;
-  content?: PetclinicOwner[];
-}
+export type PetclinicOwnersResponse =
+  | PetclinicOwner[]
+  | {
+      _embedded?: PetclinicOwnersEmbeddedWrapper;
+      _links?: PetclinicOwnersResponseHalLinks;
+      page?: PetclinicOwnersPageInfo;
+      content?: PetclinicOwner[];
+    };
