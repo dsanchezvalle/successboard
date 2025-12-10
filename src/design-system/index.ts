@@ -7,12 +7,21 @@
  * // Import tokens
  * import { semanticLight, fontSize, spacing } from '@/design-system';
  *
+ * // Import primitives
+ * import { Container, Section, Heading, Text } from '@/design-system/primitives';
+ *
  * // Import CSS variables
  * import { completeCSS } from '@/design-system/tokens/css-variables';
  */
 
 // Re-export all tokens
 export * from "./tokens";
+
+// Re-export primitives
+export * from "./primitives";
+
+// Re-export utilities
+export { cn } from "./utils/cn";
 
 // Re-export CSS variable generators
 export {
