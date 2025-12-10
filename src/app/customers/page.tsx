@@ -1,6 +1,7 @@
 import { getCustomersFromPetclinic } from "@/features/customers/api/get-customers-from-petclinic";
 import type { Customer } from "@/modules/customers/types";
 import { CustomersPageClient } from "@/modules/customers/components/CustomersPageClient";
+import { Container, Section, Heading, Text } from "@/design-system/primitives";
 
 export const dynamic = "force-dynamic";
 
@@ -9,15 +10,22 @@ export default async function Page() {
 
   if (error) {
     return (
-      <main className="min-h-screen w-full flex justify-center px-4 py-8">
-        <div className="w-full max-w-4xl space-y-4">
-          <h1 className="text-2xl font-semibold">Customers</h1>
-          <div className="rounded-md border border-red-300 bg-red-50 p-4 text-sm text-red-800">
-            <p className="font-medium mb-1">Failed to load customers.</p>
-            <p className="mb-0">{error}</p>
+      <Container maxWidth="lg" padding="md" className="py-8">
+        <Section as="div" spacing="sm" gap="sm" aria-label="Customers error">
+          <Heading level={1}>Customers</Heading>
+          <div
+            className="rounded-md border border-red-300 bg-red-50 p-4 dark:border-red-800 dark:bg-red-950"
+            role="alert"
+          >
+            <Text variant="body" color="error" weight="medium" className="mb-1">
+              Failed to load customers.
+            </Text>
+            <Text variant="small" color="error">
+              {error}
+            </Text>
           </div>
-        </div>
-      </main>
+        </Section>
+      </Container>
     );
   }
 
@@ -34,18 +42,20 @@ export default async function Page() {
   ).sort((a, b) => a.localeCompare(b));
 
   return (
-    <main className="min-h-screen w-full flex justify-center px-4 py-8">
-      <div className="w-full max-w-5xl space-y-4">
-        <h1 className="text-2xl font-semibold">Customers</h1>
+    <Container maxWidth="xl" padding="md" className="py-8">
+      <Section as="div" spacing="none" gap="md" aria-label="Customers list">
+        <Heading level={1}>Customers</Heading>
         {typedCustomers.length === 0 ? (
-          <p className="text-sm text-gray-600">No customers found.</p>
+          <Text variant="small" color="muted">
+            No customers found.
+          </Text>
         ) : (
           <CustomersPageClient
             customers={typedCustomers}
             availableCities={availableCities}
           />
         )}
-      </div>
-    </main>
+      </Section>
+    </Container>
   );
 }
