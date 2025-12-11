@@ -195,3 +195,19 @@ export {
   type HealthDistributionViewModel,
   type AtRiskAccountViewModel,
 } from "./overview-service";
+
+export {
+  // Customers service
+  getCustomersHubData,
+  getMockCustomersHubData,
+  filterCustomersBySegment,
+  filterCustomersBySearch,
+  filterCustomersByHealthRange,
+  filterCustomersByMrrRange,
+  type CustomersHubData,
+  type CustomerHubListItem,
+  type CustomersSegmentationSummary,
+  type SegmentSummaryItem,
+  type FrameworkListItem,
+  type CustomerSegmentTab,
+} from "./customers-service";

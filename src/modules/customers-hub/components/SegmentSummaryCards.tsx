@@ -11,35 +11,31 @@
 
 import * as React from "react";
 import { cn } from "@/design-system/utils/cn";
-import type { SegmentationSummary, CustomerSegment } from "../types";
+import type {
+  CustomersSegmentationSummary,
+  CustomerSegmentTab,
+} from "@/modules/api";
 
 export interface SegmentSummaryCardsProps {
   /** Segmentation summary data */
-  summary: SegmentationSummary;
+  summary: CustomersSegmentationSummary;
   /** Currently selected segment */
-  selectedSegment?: CustomerSegment;
+  selectedSegment?: CustomerSegmentTab;
   /** Callback when a segment card is clicked */
-  onSegmentClick?: (segment: CustomerSegment) => void;
+  onSegmentClick?: (segment: CustomerSegmentTab) => void;
   /** Additional CSS classes */
   className?: string;
 }
 
-function formatCurrency(amount: number): string {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    maximumFractionDigits: 0,
-  }).format(amount);
-}
-
 const segmentConfig: Record<
-  Exclude<CustomerSegment, "all">,
+  Exclude<CustomerSegmentTab, "all">,
   {
     label: string;
     description: string;
     color: string;
     bgColor: string;
     borderColor: string;
+    ringColor: string;
   }
 > = {
   active: {
@@ -48,13 +44,15 @@ const segmentConfig: Record<
     color: "text-green-400",
     bgColor: "bg-green-950/30",
     borderColor: "border-green-800/50",
+    ringColor: "ring-green-500",
   },
   "at-risk": {
     label: "At-Risk",
     description: "Accounts needing attention",
-    color: "text-amber-400",
-    bgColor: "bg-amber-950/30",
-    borderColor: "border-amber-800/50",
+    color: "text-red-400",
+    bgColor: "bg-red-950/30",
+    borderColor: "border-red-800/50",
+    ringColor: "ring-red-500",
   },
   vip: {
     label: "VIP",
@@ -62,13 +60,23 @@ const segmentConfig: Record<
     color: "text-blue-400",
     bgColor: "bg-blue-950/30",
     borderColor: "border-blue-800/50",
+    ringColor: "ring-blue-500",
   },
-  new: {
-    label: "New",
-    description: "Recently onboarded",
+  onboarding: {
+    label: "Onboarding",
+    description: "Recently signed customers",
+    color: "text-amber-400",
+    bgColor: "bg-amber-950/30",
+    borderColor: "border-amber-800/50",
+    ringColor: "ring-amber-500",
+  },
+  trial: {
+    label: "Trial",
+    description: "Evaluating the product",
     color: "text-purple-400",
     bgColor: "bg-purple-950/30",
     borderColor: "border-purple-800/50",
+    ringColor: "ring-purple-500",
   },
 };
 
@@ -79,10 +87,10 @@ export function SegmentSummaryCards({
   className,
 }: SegmentSummaryCardsProps) {
   return (
-    <div className={cn("grid gap-4 sm:grid-cols-2 lg:grid-cols-4", className)}>
+    <div className={cn("grid gap-4 sm:grid-cols-2 lg:grid-cols-5", className)}>
       {summary.segments.map((segment) => {
         const config =
-          segmentConfig[segment.segment as Exclude<CustomerSegment, "all">];
+          segmentConfig[segment.segment as Exclude<CustomerSegmentTab, "all">];
         if (!config) return null;
 
         const isSelected = selectedSegment === segment.segment;
@@ -101,10 +109,7 @@ export function SegmentSummaryCards({
               isClickable &&
                 "cursor-pointer hover:scale-[1.02] hover:shadow-lg",
               isSelected && "ring-2 ring-offset-2 ring-offset-gray-950",
-              isSelected && segment.segment === "active" && "ring-green-500",
-              isSelected && segment.segment === "at-risk" && "ring-amber-500",
-              isSelected && segment.segment === "vip" && "ring-blue-500",
-              isSelected && segment.segment === "new" && "ring-purple-500",
+              isSelected && config.ringColor,
               !isClickable && "cursor-default"
             )}
           >
@@ -137,7 +142,7 @@ export function SegmentSummaryCards({
               <div>
                 <span className="text-gray-400">MRR:</span>{" "}
                 <span className="font-medium text-gray-300">
-                  {formatCurrency(segment.totalMrr)}
+                  {segment.totalMrrFormatted}
                 </span>
               </div>
               <div>

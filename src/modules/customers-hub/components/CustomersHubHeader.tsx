@@ -12,28 +12,19 @@
 import * as React from "react";
 import { Heading, Text } from "@/design-system/primitives";
 import { cn } from "@/design-system/utils/cn";
-import type { SegmentationSummary } from "../types";
+import type { CustomersSegmentationSummary } from "@/modules/api";
 
 export interface CustomersHubHeaderProps {
   /** Segmentation summary for metrics display */
-  summary: SegmentationSummary;
+  summary: CustomersSegmentationSummary;
   /** Additional CSS classes */
   className?: string;
-}
-
-function formatCurrency(amount: number): string {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    maximumFractionDigits: 0,
-  }).format(amount);
 }
 
 export function CustomersHubHeader({
   summary,
   className,
 }: CustomersHubHeaderProps) {
-  const totalMrr = summary.segments.reduce((sum, s) => sum + s.totalMrr, 0);
   const atRiskSegment = summary.segments.find((s) => s.segment === "at-risk");
   const vipSegment = summary.segments.find((s) => s.segment === "vip");
 
@@ -68,7 +59,7 @@ export function CustomersHubHeader({
         <div className="rounded-lg border border-gray-800 bg-gray-900/60 px-3 py-2">
           <div className="text-xs font-medium text-gray-500">Total MRR</div>
           <div className="mt-0.5 text-xl font-semibold tabular-nums text-gray-100">
-            {formatCurrency(totalMrr)}
+            {summary.totalMrrFormatted}
           </div>
         </div>
         <div className="rounded-lg border border-amber-800/50 bg-amber-950/20 px-3 py-2">

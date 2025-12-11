@@ -14,36 +14,33 @@
 import * as React from "react";
 import Link from "next/link";
 import { cn } from "@/design-system/utils/cn";
-import type { EnrichedCustomer, CustomerSegment } from "../types";
+import type { CustomerHubListItem, CustomerSegmentTab } from "@/modules/api";
 
 export interface CustomersHubTableProps {
   /** Customers to display */
-  customers: EnrichedCustomer[];
+  customers: CustomerHubListItem[];
   /** Additional CSS classes */
   className?: string;
 }
 
-function formatCurrency(amount: number): string {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    maximumFractionDigits: 0,
-  }).format(amount);
-}
-
 const segmentStyles: Record<
-  CustomerSegment,
+  CustomerSegmentTab,
   { bg: string; text: string; label: string }
 > = {
   all: { bg: "bg-gray-800", text: "text-gray-300", label: "All" },
   active: { bg: "bg-green-900/50", text: "text-green-400", label: "Active" },
   "at-risk": {
-    bg: "bg-amber-900/50",
-    text: "text-amber-400",
+    bg: "bg-red-900/50",
+    text: "text-red-400",
     label: "At-Risk",
   },
   vip: { bg: "bg-blue-900/50", text: "text-blue-400", label: "VIP" },
-  new: { bg: "bg-purple-900/50", text: "text-purple-400", label: "New" },
+  onboarding: {
+    bg: "bg-amber-900/50",
+    text: "text-amber-400",
+    label: "Onboarding",
+  },
+  trial: { bg: "bg-purple-900/50", text: "text-purple-400", label: "Trial" },
 };
 
 function getHealthColor(score: number): string {
@@ -116,14 +113,14 @@ export function CustomersHubTable({
               scope="col"
               className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-gray-400"
             >
-              City
+              Tier
             </th>
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-800">
           {customers.map((customer) => {
             const segment = segmentStyles[customer.segment];
-            const healthScore = customer.metrics.healthScore;
+            const healthScore = customer.healthScore;
 
             return (
               <tr
@@ -141,11 +138,9 @@ export function CustomersHubTable({
                   >
                     {customer.name}
                   </Link>
-                  {customer.email && (
-                    <div className="mt-0.5 text-xs text-gray-500">
-                      {customer.email}
-                    </div>
-                  )}
+                  <div className="mt-0.5 text-xs text-gray-500">
+                    {customer.companyName}
+                  </div>
                 </td>
 
                 {/* Segment Badge */}
@@ -203,7 +198,7 @@ export function CustomersHubTable({
                 {/* MRR */}
                 <td className="px-4 py-3">
                   <span className="font-medium tabular-nums text-gray-200">
-                    {formatCurrency(customer.mrr)}
+                    {customer.mrrFormatted}
                   </span>
                   <span className="text-gray-500">/mo</span>
                 </td>
@@ -224,9 +219,9 @@ export function CustomersHubTable({
                   </span>
                 </td>
 
-                {/* City */}
+                {/* Tier */}
                 <td className="px-4 py-3 text-gray-400">
-                  {customer.city ?? "-"}
+                  {customer.tierLabel}
                 </td>
               </tr>
             );

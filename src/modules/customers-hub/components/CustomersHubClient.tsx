@@ -11,30 +11,41 @@ import * as React from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { cn } from "@/design-system/utils/cn";
 import type {
-  EnrichedCustomer,
-  CustomerSegment,
-  CustomersHubFilterState,
-  SegmentationSummary,
-} from "../types";
+  CustomerHubListItem,
+  CustomersSegmentationSummary,
+  CustomerSegmentTab,
+} from "@/modules/api";
 import {
-  filterBySegment,
-  filterBySearch,
-  filterByHealthRange,
-  filterByMrrRange,
-} from "../utils/derive-customer-segments";
+  filterCustomersBySegment,
+  filterCustomersBySearch,
+  filterCustomersByHealthRange,
+  filterCustomersByMrrRange,
+} from "@/modules/api";
 import { CustomersHubHeader } from "./CustomersHubHeader";
 import { CustomersHubTabs } from "./CustomersHubTabs";
 import { CustomersHubFilters } from "./CustomersHubFilters";
 import { CustomersHubTable } from "./CustomersHubTable";
 import { SegmentSummaryCards } from "./SegmentSummaryCards";
 
+/**
+ * Filter state for the Customers Hub
+ */
+interface CustomersHubFilterState {
+  searchQuery: string;
+  segment: CustomerSegmentTab;
+  healthRange: "all" | "healthy" | "moderate" | "at-risk";
+  mrrRange: "all" | "low" | "medium" | "high" | "enterprise";
+}
+
 export interface CustomersHubClientProps {
-  /** Enriched customers data */
-  customers: EnrichedCustomer[];
+  /** Customer list items from API */
+  customers: CustomerHubListItem[];
   /** Segmentation summary */
-  summary: SegmentationSummary;
+  summary: CustomersSegmentationSummary;
   /** Initial segment from URL */
-  initialSegment?: CustomerSegment;
+  initialSegment?: CustomerSegmentTab;
+  /** Whether using fallback/demo data */
+  isFallback?: boolean;
   /** Additional CSS classes */
   className?: string;
 }
@@ -50,20 +61,21 @@ export function CustomersHubClient({
   customers,
   summary,
   initialSegment = "all",
+  isFallback = false,
   className,
 }: CustomersHubClientProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
   // Initialize segment from URL or prop
-  const urlSegment = searchParams.get("segment") as CustomerSegment | null;
+  const urlSegment = searchParams.get("segment") as CustomerSegmentTab | null;
   const [filters, setFilters] = React.useState<CustomersHubFilterState>({
     ...DEFAULT_FILTERS,
     segment: urlSegment || initialSegment,
   });
 
   // Update URL when segment changes
-  const handleSegmentChange = (segment: CustomerSegment) => {
+  const handleSegmentChange = (segment: CustomerSegmentTab) => {
     setFilters((prev) => ({ ...prev, segment }));
 
     // Update URL without full navigation
@@ -84,22 +96,32 @@ export function CustomersHubClient({
     let result = customers;
 
     // Filter by segment
-    result = filterBySegment(result, filters.segment);
+    result = filterCustomersBySegment(result, filters.segment);
 
     // Filter by search
-    result = filterBySearch(result, filters.searchQuery);
+    result = filterCustomersBySearch(result, filters.searchQuery);
 
     // Filter by health range
-    result = filterByHealthRange(result, filters.healthRange);
+    result = filterCustomersByHealthRange(result, filters.healthRange);
 
     // Filter by MRR range
-    result = filterByMrrRange(result, filters.mrrRange);
+    result = filterCustomersByMrrRange(result, filters.mrrRange);
 
     return result;
   }, [customers, filters]);
 
   return (
     <div className={cn("space-y-6", className)}>
+      {/* Demo Data Banner */}
+      {isFallback && (
+        <div className="rounded-lg border border-amber-800/50 bg-amber-950/30 px-4 py-3 text-sm text-amber-200">
+          <p className="font-medium">Using demo data</p>
+          <p className="text-xs text-amber-300/70">
+            Configure NEXT_PUBLIC_MOCKAPI_BASE_URL to connect to your backend.
+          </p>
+        </div>
+      )}
+
       {/* Header with summary metrics */}
       <CustomersHubHeader summary={summary} />
 

@@ -13,7 +13,17 @@
 
 import * as React from "react";
 import { cn } from "@/design-system/utils/cn";
-import type { CustomersHubFilterState } from "../types";
+import type { CustomerSegmentTab } from "@/modules/api";
+
+/**
+ * Filter state for the Customers Hub
+ */
+interface CustomersHubFilterState {
+  searchQuery: string;
+  segment: CustomerSegmentTab;
+  healthRange: "all" | "healthy" | "moderate" | "at-risk";
+  mrrRange: "all" | "low" | "medium" | "high" | "enterprise";
+}
 
 export interface CustomersHubFiltersProps {
   /** Current filter state */
