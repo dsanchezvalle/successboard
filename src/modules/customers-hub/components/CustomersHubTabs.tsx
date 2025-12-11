@@ -1,0 +1,194 @@
+/**
+ * CustomersHubTabs - Segment tab navigation
+ *
+ * Accessible tab component for switching between customer segments.
+ * Uses proper ARIA roles and keyboard navigation.
+ *
+ * @accessibility
+ * - role="tablist" on container
+ * - role="tab" on each tab button
+ * - aria-selected for current tab
+ * - Keyboard navigation (arrow keys)
+ * - Focus-visible styles
+ */
+
+"use client";
+
+import * as React from "react";
+import { cn } from "@/design-system/utils/cn";
+import type {
+  CustomerSegment,
+  SegmentTab,
+  SegmentationSummary,
+} from "../types";
+
+export interface CustomersHubTabsProps {
+  /** Currently selected segment */
+  value: CustomerSegment;
+  /** Callback when segment changes */
+  onChange: (segment: CustomerSegment) => void;
+  /** Segmentation summary for counts */
+  summary: SegmentationSummary;
+  /** Additional CSS classes */
+  className?: string;
+}
+
+const TABS: SegmentTab[] = [
+  { id: "all", label: "All", description: "All customers", color: "default" },
+  {
+    id: "active",
+    label: "Active",
+    description: "Healthy customers",
+    color: "success",
+  },
+  {
+    id: "at-risk",
+    label: "At-Risk",
+    description: "Need attention",
+    color: "warning",
+  },
+  {
+    id: "vip",
+    label: "VIP",
+    description: "High-value accounts",
+    color: "info",
+  },
+  {
+    id: "new",
+    label: "New",
+    description: "Recently onboarded",
+    color: "default",
+  },
+];
+
+const colorStyles: Record<
+  SegmentTab["color"],
+  { active: string; inactive: string; count: string }
+> = {
+  default: {
+    active: "border-gray-400 text-gray-100",
+    inactive:
+      "border-transparent text-gray-400 hover:text-gray-200 hover:border-gray-600",
+    count: "bg-gray-700 text-gray-300",
+  },
+  success: {
+    active: "border-green-500 text-green-400",
+    inactive:
+      "border-transparent text-gray-400 hover:text-green-300 hover:border-green-700",
+    count: "bg-green-900/50 text-green-400",
+  },
+  warning: {
+    active: "border-amber-500 text-amber-400",
+    inactive:
+      "border-transparent text-gray-400 hover:text-amber-300 hover:border-amber-700",
+    count: "bg-amber-900/50 text-amber-400",
+  },
+  danger: {
+    active: "border-red-500 text-red-400",
+    inactive:
+      "border-transparent text-gray-400 hover:text-red-300 hover:border-red-700",
+    count: "bg-red-900/50 text-red-400",
+  },
+  info: {
+    active: "border-blue-500 text-blue-400",
+    inactive:
+      "border-transparent text-gray-400 hover:text-blue-300 hover:border-blue-700",
+    count: "bg-blue-900/50 text-blue-400",
+  },
+};
+
+export function CustomersHubTabs({
+  value,
+  onChange,
+  summary,
+  className,
+}: CustomersHubTabsProps) {
+  const tabsRef = React.useRef<HTMLDivElement>(null);
+
+  // Get count for a segment
+  const getCount = (segment: CustomerSegment): number => {
+    if (segment === "all") return summary.total;
+    return summary.segments.find((s) => s.segment === segment)?.count ?? 0;
+  };
+
+  // Keyboard navigation
+  const handleKeyDown = (e: React.KeyboardEvent, currentIndex: number) => {
+    const tabs = TABS;
+    let newIndex = currentIndex;
+
+    switch (e.key) {
+      case "ArrowLeft":
+        e.preventDefault();
+        newIndex = currentIndex > 0 ? currentIndex - 1 : tabs.length - 1;
+        break;
+      case "ArrowRight":
+        e.preventDefault();
+        newIndex = currentIndex < tabs.length - 1 ? currentIndex + 1 : 0;
+        break;
+      case "Home":
+        e.preventDefault();
+        newIndex = 0;
+        break;
+      case "End":
+        e.preventDefault();
+        newIndex = tabs.length - 1;
+        break;
+      default:
+        return;
+    }
+
+    onChange(tabs[newIndex].id);
+
+    // Focus the new tab
+    const tabElements = tabsRef.current?.querySelectorAll('[role="tab"]');
+    (tabElements?.[newIndex] as HTMLElement)?.focus();
+  };
+
+  return (
+    <div
+      ref={tabsRef}
+      role="tablist"
+      aria-label="Customer segments"
+      className={cn(
+        "flex gap-1 overflow-x-auto border-b border-gray-800 pb-px",
+        className
+      )}
+    >
+      {TABS.map((tab, index) => {
+        const isSelected = value === tab.id;
+        const count = getCount(tab.id);
+        const styles = colorStyles[tab.color];
+
+        return (
+          <button
+            key={tab.id}
+            role="tab"
+            aria-selected={isSelected}
+            aria-controls={`tabpanel-${tab.id}`}
+            id={`tab-${tab.id}`}
+            tabIndex={isSelected ? 0 : -1}
+            onClick={() => onChange(tab.id)}
+            onKeyDown={(e) => handleKeyDown(e, index)}
+            className={cn(
+              "flex items-center gap-2 whitespace-nowrap border-b-2 px-3 py-2 text-sm font-medium transition-colors",
+              "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500",
+              isSelected ? styles.active : styles.inactive
+            )}
+          >
+            <span>{tab.label}</span>
+            <span
+              className={cn(
+                "rounded-full px-1.5 py-0.5 text-xs tabular-nums",
+                isSelected ? styles.count : "bg-gray-800 text-gray-500"
+              )}
+            >
+              {count}
+            </span>
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+CustomersHubTabs.displayName = "CustomersHubTabs";
