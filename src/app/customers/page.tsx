@@ -2,59 +2,41 @@
  * Customers Hub Page
  *
  * Unified customer management experience with segmentation.
- * Replaces the separate Customers and Segmentation pages.
- *
- * TODO: Replace Petclinic data fetching with mockapi.io endpoints
+ * Data is fetched from the mockapi.io backend via the customers-service.
+ * Falls back to mock data if the API is not configured.
  */
 
 import { Suspense } from "react";
-import { getCustomersFromPetclinic } from "@/features/customers/api/get-customers-from-petclinic";
-import type { Customer } from "@/modules/customers/types";
-import { Heading, Text } from "@/design-system/primitives";
+import { CustomersHubClient } from "@/modules/customers-hub/components/CustomersHubClient";
 import {
-  CustomersHubClient,
-  enrichCustomers,
-  calculateSegmentationSummary,
-} from "@/modules/customers-hub";
+  getCustomersHubData,
+  getMockCustomersHubData,
+  isApiConfigured,
+  type CustomersHubData,
+} from "@/modules/api";
 
 export const dynamic = "force-dynamic";
 
 export default async function CustomersPage() {
-  const { customers, error } = await getCustomersFromPetclinic();
+  // Fetch dashboard data from API or use mock data
+  let hubData: CustomersHubData;
 
-  if (error) {
-    return (
-      <div className="w-full max-w-7xl mx-auto px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
-        <div className="space-y-4">
-          <Heading level={1} className="text-gray-50">
-            Customers
-          </Heading>
-          <div
-            className="rounded-xl border border-red-800/50 bg-red-950/30 p-4"
-            role="alert"
-          >
-            <Text variant="body" color="error" weight="medium" className="mb-1">
-              Failed to load customers.
-            </Text>
-            <Text variant="small" color="error">
-              {error}
-            </Text>
-          </div>
-        </div>
-      </div>
-    );
+  if (isApiConfigured()) {
+    hubData = await getCustomersHubData();
+  } else {
+    hubData = getMockCustomersHubData();
   }
 
-  // Enrich customers with derived metrics and segments
-  // TODO: Replace with mockapi /customers endpoint that returns enriched data
-  const typedCustomers = customers as unknown as Customer[];
-  const enrichedCustomers = enrichCustomers(typedCustomers);
-  const summary = calculateSegmentationSummary(enrichedCustomers);
+  const { customers, summary, isFallback } = hubData;
 
   return (
     <div className="w-full max-w-7xl mx-auto px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
       <Suspense fallback={<CustomersHubSkeleton />}>
-        <CustomersHubClient customers={enrichedCustomers} summary={summary} />
+        <CustomersHubClient
+          customers={customers}
+          summary={summary}
+          isFallback={isFallback}
+        />
       </Suspense>
     </div>
   );
