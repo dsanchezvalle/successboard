@@ -17,23 +17,29 @@
 import * as React from "react";
 import { cn } from "@/design-system/utils/cn";
 import type {
-  CustomerSegment,
-  SegmentTab,
-  SegmentationSummary,
-} from "../types";
+  CustomerSegmentTab,
+  CustomersSegmentationSummary,
+} from "@/modules/api";
+
+interface SegmentTabConfig {
+  id: CustomerSegmentTab;
+  label: string;
+  description: string;
+  color: "default" | "success" | "warning" | "danger" | "info";
+}
 
 export interface CustomersHubTabsProps {
   /** Currently selected segment */
-  value: CustomerSegment;
+  value: CustomerSegmentTab;
   /** Callback when segment changes */
-  onChange: (segment: CustomerSegment) => void;
+  onChange: (segment: CustomerSegmentTab) => void;
   /** Segmentation summary for counts */
-  summary: SegmentationSummary;
+  summary: CustomersSegmentationSummary;
   /** Additional CSS classes */
   className?: string;
 }
 
-const TABS: SegmentTab[] = [
+const TABS: SegmentTabConfig[] = [
   { id: "all", label: "All", description: "All customers", color: "default" },
   {
     id: "active",
@@ -45,7 +51,7 @@ const TABS: SegmentTab[] = [
     id: "at-risk",
     label: "At-Risk",
     description: "Need attention",
-    color: "warning",
+    color: "danger",
   },
   {
     id: "vip",
@@ -54,15 +60,21 @@ const TABS: SegmentTab[] = [
     color: "info",
   },
   {
-    id: "new",
-    label: "New",
-    description: "Recently onboarded",
+    id: "onboarding",
+    label: "Onboarding",
+    description: "Recently signed",
+    color: "warning",
+  },
+  {
+    id: "trial",
+    label: "Trial",
+    description: "Evaluating",
     color: "default",
   },
 ];
 
 const colorStyles: Record<
-  SegmentTab["color"],
+  SegmentTabConfig["color"],
   { active: string; inactive: string; count: string }
 > = {
   default: {
@@ -106,7 +118,7 @@ export function CustomersHubTabs({
   const tabsRef = React.useRef<HTMLDivElement>(null);
 
   // Get count for a segment
-  const getCount = (segment: CustomerSegment): number => {
+  const getCount = (segment: CustomerSegmentTab): number => {
     if (segment === "all") return summary.total;
     return summary.segments.find((s) => s.segment === segment)?.count ?? 0;
   };

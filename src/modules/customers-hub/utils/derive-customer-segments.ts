@@ -1,10 +1,13 @@
 /**
  * Customer Segment Derivation Utilities
  *
- * Frontend-level segment derivation from customer data.
- * These functions will be replaced by mockapi endpoints in the future.
+ * @deprecated This module is deprecated. Use the customers-service from
+ * `@/modules/api` instead, which fetches data from the mockapi.io backend.
  *
- * TODO: Replace all derivation logic with mockapi /segments and /customers endpoints
+ * These legacy helpers derive mock metrics from Petclinic data and will be
+ * removed in a future cleanup batch.
+ *
+ * @see {@link @/modules/api/customers-service.ts}
  */
 
 import type {

@@ -1,9 +1,15 @@
 /**
  * Customers Hub Types
  *
- * Type definitions for the unified Customers Hub experience.
- * These types support both current Petclinic-derived data and
- * future mockapi.io integration.
+ * @deprecated This module is deprecated. Use types from `@/modules/api` instead:
+ * - CustomerHubListItem
+ * - CustomersSegmentationSummary
+ * - CustomerSegmentTab
+ *
+ * These legacy types are tied to Petclinic-derived data and will be
+ * removed in a future cleanup batch.
+ *
+ * @see {@link @/modules/api/customers-service.ts}
  */
 
 import type {
