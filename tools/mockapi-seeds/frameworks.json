@@ -1,0 +1,188 @@
+[
+  {
+    "id": "fw_atrisk",
+    "name": "At-Risk Accounts",
+    "description": "Customers with health scores below 50 or active risk flags requiring immediate attention",
+    "type": "segment",
+    "criteria": {
+      "healthScoreRange": { "min": 0, "max": 49 },
+      "lifecycleStages": ["at-risk"]
+    },
+    "businessDimension": "churn-risk",
+    "color": "#ef4444",
+    "badgeStyle": "solid",
+    "isDefault": true,
+    "isRecommended": true,
+    "customerCount": 3,
+    "sortOrder": 1,
+    "createdAt": "2024-01-01T00:00:00Z",
+    "updatedAt": "2024-12-01T00:00:00Z"
+  },
+  {
+    "id": "fw_growth",
+    "name": "Growth Opportunities",
+    "description": "Healthy customers with expansion potential based on usage patterns and engagement",
+    "type": "segment",
+    "criteria": {
+      "healthScoreRange": { "min": 75, "max": 100 },
+      "lifecycleStages": ["active", "expanding"]
+    },
+    "businessDimension": "growth",
+    "color": "#22c55e",
+    "badgeStyle": "solid",
+    "isDefault": true,
+    "isRecommended": true,
+    "customerCount": 4,
+    "sortOrder": 2,
+    "createdAt": "2024-01-01T00:00:00Z",
+    "updatedAt": "2024-12-01T00:00:00Z"
+  },
+  {
+    "id": "fw_onboarding",
+    "name": "Onboarding",
+    "description": "New customers in the implementation and onboarding phase",
+    "type": "segment",
+    "criteria": {
+      "lifecycleStages": ["onboarding", "trial"]
+    },
+    "businessDimension": "onboarding",
+    "color": "#3b82f6",
+    "badgeStyle": "solid",
+    "isDefault": true,
+    "isRecommended": true,
+    "customerCount": 3,
+    "sortOrder": 3,
+    "createdAt": "2024-01-01T00:00:00Z",
+    "updatedAt": "2024-12-01T00:00:00Z"
+  },
+  {
+    "id": "fw_enterprise",
+    "name": "Enterprise Accounts",
+    "description": "High-value enterprise tier customers requiring dedicated attention",
+    "type": "segment",
+    "criteria": {
+      "tiers": ["enterprise"],
+      "mrrRange": { "min": 2500000, "max": 10000000 }
+    },
+    "businessDimension": "engagement",
+    "color": "#8b5cf6",
+    "badgeStyle": "outline",
+    "isDefault": true,
+    "isRecommended": false,
+    "customerCount": 5,
+    "sortOrder": 4,
+    "createdAt": "2024-01-01T00:00:00Z",
+    "updatedAt": "2024-12-01T00:00:00Z"
+  },
+  {
+    "id": "fw_strategic",
+    "name": "Strategic Accounts",
+    "description": "Top-tier strategic accounts with executive sponsorship and custom success plans",
+    "type": "segment",
+    "criteria": {
+      "tiers": ["strategic"],
+      "mrrRange": { "min": 10000000 }
+    },
+    "businessDimension": "engagement",
+    "color": "#f59e0b",
+    "badgeStyle": "solid",
+    "isDefault": true,
+    "isRecommended": true,
+    "customerCount": 2,
+    "sortOrder": 5,
+    "createdAt": "2024-01-01T00:00:00Z",
+    "updatedAt": "2024-12-01T00:00:00Z"
+  },
+  {
+    "id": "fw_renewal",
+    "name": "Upcoming Renewals",
+    "description": "Customers with renewals due in the next 90 days",
+    "type": "segment",
+    "criteria": {
+      "daysUntilRenewal": 90
+    },
+    "businessDimension": "renewal",
+    "color": "#06b6d4",
+    "badgeStyle": "outline",
+    "isDefault": true,
+    "isRecommended": true,
+    "customerCount": 4,
+    "sortOrder": 6,
+    "createdAt": "2024-01-01T00:00:00Z",
+    "updatedAt": "2024-12-01T00:00:00Z"
+  },
+  {
+    "id": "fw_adoption",
+    "name": "Low Adoption",
+    "description": "Customers with adoption concerns that need proactive engagement",
+    "type": "segment",
+    "criteria": {
+      "riskFlags": ["low-adoption", "no-engagement"]
+    },
+    "businessDimension": "adoption",
+    "color": "#f97316",
+    "badgeStyle": "subtle",
+    "isDefault": false,
+    "isRecommended": false,
+    "customerCount": 2,
+    "sortOrder": 7,
+    "createdAt": "2024-01-01T00:00:00Z",
+    "updatedAt": "2024-12-01T00:00:00Z"
+  },
+  {
+    "id": "fw_health_review",
+    "name": "Health Review Framework",
+    "description": "Standard methodology for conducting customer health assessments",
+    "type": "framework",
+    "criteria": {},
+    "businessDimension": "health",
+    "color": "#10b981",
+    "badgeStyle": "outline",
+    "isDefault": false,
+    "isRecommended": true,
+    "sortOrder": 8,
+    "createdAt": "2024-01-01T00:00:00Z",
+    "updatedAt": "2024-12-01T00:00:00Z"
+  },
+  {
+    "id": "fw_churn_playbook",
+    "name": "Churn Prevention Playbook",
+    "description": "Tactical playbook for addressing at-risk customers and preventing churn",
+    "type": "playbook",
+    "criteria": {
+      "healthScoreRange": { "min": 0, "max": 49 },
+      "riskFlags": [
+        "low-adoption",
+        "champion-left",
+        "competitor-threat",
+        "budget-cut"
+      ]
+    },
+    "businessDimension": "churn-risk",
+    "color": "#dc2626",
+    "badgeStyle": "solid",
+    "isDefault": false,
+    "isRecommended": true,
+    "sortOrder": 9,
+    "createdAt": "2024-01-01T00:00:00Z",
+    "updatedAt": "2024-12-01T00:00:00Z"
+  },
+  {
+    "id": "fw_expansion_playbook",
+    "name": "Expansion Playbook",
+    "description": "Tactical playbook for identifying and executing expansion opportunities",
+    "type": "playbook",
+    "criteria": {
+      "healthScoreRange": { "min": 80, "max": 100 },
+      "lifecycleStages": ["active", "expanding"]
+    },
+    "businessDimension": "expansion",
+    "color": "#059669",
+    "badgeStyle": "solid",
+    "isDefault": false,
+    "isRecommended": true,
+    "sortOrder": 10,
+    "createdAt": "2024-01-01T00:00:00Z",
+    "updatedAt": "2024-12-01T00:00:00Z"
+  }
+]

@@ -1,0 +1,140 @@
+[
+  {
+    "id": "metrics_current",
+    "totalCustomers": 15,
+    "totalMrr": 5232500000,
+    "totalArr": 62790000000,
+    "currency": "USD",
+    "churnRate": 0.028,
+    "churnTrend": "down",
+    "atRiskCount": 3,
+    "vipCount": 2,
+    "trialCount": 1,
+    "onboardingCount": 2,
+    "avgHealthScore": 68,
+    "healthTrend": "up",
+    "expansionPipelineMrr": 6300000000,
+    "netRevenueRetention": 1.12,
+    "grossRevenueRetention": 0.94,
+    "avgNpsScore": 52,
+    "segmentBreakdown": [
+      {
+        "segmentId": "fw_atrisk",
+        "segmentName": "At-Risk Accounts",
+        "customerCount": 3,
+        "percentage": 20,
+        "totalMrr": 508000000,
+        "avgHealthScore": 38
+      },
+      {
+        "segmentId": "fw_growth",
+        "segmentName": "Growth Opportunities",
+        "customerCount": 4,
+        "percentage": 27,
+        "totalMrr": 3245000000,
+        "avgHealthScore": 86
+      },
+      {
+        "segmentId": "fw_onboarding",
+        "segmentName": "Onboarding",
+        "customerCount": 3,
+        "percentage": 20,
+        "totalMrr": 62000000,
+        "avgHealthScore": 60
+      },
+      {
+        "segmentId": "fw_enterprise",
+        "segmentName": "Enterprise Accounts",
+        "customerCount": 5,
+        "percentage": 33,
+        "totalMrr": 1815000000,
+        "avgHealthScore": 76
+      }
+    ],
+    "tierBreakdown": [
+      {
+        "segmentId": "tier_smb",
+        "segmentName": "SMB",
+        "customerCount": 5,
+        "percentage": 33,
+        "totalMrr": 112000000,
+        "avgHealthScore": 66
+      },
+      {
+        "segmentId": "tier_midmarket",
+        "segmentName": "Mid-Market",
+        "customerCount": 4,
+        "percentage": 27,
+        "totalMrr": 368000000,
+        "avgHealthScore": 59
+      },
+      {
+        "segmentId": "tier_enterprise",
+        "segmentName": "Enterprise",
+        "customerCount": 4,
+        "percentage": 27,
+        "totalMrr": 1730000000,
+        "avgHealthScore": 69
+      },
+      {
+        "segmentId": "tier_strategic",
+        "segmentName": "Strategic",
+        "customerCount": 2,
+        "percentage": 13,
+        "totalMrr": 3050000000,
+        "avgHealthScore": 90
+      }
+    ],
+    "lifecycleBreakdown": [
+      {
+        "segmentId": "lifecycle_trial",
+        "segmentName": "Trial",
+        "customerCount": 1,
+        "percentage": 7,
+        "totalMrr": 25000000,
+        "avgHealthScore": 55
+      },
+      {
+        "segmentId": "lifecycle_onboarding",
+        "segmentName": "Onboarding",
+        "customerCount": 2,
+        "percentage": 13,
+        "totalMrr": 37000000,
+        "avgHealthScore": 63
+      },
+      {
+        "segmentId": "lifecycle_active",
+        "segmentName": "Active",
+        "customerCount": 6,
+        "percentage": 40,
+        "totalMrr": 2940000000,
+        "avgHealthScore": 78
+      },
+      {
+        "segmentId": "lifecycle_expanding",
+        "segmentName": "Expanding",
+        "customerCount": 2,
+        "percentage": 13,
+        "totalMrr": 1345000000,
+        "avgHealthScore": 88
+      },
+      {
+        "segmentId": "lifecycle_atrisk",
+        "segmentName": "At-Risk",
+        "customerCount": 3,
+        "percentage": 20,
+        "totalMrr": 508000000,
+        "avgHealthScore": 38
+      },
+      {
+        "segmentId": "lifecycle_churned",
+        "segmentName": "Churned",
+        "customerCount": 1,
+        "percentage": 7,
+        "totalMrr": 0,
+        "avgHealthScore": 0
+      }
+    ],
+    "lastUpdatedAt": "2024-12-11T00:00:00Z"
+  }
+]
