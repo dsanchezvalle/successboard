@@ -13,28 +13,36 @@ import * as React from "react";
 import { cn } from "@/design-system/utils/cn";
 
 export interface RevenueHighlightProps {
-  /** Monthly Recurring Revenue value */
+  /** Monthly Recurring Revenue value (in cents if from API) */
   mrr: number;
-  /** Optional trend percentage (e.g., 5.2 for +5.2%) */
-  trend?: number;
+  /** Pre-formatted MRR string (optional, takes precedence) */
+  mrrFormatted?: string;
+  /** Trend direction */
+  trend?: "up" | "down" | "flat";
+  /** Trend value string (e.g., "+5.2%") */
+  trendValue?: string;
   /** Additional CSS classes */
   className?: string;
 }
 
 function formatCurrency(amount: number): string {
+  // If amount is large (likely in cents), convert to dollars
+  const value = amount > 100000 ? amount / 100 : amount;
   return new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
     maximumFractionDigits: 0,
-  }).format(amount);
+  }).format(value);
 }
 
 export function RevenueHighlight({
   mrr,
+  mrrFormatted,
   trend,
+  trendValue,
   className,
 }: RevenueHighlightProps) {
-  const isPositiveTrend = trend !== undefined && trend >= 0;
+  const isPositiveTrend = trend === "up";
 
   return (
     <article
@@ -56,10 +64,10 @@ export function RevenueHighlight({
 
         <div className="mt-2 flex items-baseline gap-3">
           <span className="text-4xl font-bold tabular-nums tracking-tight text-gray-50">
-            {formatCurrency(mrr)}
+            {mrrFormatted ?? formatCurrency(mrr)}
           </span>
 
-          {trend !== undefined && (
+          {trend && trend !== "flat" && trendValue && (
             <span
               className={cn(
                 "flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium",
@@ -69,7 +77,7 @@ export function RevenueHighlight({
               )}
             >
               <span aria-hidden="true">{isPositiveTrend ? "↑" : "↓"}</span>
-              <span>{Math.abs(trend).toFixed(1)}%</span>
+              <span>{trendValue}</span>
             </span>
           )}
         </div>

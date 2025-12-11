@@ -1,3 +1,7 @@
+/**
+ * @deprecated Use `OverviewKpisViewModel` from `@/modules/api` instead.
+ * This type is tied to the legacy Petclinic-derived metrics.
+ */
 export interface OverviewKpis {
   // Real metrics derived from Petclinic data
   totalCustomers: number;
