@@ -1,20 +1,36 @@
+/**
+ * Customers Hub Page
+ *
+ * Unified customer management experience with segmentation.
+ * Replaces the separate Customers and Segmentation pages.
+ *
+ * TODO: Replace Petclinic data fetching with mockapi.io endpoints
+ */
+
+import { Suspense } from "react";
 import { getCustomersFromPetclinic } from "@/features/customers/api/get-customers-from-petclinic";
 import type { Customer } from "@/modules/customers/types";
-import { CustomersPageClient } from "@/modules/customers/components/CustomersPageClient";
-import { Container, Section, Heading, Text } from "@/design-system/primitives";
+import { Heading, Text } from "@/design-system/primitives";
+import {
+  CustomersHubClient,
+  enrichCustomers,
+  calculateSegmentationSummary,
+} from "@/modules/customers-hub";
 
 export const dynamic = "force-dynamic";
 
-export default async function Page() {
+export default async function CustomersPage() {
   const { customers, error } = await getCustomersFromPetclinic();
 
   if (error) {
     return (
-      <Container maxWidth="lg" padding="md" className="py-8">
-        <Section as="div" spacing="sm" gap="sm" aria-label="Customers error">
-          <Heading level={1}>Customers</Heading>
+      <div className="w-full max-w-7xl mx-auto px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
+        <div className="space-y-4">
+          <Heading level={1} className="text-gray-50">
+            Customers
+          </Heading>
           <div
-            className="rounded-md border border-red-300 bg-red-50 p-4 dark:border-red-800 dark:bg-red-950"
+            className="rounded-xl border border-red-800/50 bg-red-950/30 p-4"
             role="alert"
           >
             <Text variant="body" color="error" weight="medium" className="mb-1">
@@ -24,38 +40,32 @@ export default async function Page() {
               {error}
             </Text>
           </div>
-        </Section>
-      </Container>
+        </div>
+      </div>
     );
   }
 
+  // Enrich customers with derived metrics and segments
+  // TODO: Replace with mockapi /customers endpoint that returns enriched data
   const typedCustomers = customers as unknown as Customer[];
-
-  const availableCities = Array.from(
-    new Set(
-      typedCustomers
-        .map((c) => c.city)
-        .filter(
-          (c): c is string => typeof c === "string" && c.trim().length > 0
-        )
-    )
-  ).sort((a, b) => a.localeCompare(b));
+  const enrichedCustomers = enrichCustomers(typedCustomers);
+  const summary = calculateSegmentationSummary(enrichedCustomers);
 
   return (
-    <Container maxWidth="xl" padding="md" className="py-8">
-      <Section as="div" spacing="none" gap="md" aria-label="Customers list">
-        <Heading level={1}>Customers</Heading>
-        {typedCustomers.length === 0 ? (
-          <Text variant="small" color="muted">
-            No customers found.
-          </Text>
-        ) : (
-          <CustomersPageClient
-            customers={typedCustomers}
-            availableCities={availableCities}
-          />
-        )}
-      </Section>
-    </Container>
+    <div className="w-full max-w-7xl mx-auto px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
+      <Suspense fallback={<CustomersHubSkeleton />}>
+        <CustomersHubClient customers={enrichedCustomers} summary={summary} />
+      </Suspense>
+    </div>
+  );
+}
+
+function CustomersHubSkeleton() {
+  return (
+    <div className="space-y-6 animate-pulse">
+      <div className="h-24 rounded-xl bg-gray-800/50" />
+      <div className="h-12 rounded-lg bg-gray-800/50" />
+      <div className="h-64 rounded-xl bg-gray-800/50" />
+    </div>
   );
 }
