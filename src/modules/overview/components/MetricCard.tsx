@@ -19,7 +19,7 @@ export type MetricStatus =
   | "warning"
   | "danger"
   | "info";
-export type MetricTrend = "up" | "down" | "neutral";
+export type MetricTrend = "up" | "down" | "neutral" | "flat";
 export type MetricSize = "default" | "large" | "compact";
 
 export interface MetricCardProps {
@@ -63,6 +63,7 @@ const trendStyles: Record<MetricTrend, { color: string; icon: string }> = {
   up: { color: "text-green-400", icon: "↑" },
   down: { color: "text-red-400", icon: "↓" },
   neutral: { color: "text-gray-400", icon: "→" },
+  flat: { color: "text-gray-400", icon: "→" },
 };
 
 const sizeStyles: Record<
