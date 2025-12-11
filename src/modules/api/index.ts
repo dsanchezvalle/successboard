@@ -180,3 +180,18 @@ export {
   type OverviewMetricsViewModel,
   type FrameworkViewModel,
 } from "./mappers";
+
+// =============================================================================
+// SERVICE EXPORTS
+// =============================================================================
+
+export {
+  // Overview service
+  getOverviewDashboardData,
+  getMockOverviewData,
+  isApiConfigured,
+  type OverviewDashboardData,
+  type OverviewKpisViewModel,
+  type HealthDistributionViewModel,
+  type AtRiskAccountViewModel,
+} from "./overview-service";

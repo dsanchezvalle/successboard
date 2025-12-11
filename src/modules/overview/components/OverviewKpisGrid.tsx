@@ -10,33 +10,37 @@
  * - Good contrast ratios
  */
 
-import type { OverviewKpis } from "@/modules/overview/types";
+import type {
+  OverviewKpisViewModel,
+  HealthDistributionViewModel,
+} from "@/modules/api";
 import { MetricCard } from "./MetricCard";
 import { MetricsSection } from "./MetricsSection";
 import { CustomerHealthSummary } from "./CustomerHealthSummary";
 import { RevenueHighlight } from "./RevenueHighlight";
 
 interface OverviewKpisGridProps {
-  kpis: OverviewKpis;
-}
-
-function formatPercent(value: number): string {
-  return `${(value * 100).toFixed(1)}%`;
+  kpis: OverviewKpisViewModel;
+  healthDistribution: HealthDistributionViewModel;
 }
 
 function formatNumber(value: number): string {
   return new Intl.NumberFormat("en-US").format(value);
 }
 
-export function OverviewKpisGrid({ kpis }: OverviewKpisGridProps) {
-  // Determine status based on thresholds
-  const churnStatus =
-    kpis.churnRate > 0.2
-      ? "danger"
-      : kpis.churnRate > 0.1
-      ? "warning"
-      : "success";
+export function OverviewKpisGrid({
+  kpis,
+  healthDistribution,
+}: OverviewKpisGridProps) {
   const atRiskStatus = kpis.atRiskCustomers > 5 ? "warning" : "default";
+
+  // Determine health score status
+  const healthScoreStatus =
+    kpis.avgHealthScore >= 70
+      ? "success"
+      : kpis.avgHealthScore >= 50
+      ? "warning"
+      : "danger";
 
   return (
     <div className="space-y-8">
@@ -44,7 +48,9 @@ export function OverviewKpisGrid({ kpis }: OverviewKpisGridProps) {
       <div className="grid gap-4 lg:grid-cols-3">
         <RevenueHighlight
           mrr={kpis.mrr}
-          trend={5.2} // Mock trend for visual demo
+          mrrFormatted={kpis.mrrFormatted}
+          trend={kpis.mrrTrend}
+          trendValue={kpis.mrrTrendValue}
           className="lg:col-span-1"
         />
         <div className="grid gap-3 sm:grid-cols-2 lg:col-span-2">
@@ -54,64 +60,65 @@ export function OverviewKpisGrid({ kpis }: OverviewKpisGridProps) {
             description="Active accounts in your portfolio"
             size="large"
             status="info"
-            trend="up"
-            trendValue="+12%"
+            trend={kpis.customersTrend}
+            trendValue={kpis.customersTrendValue}
           />
           <MetricCard
             title="Churn Rate"
-            value={formatPercent(kpis.churnRate)}
+            value={kpis.churnRateFormatted}
             description="Monthly customer churn"
             size="large"
-            status={churnStatus}
-            trend={kpis.churnRate > 0.1 ? "up" : "down"}
-            trendValue={kpis.churnRate > 0.1 ? "+2.1%" : "-1.5%"}
+            status={kpis.churnStatus}
+            trend={kpis.churnTrend}
+            trendValue={kpis.churnTrendValue}
           />
         </div>
       </div>
 
       {/* Customer Health Visual */}
       <CustomerHealthSummary
-        total={kpis.totalCustomers}
-        active={kpis.activeCustomers}
-        atRisk={kpis.atRiskCustomers}
-        vip={kpis.vipCustomers}
+        total={healthDistribution.total}
+        active={healthDistribution.active}
+        atRisk={healthDistribution.atRisk}
+        vip={healthDistribution.vip}
       />
 
-      {/* Customer Base Metrics */}
+      {/* Customer Segments */}
       <MetricsSection
-        title="Customer Base"
-        subtitle="Breakdown of your customer portfolio from Petclinic data"
+        title="Customer Segments"
+        subtitle="Breakdown of your customer portfolio by lifecycle stage"
         columns={4}
       >
         <MetricCard
-          title="With Pets"
-          value={formatNumber(kpis.customersWithPets)}
-          description="Owners with registered pets"
-          status="success"
-        />
-        <MetricCard
-          title="Without Pets"
-          value={formatNumber(kpis.customersWithoutPets)}
-          description="Owners without pets yet"
-          status={kpis.customersWithoutPets > 0 ? "warning" : "default"}
-        />
-        <MetricCard
-          title="Avg. Pets/Customer"
-          value={kpis.avgPetsPerCustomer.toFixed(2)}
-          description="Pet density per owner"
-        />
-        <MetricCard
-          title="Active Customers"
+          title="Active"
           value={formatNumber(kpis.activeCustomers)}
-          description="Engaged accounts"
+          description="Healthy, engaged accounts"
           status="success"
+        />
+        <MetricCard
+          title="Onboarding"
+          value={formatNumber(kpis.onboardingCustomers)}
+          description="Recently signed customers"
+          status="info"
+        />
+        <MetricCard
+          title="Trial"
+          value={formatNumber(kpis.trialCustomers)}
+          description="Evaluating the product"
+          status="default"
+        />
+        <MetricCard
+          title="VIP"
+          value={formatNumber(kpis.vipCustomers)}
+          description="Strategic accounts"
+          status="info"
         />
       </MetricsSection>
 
       {/* Health & Risk Metrics */}
       <MetricsSection
         title="Health & Risk"
-        subtitle="Customer success health indicators (mock data)"
+        subtitle="Customer success health indicators"
         columns={3}
       >
         <MetricCard
@@ -119,27 +126,22 @@ export function OverviewKpisGrid({ kpis }: OverviewKpisGridProps) {
           value={formatNumber(kpis.atRiskCustomers)}
           description="Accounts needing attention"
           status={atRiskStatus}
-          trend={kpis.atRiskCustomers > 3 ? "up" : "down"}
-          trendValue={kpis.atRiskCustomers > 3 ? "+2" : "-1"}
         />
         <MetricCard
-          title="VIP Customers"
-          value={formatNumber(kpis.vipCustomers)}
-          description="High-value accounts"
-          status="info"
+          title="Avg Health Score"
+          value={`${Math.round(kpis.avgHealthScore)}%`}
+          description="Portfolio health average"
+          status={healthScoreStatus}
+          trend={kpis.healthTrend}
         />
-        <MetricCard
-          title="Health Score"
-          value={`${Math.round((1 - kpis.churnRate) * 100)}%`}
-          description="Overall portfolio health"
-          status={
-            kpis.churnRate < 0.1
-              ? "success"
-              : kpis.churnRate < 0.2
-              ? "warning"
-              : "danger"
-          }
-        />
+        {kpis.nrrFormatted && (
+          <MetricCard
+            title="Net Revenue Retention"
+            value={kpis.nrrFormatted}
+            description="Revenue retention rate"
+            status={kpis.nrr && kpis.nrr >= 1 ? "success" : "warning"}
+          />
+        )}
       </MetricsSection>
     </div>
   );

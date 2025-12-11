@@ -1,6 +1,19 @@
+/**
+ * @deprecated This module is deprecated. Use `getOverviewDashboardData()` from
+ * `@/modules/api` instead, which fetches data from the mockapi.io backend.
+ *
+ * This legacy helper derives mock metrics from Petclinic data and will be
+ * removed in a future cleanup batch.
+ *
+ * @see {@link @/modules/api/overview-service.ts}
+ */
+
 import { getCustomersFromPetclinic } from "@/features/customers/api/get-customers-from-petclinic";
 import type { OverviewKpis } from "@/modules/overview/types";
 
+/**
+ * @deprecated Use `getOverviewDashboardData()` from `@/modules/api` instead.
+ */
 export async function getOverviewKpis(): Promise<OverviewKpis> {
   const { customers, error } = await getCustomersFromPetclinic();
 

@@ -2,9 +2,7 @@
  * AccountsNeedingAttention - At-risk customer highlights
  *
  * Displays a summary of accounts that need immediate attention.
- * Shows placeholder data that will be replaced by mockapi.
- *
- * TODO: Replace mock data with mockapi endpoint for at-risk accounts
+ * Receives data from the overview-service.
  *
  * @accessibility
  * - Uses semantic list structure
@@ -15,51 +13,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { cn } from "@/design-system/utils/cn";
-
-interface AtRiskAccount {
-  id: string;
-  name: string;
-  healthScore: number;
-  riskReason: string;
-  daysSinceContact: number;
-  mrr: number;
-}
-
-// TODO: Replace with mockapi endpoint
-const mockAtRiskAccounts: AtRiskAccount[] = [
-  {
-    id: "1",
-    name: "Acme Corporation",
-    healthScore: 35,
-    riskReason: "No login in 30+ days",
-    daysSinceContact: 45,
-    mrr: 2500,
-  },
-  {
-    id: "2",
-    name: "TechStart Inc",
-    healthScore: 42,
-    riskReason: "Support tickets increasing",
-    daysSinceContact: 12,
-    mrr: 1800,
-  },
-  {
-    id: "3",
-    name: "Global Services Ltd",
-    healthScore: 28,
-    riskReason: "Contract renewal pending",
-    daysSinceContact: 8,
-    mrr: 4200,
-  },
-];
-
-function formatCurrency(amount: number): string {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    maximumFractionDigits: 0,
-  }).format(amount);
-}
+import type { AtRiskAccountViewModel } from "@/modules/api";
 
 function getHealthColor(score: number): string {
   if (score >= 70) return "text-green-400";
@@ -74,18 +28,16 @@ function getHealthBg(score: number): string {
 }
 
 export interface AccountsNeedingAttentionProps {
-  /** Maximum number of accounts to show */
-  limit?: number;
+  /** Accounts needing attention (from API) */
+  accounts: AtRiskAccountViewModel[];
   /** Additional CSS classes */
   className?: string;
 }
 
 export function AccountsNeedingAttention({
-  limit = 3,
+  accounts,
   className,
 }: AccountsNeedingAttentionProps) {
-  const accounts = mockAtRiskAccounts.slice(0, limit);
-
   if (accounts.length === 0) {
     return (
       <section
@@ -164,7 +116,7 @@ export function AccountsNeedingAttention({
                     {account.name}
                   </h3>
                   <span className="flex-shrink-0 text-xs text-gray-500">
-                    {formatCurrency(account.mrr)}/mo
+                    {account.mrrFormatted}/mo
                   </span>
                 </div>
                 <p className="mt-0.5 text-xs text-gray-500">
