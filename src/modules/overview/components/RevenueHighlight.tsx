@@ -47,23 +47,23 @@ export function RevenueHighlight({
   return (
     <article
       className={cn(
-        "relative overflow-hidden rounded-xl border border-blue-800/40 bg-gradient-to-br from-blue-950/50 to-gray-900/80 p-5 shadow-md",
+        "relative overflow-hidden rounded-xl border border-info-border bg-gradient-to-br from-info-bg to-bg-surface p-5 shadow-md",
         className
       )}
     >
       {/* Decorative gradient overlay */}
       <div
-        className="pointer-events-none absolute -right-8 -top-8 h-32 w-32 rounded-full bg-blue-500/10 blur-2xl"
+        className="pointer-events-none absolute -right-8 -top-8 h-32 w-32 rounded-full bg-info-icon/10 blur-2xl"
         aria-hidden="true"
       />
 
       <div className="relative">
-        <h3 className="text-xs font-medium uppercase tracking-wide text-blue-300/80">
+        <h3 className="text-xs font-medium uppercase tracking-wide text-info-foreground">
           Monthly Recurring Revenue
         </h3>
 
         <div className="mt-2 flex items-baseline gap-3">
-          <span className="text-4xl font-bold tabular-nums tracking-tight text-gray-50">
+          <span className="text-4xl font-bold tabular-nums tracking-tight text-text-primary">
             {mrrFormatted ?? formatCurrency(mrr)}
           </span>
 
@@ -72,8 +72,8 @@ export function RevenueHighlight({
               className={cn(
                 "flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium",
                 isPositiveTrend
-                  ? "bg-green-500/20 text-green-400"
-                  : "bg-red-500/20 text-red-400"
+                  ? "bg-success-bg text-success-icon"
+                  : "bg-error-bg text-error-icon"
               )}
             >
               <span aria-hidden="true">{isPositiveTrend ? "↑" : "↓"}</span>
@@ -82,7 +82,7 @@ export function RevenueHighlight({
           )}
         </div>
 
-        <p className="mt-2 text-sm text-gray-500">
+        <p className="mt-2 text-sm text-text-muted">
           Estimated monthly recurring revenue based on customer base.
         </p>
       </div>
