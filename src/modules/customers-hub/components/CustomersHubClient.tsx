@@ -114,9 +114,9 @@ export function CustomersHubClient({
     <div className={cn("space-y-6", className)}>
       {/* Demo Data Banner */}
       {isFallback && (
-        <div className="rounded-lg border border-amber-800/50 bg-amber-950/30 px-4 py-3 text-sm text-amber-200">
+        <div className="rounded-lg border border-warning-border bg-warning-bg px-4 py-3 text-sm text-warning-foreground">
           <p className="font-medium">Using demo data</p>
-          <p className="text-xs text-amber-300/70">
+          <p className="text-xs text-warning-foreground/80">
             Configure NEXT_PUBLIC_MOCKAPI_BASE_URL to connect to your backend.
           </p>
         </div>
@@ -151,14 +151,14 @@ export function CustomersHubClient({
         <CustomersHubFilters value={filters} onChange={setFilters} />
 
         {/* Results count */}
-        <div className="flex items-center justify-between text-sm text-gray-500">
+        <div className="flex items-center justify-between text-sm text-text-muted">
           <span>
             Showing{" "}
-            <span className="font-medium text-gray-300">
+            <span className="font-medium text-text-secondary">
               {filteredCustomers.length}
             </span>{" "}
             of{" "}
-            <span className="font-medium text-gray-300">
+            <span className="font-medium text-text-secondary">
               {customers.length}
             </span>{" "}
             customers

@@ -32,13 +32,13 @@ export function CustomersHubHeader({
     <header className={cn("space-y-4", className)}>
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div className="space-y-1">
-          <Heading level={1} className="text-gray-50">
+          <Heading level={1} className="text-text-primary">
             Customers
           </Heading>
           <Text
             variant="body"
             color="muted"
-            className="max-w-2xl text-gray-400"
+            className="max-w-2xl text-text-muted"
           >
             Manage your customer portfolio, track health scores, and identify
             opportunities.
@@ -48,29 +48,31 @@ export function CustomersHubHeader({
 
       {/* Quick Stats */}
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-        <div className="rounded-lg border border-gray-800 bg-gray-900/60 px-3 py-2">
-          <div className="text-xs font-medium text-gray-500">
+        <div className="rounded-lg border border-border-default bg-bg-surface px-3 py-2 shadow-sm">
+          <div className="text-xs font-medium text-text-muted">
             Total Customers
           </div>
-          <div className="mt-0.5 text-xl font-semibold tabular-nums text-gray-100">
+          <div className="mt-0.5 text-xl font-semibold tabular-nums text-text-primary">
             {summary.total}
           </div>
         </div>
-        <div className="rounded-lg border border-gray-800 bg-gray-900/60 px-3 py-2">
-          <div className="text-xs font-medium text-gray-500">Total MRR</div>
-          <div className="mt-0.5 text-xl font-semibold tabular-nums text-gray-100">
+        <div className="rounded-lg border border-border-default bg-bg-surface px-3 py-2 shadow-sm">
+          <div className="text-xs font-medium text-text-muted">Total MRR</div>
+          <div className="mt-0.5 text-xl font-semibold tabular-nums text-text-primary">
             {summary.totalMrrFormatted}
           </div>
         </div>
-        <div className="rounded-lg border border-amber-800/50 bg-amber-950/20 px-3 py-2">
-          <div className="text-xs font-medium text-amber-400/80">At-Risk</div>
-          <div className="mt-0.5 text-xl font-semibold tabular-nums text-amber-300">
+        <div className="rounded-lg border border-warning-border bg-warning-bg px-3 py-2 shadow-sm">
+          <div className="text-xs font-medium text-warning-foreground">
+            At-Risk
+          </div>
+          <div className="mt-0.5 text-xl font-semibold tabular-nums text-warning-foreground">
             {atRiskSegment?.count ?? 0}
           </div>
         </div>
-        <div className="rounded-lg border border-blue-800/50 bg-blue-950/20 px-3 py-2">
-          <div className="text-xs font-medium text-blue-400/80">VIP</div>
-          <div className="mt-0.5 text-xl font-semibold tabular-nums text-blue-300">
+        <div className="rounded-lg border border-info-border bg-info-bg px-3 py-2 shadow-sm">
+          <div className="text-xs font-medium text-info-foreground">VIP</div>
+          <div className="mt-0.5 text-xl font-semibold tabular-nums text-info-foreground">
             {vipSegment?.count ?? 0}
           </div>
         </div>

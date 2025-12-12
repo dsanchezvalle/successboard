@@ -29,11 +29,11 @@ interface QuickActionProps {
 
 const variantStyles: Record<string, string> = {
   primary:
-    "border-blue-800/50 bg-blue-950/30 hover:bg-blue-900/40 hover:border-blue-700/50",
+    "border-info-border bg-info-bg hover:bg-ds-primary-subtle hover:border-ds-primary",
   secondary:
-    "border-gray-800 bg-gray-900/60 hover:bg-gray-800/80 hover:border-gray-700",
+    "border-border-default bg-bg-surface hover:bg-bg-subtle hover:border-border-strong",
   warning:
-    "border-amber-800/50 bg-amber-950/30 hover:bg-amber-900/40 hover:border-amber-700/50",
+    "border-warning-border bg-warning-bg hover:bg-warning-bg hover:border-warning-icon",
 };
 
 function QuickAction({
@@ -48,28 +48,28 @@ function QuickAction({
       href={href}
       className={cn(
         "group flex items-start gap-3 rounded-xl border p-4 transition-all duration-200",
-        "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500",
+        "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-border-focus",
         variantStyles[variant]
       )}
     >
       {icon && (
         <div
-          className="flex-shrink-0 text-gray-500 group-hover:text-gray-400"
+          className="flex-shrink-0 text-text-muted group-hover:text-text-secondary"
           aria-hidden="true"
         >
           {icon}
         </div>
       )}
       <div className="min-w-0 flex-1">
-        <h3 className="text-sm font-medium text-gray-200 group-hover:text-gray-50">
+        <h3 className="text-sm font-medium text-text-primary group-hover:text-text-primary">
           {label}
         </h3>
-        <p className="mt-0.5 text-xs text-gray-500 group-hover:text-gray-400">
+        <p className="mt-0.5 text-xs text-text-muted group-hover:text-text-secondary">
           {description}
         </p>
       </div>
       <div
-        className="flex-shrink-0 text-gray-600 group-hover:text-gray-400 transition-transform group-hover:translate-x-0.5"
+        className="flex-shrink-0 text-text-disabled group-hover:text-text-muted transition-transform group-hover:translate-x-0.5"
         aria-hidden="true"
       >
         →
@@ -96,7 +96,7 @@ export function QuickActions({
     >
       <h2
         id="quick-actions-heading"
-        className="text-base font-semibold tracking-tight text-gray-100"
+        className="text-base font-semibold tracking-tight text-text-primary"
       >
         Quick Actions
       </h2>

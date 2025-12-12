@@ -38,14 +38,14 @@ export function OverviewHeader({
       )}
     >
       <div className="space-y-1">
-        <Heading level={1} className="text-gray-50">
+        <Heading level={1} className="text-text-primary">
           {title}
         </Heading>
         {subtitle && (
           <Text
             variant="body"
             color="muted"
-            className="max-w-2xl text-gray-400"
+            className="max-w-2xl text-text-muted"
           >
             {subtitle}
           </Text>

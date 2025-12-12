@@ -47,31 +47,31 @@ export function CustomerHealthSummary({
       label: "Active",
       value: active,
       percent: activePercent,
-      color: "bg-green-500",
+      color: "bg-success-icon",
     },
     {
       label: "At Risk",
       value: atRisk,
       percent: atRiskPercent,
-      color: "bg-amber-500",
+      color: "bg-warning-icon",
     },
-    { label: "VIP", value: vip, percent: vipPercent, color: "bg-blue-500" },
+    { label: "VIP", value: vip, percent: vipPercent, color: "bg-info-icon" },
   ];
 
   return (
     <article
       className={cn(
-        "rounded-xl border border-gray-800 bg-gray-900/60 p-4 shadow-sm",
+        "rounded-xl border border-border-default bg-bg-surface p-4 shadow-sm",
         className
       )}
     >
-      <h3 className="text-xs font-medium uppercase tracking-wide text-gray-400">
+      <h3 className="text-xs font-medium uppercase tracking-wide text-text-muted">
         Customer Health Distribution
       </h3>
 
       {/* Progress bar */}
       <div
-        className="mt-3 flex h-2.5 overflow-hidden rounded-full bg-gray-800"
+        className="mt-3 flex h-2.5 overflow-hidden rounded-full bg-bg-muted"
         role="progressbar"
         aria-label="Customer health distribution"
         aria-valuenow={activePercent}
@@ -90,7 +90,7 @@ export function CustomerHealthSummary({
         ))}
         {otherPercent > 0 && (
           <div
-            className="bg-gray-700"
+            className="bg-bg-subtle"
             style={{ width: `${otherPercent}%` }}
             title={`Other: ${otherPercent.toFixed(1)}%`}
           />
@@ -105,12 +105,12 @@ export function CustomerHealthSummary({
               className={cn("h-2.5 w-2.5 rounded-full", segment.color)}
               aria-hidden="true"
             />
-            <span className="text-xs text-gray-400">
+            <span className="text-xs text-text-muted">
               {segment.label}:{" "}
-              <span className="font-medium text-gray-200">
+              <span className="font-medium text-text-primary">
                 {segment.value.toLocaleString()}
               </span>
-              <span className="ml-1 text-gray-500">
+              <span className="ml-1 text-text-placeholder">
                 ({segment.percent.toFixed(0)}%)
               </span>
             </span>
