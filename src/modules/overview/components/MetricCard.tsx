@@ -43,27 +43,31 @@ export interface MetricCardProps {
   className?: string;
 }
 
+/**
+ * Status styles using semantic tokens for theme support.
+ * These work in both light and dark modes.
+ */
 const statusStyles: Record<MetricStatus, string> = {
-  default: "border-gray-800 bg-gray-900/60",
-  success: "border-green-800/50 bg-green-950/30",
-  warning: "border-amber-800/50 bg-amber-950/30",
-  danger: "border-red-800/50 bg-red-950/30",
-  info: "border-blue-800/50 bg-blue-950/30",
+  default: "border-border-default bg-bg-surface",
+  success: "border-success-border bg-success-bg",
+  warning: "border-warning-border bg-warning-bg",
+  danger: "border-error-border bg-error-bg",
+  info: "border-info-border bg-info-bg",
 };
 
 const statusAccentStyles: Record<MetricStatus, string> = {
-  default: "bg-gray-700",
-  success: "bg-green-500",
-  warning: "bg-amber-500",
-  danger: "bg-red-500",
-  info: "bg-blue-500",
+  default: "bg-bg-muted",
+  success: "bg-success-icon",
+  warning: "bg-warning-icon",
+  danger: "bg-error-icon",
+  info: "bg-info-icon",
 };
 
 const trendStyles: Record<MetricTrend, { color: string; icon: string }> = {
-  up: { color: "text-green-400", icon: "↑" },
-  down: { color: "text-red-400", icon: "↓" },
-  neutral: { color: "text-gray-400", icon: "→" },
-  flat: { color: "text-gray-400", icon: "→" },
+  up: { color: "text-success-icon", icon: "↑" },
+  down: { color: "text-error-icon", icon: "↓" },
+  neutral: { color: "text-text-muted", icon: "→" },
+  flat: { color: "text-text-muted", icon: "→" },
 };
 
 const sizeStyles: Record<
@@ -123,7 +127,7 @@ export function MetricCard({
           {/* Title */}
           <h3
             className={cn(
-              "font-medium uppercase tracking-wide text-gray-400",
+              "font-medium uppercase tracking-wide text-text-muted",
               sizes.title
             )}
           >
@@ -134,7 +138,7 @@ export function MetricCard({
           <div className="mt-1 flex items-baseline gap-2">
             <span
               className={cn(
-                "font-semibold tabular-nums text-gray-50",
+                "font-semibold tabular-nums text-text-primary",
                 sizes.value
               )}
             >
@@ -155,7 +159,7 @@ export function MetricCard({
 
           {/* Description */}
           {description && (
-            <p className="mt-1.5 text-xs leading-relaxed text-gray-500">
+            <p className="mt-1.5 text-xs leading-relaxed text-text-placeholder">
               {description}
             </p>
           )}
@@ -163,7 +167,7 @@ export function MetricCard({
 
         {/* Icon */}
         {icon && (
-          <div className="flex-shrink-0 text-gray-600" aria-hidden="true">
+          <div className="flex-shrink-0 text-text-disabled" aria-hidden="true">
             {icon}
           </div>
         )}

@@ -27,6 +27,9 @@ export interface SegmentSummaryCardsProps {
   className?: string;
 }
 
+/**
+ * Segment card styles using DS semantic tokens for proper light/dark theming
+ */
 const segmentConfig: Record<
   Exclude<CustomerSegmentTab, "all">,
   {
@@ -41,42 +44,42 @@ const segmentConfig: Record<
   active: {
     label: "Active",
     description: "Healthy, engaged customers",
-    color: "text-green-400",
-    bgColor: "bg-green-950/30",
-    borderColor: "border-green-800/50",
-    ringColor: "ring-green-500",
+    color: "text-success-foreground",
+    bgColor: "bg-success-bg",
+    borderColor: "border-success-border",
+    ringColor: "ring-success-icon",
   },
   "at-risk": {
     label: "At-Risk",
     description: "Accounts needing attention",
-    color: "text-red-400",
-    bgColor: "bg-red-950/30",
-    borderColor: "border-red-800/50",
-    ringColor: "ring-red-500",
+    color: "text-error-foreground",
+    bgColor: "bg-error-bg",
+    borderColor: "border-error-border",
+    ringColor: "ring-error-icon",
   },
   vip: {
     label: "VIP",
     description: "High-value accounts",
-    color: "text-blue-400",
-    bgColor: "bg-blue-950/30",
-    borderColor: "border-blue-800/50",
-    ringColor: "ring-blue-500",
+    color: "text-info-foreground",
+    bgColor: "bg-info-bg",
+    borderColor: "border-info-border",
+    ringColor: "ring-info-icon",
   },
   onboarding: {
     label: "Onboarding",
     description: "Recently signed customers",
-    color: "text-amber-400",
-    bgColor: "bg-amber-950/30",
-    borderColor: "border-amber-800/50",
-    ringColor: "ring-amber-500",
+    color: "text-warning-foreground",
+    bgColor: "bg-warning-bg",
+    borderColor: "border-warning-border",
+    ringColor: "ring-warning-icon",
   },
   trial: {
     label: "Trial",
     description: "Evaluating the product",
-    color: "text-purple-400",
-    bgColor: "bg-purple-950/30",
-    borderColor: "border-purple-800/50",
-    ringColor: "ring-purple-500",
+    color: "text-text-secondary",
+    bgColor: "bg-bg-subtle",
+    borderColor: "border-border-default",
+    ringColor: "ring-border-strong",
   },
 };
 
@@ -108,7 +111,7 @@ export function SegmentSummaryCards({
               config.borderColor,
               isClickable &&
                 "cursor-pointer hover:scale-[1.02] hover:shadow-lg",
-              isSelected && "ring-2 ring-offset-2 ring-offset-gray-950",
+              isSelected && "ring-2 ring-offset-2 ring-offset-bg-page",
               isSelected && config.ringColor,
               !isClickable && "cursor-default"
             )}
@@ -131,30 +134,30 @@ export function SegmentSummaryCards({
 
             {/* Count */}
             <div className="mt-2">
-              <span className="text-3xl font-bold tabular-nums text-gray-100">
+              <span className="text-3xl font-bold tabular-nums text-text-primary">
                 {segment.count}
               </span>
-              <span className="ml-1 text-sm text-gray-500">customers</span>
+              <span className="ml-1 text-sm text-text-muted">customers</span>
             </div>
 
             {/* Metrics */}
-            <div className="mt-3 flex items-center gap-4 text-xs text-gray-500">
+            <div className="mt-3 flex items-center gap-4 text-xs text-text-muted">
               <div>
-                <span className="text-gray-400">MRR:</span>{" "}
-                <span className="font-medium text-gray-300">
+                <span className="text-text-placeholder">MRR:</span>{" "}
+                <span className="font-medium text-text-secondary">
                   {segment.totalMrrFormatted}
                 </span>
               </div>
               <div>
-                <span className="text-gray-400">Avg Health:</span>{" "}
+                <span className="text-text-placeholder">Avg Health:</span>{" "}
                 <span
                   className={cn(
                     "font-medium",
                     segment.avgHealthScore >= 70
-                      ? "text-green-400"
+                      ? "text-success-icon"
                       : segment.avgHealthScore >= 40
-                      ? "text-amber-400"
-                      : "text-red-400"
+                      ? "text-warning-icon"
+                      : "text-error-icon"
                   )}
                 >
                   {segment.avgHealthScore.toFixed(0)}
@@ -163,13 +166,13 @@ export function SegmentSummaryCards({
             </div>
 
             {/* Description */}
-            <p className="mt-2 text-xs text-gray-500">{config.description}</p>
+            <p className="mt-2 text-xs text-text-muted">{config.description}</p>
 
             {/* Click indicator */}
             {isClickable && (
               <div
                 className={cn(
-                  "absolute right-3 top-1/2 -translate-y-1/2 text-gray-600 transition-transform group-hover:translate-x-1",
+                  "absolute right-3 top-1/2 -translate-y-1/2 text-text-disabled transition-transform group-hover:translate-x-1",
                   config.color
                 )}
               >

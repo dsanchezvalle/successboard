@@ -23,36 +23,43 @@ export interface CustomersHubTableProps {
   className?: string;
 }
 
+/**
+ * Segment badge styles using DS semantic tokens for proper light/dark theming
+ */
 const segmentStyles: Record<
   CustomerSegmentTab,
   { bg: string; text: string; label: string }
 > = {
-  all: { bg: "bg-gray-800", text: "text-gray-300", label: "All" },
-  active: { bg: "bg-green-900/50", text: "text-green-400", label: "Active" },
+  all: { bg: "bg-bg-muted", text: "text-text-secondary", label: "All" },
+  active: {
+    bg: "bg-success-bg",
+    text: "text-success-foreground",
+    label: "Active",
+  },
   "at-risk": {
-    bg: "bg-red-900/50",
-    text: "text-red-400",
+    bg: "bg-error-bg",
+    text: "text-error-foreground",
     label: "At-Risk",
   },
-  vip: { bg: "bg-blue-900/50", text: "text-blue-400", label: "VIP" },
+  vip: { bg: "bg-info-bg", text: "text-info-foreground", label: "VIP" },
   onboarding: {
-    bg: "bg-amber-900/50",
-    text: "text-amber-400",
+    bg: "bg-warning-bg",
+    text: "text-warning-foreground",
     label: "Onboarding",
   },
-  trial: { bg: "bg-purple-900/50", text: "text-purple-400", label: "Trial" },
+  trial: { bg: "bg-bg-subtle", text: "text-text-secondary", label: "Trial" },
 };
 
 function getHealthColor(score: number): string {
-  if (score >= 70) return "text-green-400";
-  if (score >= 40) return "text-amber-400";
-  return "text-red-400";
+  if (score >= 70) return "text-success-icon";
+  if (score >= 40) return "text-warning-icon";
+  return "text-error-icon";
 }
 
 function getHealthBg(score: number): string {
-  if (score >= 70) return "bg-green-500";
-  if (score >= 40) return "bg-amber-500";
-  return "bg-red-500";
+  if (score >= 70) return "bg-success-icon";
+  if (score >= 40) return "bg-warning-icon";
+  return "bg-error-icon";
 }
 
 export function CustomersHubTable({
@@ -61,8 +68,8 @@ export function CustomersHubTable({
 }: CustomersHubTableProps) {
   if (customers.length === 0) {
     return (
-      <div className="rounded-xl border border-gray-800 bg-gray-900/60 p-8 text-center">
-        <p className="text-sm text-gray-500">
+      <div className="rounded-xl border border-border-default bg-bg-surface p-8 text-center shadow-sm">
+        <p className="text-sm text-text-muted">
           No customers match the current filters.
         </p>
       </div>
@@ -72,52 +79,52 @@ export function CustomersHubTable({
   return (
     <div
       className={cn(
-        "overflow-x-auto rounded-xl border border-gray-800 bg-gray-900/60 shadow-sm",
+        "overflow-x-auto rounded-xl border border-border-default bg-bg-surface shadow-sm",
         className
       )}
     >
       <table className="min-w-full text-left text-sm">
-        <thead className="border-b border-gray-800 bg-gray-900/80">
+        <thead className="border-b border-border-default bg-bg-subtle">
           <tr>
             <th
               scope="col"
-              className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-gray-400"
+              className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-text-muted"
             >
               Customer
             </th>
             <th
               scope="col"
-              className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-gray-400"
+              className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-text-muted"
             >
               Segment
             </th>
             <th
               scope="col"
-              className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-gray-400"
+              className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-text-muted"
             >
               Health
             </th>
             <th
               scope="col"
-              className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-gray-400"
+              className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-text-muted"
             >
               MRR
             </th>
             <th
               scope="col"
-              className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-gray-400"
+              className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-text-muted"
             >
               Last Contact
             </th>
             <th
               scope="col"
-              className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-gray-400"
+              className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-text-muted"
             >
               Tier
             </th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-gray-800">
+        <tbody className="divide-y divide-border-default">
           {customers.map((customer) => {
             const segment = segmentStyles[customer.segment];
             const healthScore = customer.healthScore;
@@ -125,20 +132,21 @@ export function CustomersHubTable({
             return (
               <tr
                 key={customer.id}
-                className="transition-colors hover:bg-gray-800/60"
+                className="transition-colors hover:bg-bg-subtle"
               >
                 {/* Customer Name */}
+                {/* TODO: Customer detail page navigation will be handled in a future batch */}
                 <td className="px-4 py-3">
                   <Link
                     href={`/customers/${customer.id}`}
                     className={cn(
-                      "font-medium text-blue-400 hover:text-blue-300 hover:underline",
-                      "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500"
+                      "font-medium text-ds-primary-foreground hover:text-ds-primary-hover hover:underline",
+                      "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-border-focus"
                     )}
                   >
                     {customer.name}
                   </Link>
-                  <div className="mt-0.5 text-xs text-gray-500">
+                  <div className="mt-0.5 text-xs text-text-muted">
                     {customer.companyName}
                   </div>
                 </td>
@@ -169,7 +177,7 @@ export function CustomersHubTable({
                           fill="none"
                           stroke="currentColor"
                           strokeWidth="3"
-                          className="text-gray-800"
+                          className="text-bg-muted"
                         />
                         <circle
                           cx="18"
@@ -197,10 +205,10 @@ export function CustomersHubTable({
 
                 {/* MRR */}
                 <td className="px-4 py-3">
-                  <span className="font-medium tabular-nums text-gray-200">
+                  <span className="font-medium tabular-nums text-text-primary">
                     {customer.mrrFormatted}
                   </span>
-                  <span className="text-gray-500">/mo</span>
+                  <span className="text-text-muted">/mo</span>
                 </td>
 
                 {/* Last Contact */}
@@ -209,10 +217,10 @@ export function CustomersHubTable({
                     className={cn(
                       "text-sm",
                       customer.daysSinceContact > 30
-                        ? "text-red-400"
+                        ? "text-error-icon"
                         : customer.daysSinceContact > 14
-                        ? "text-amber-400"
-                        : "text-gray-400"
+                        ? "text-warning-icon"
+                        : "text-text-muted"
                     )}
                   >
                     {customer.daysSinceContact}d ago
@@ -220,7 +228,7 @@ export function CustomersHubTable({
                 </td>
 
                 {/* Tier */}
-                <td className="px-4 py-3 text-gray-400">
+                <td className="px-4 py-3 text-text-muted">
                   {customer.tierLabel}
                 </td>
               </tr>

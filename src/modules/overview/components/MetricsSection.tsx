@@ -48,11 +48,11 @@ export function MetricsSection({
       <div className="space-y-1">
         <h2
           id={headingId}
-          className="text-base font-semibold tracking-tight text-gray-100"
+          className="text-base font-semibold tracking-tight text-text-primary"
         >
           {title}
         </h2>
-        {subtitle && <p className="text-sm text-gray-500">{subtitle}</p>}
+        {subtitle && <p className="text-sm text-text-muted">{subtitle}</p>}
       </div>
 
       <div className={cn("grid gap-3", columnStyles[columns], gridClassName)}>

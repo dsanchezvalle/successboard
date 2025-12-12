@@ -73,39 +73,42 @@ const TABS: SegmentTabConfig[] = [
   },
 ];
 
+/**
+ * Tab color styles using DS semantic tokens for proper light/dark theming
+ */
 const colorStyles: Record<
   SegmentTabConfig["color"],
   { active: string; inactive: string; count: string }
 > = {
   default: {
-    active: "border-gray-400 text-gray-100",
+    active: "border-border-strong text-text-primary",
     inactive:
-      "border-transparent text-gray-400 hover:text-gray-200 hover:border-gray-600",
-    count: "bg-gray-700 text-gray-300",
+      "border-transparent text-text-muted hover:text-text-secondary hover:border-border-default",
+    count: "bg-bg-muted text-text-secondary",
   },
   success: {
-    active: "border-green-500 text-green-400",
+    active: "border-success-icon text-success-foreground",
     inactive:
-      "border-transparent text-gray-400 hover:text-green-300 hover:border-green-700",
-    count: "bg-green-900/50 text-green-400",
+      "border-transparent text-text-muted hover:text-success-foreground hover:border-success-border",
+    count: "bg-success-bg text-success-foreground",
   },
   warning: {
-    active: "border-amber-500 text-amber-400",
+    active: "border-warning-icon text-warning-foreground",
     inactive:
-      "border-transparent text-gray-400 hover:text-amber-300 hover:border-amber-700",
-    count: "bg-amber-900/50 text-amber-400",
+      "border-transparent text-text-muted hover:text-warning-foreground hover:border-warning-border",
+    count: "bg-warning-bg text-warning-foreground",
   },
   danger: {
-    active: "border-red-500 text-red-400",
+    active: "border-error-icon text-error-foreground",
     inactive:
-      "border-transparent text-gray-400 hover:text-red-300 hover:border-red-700",
-    count: "bg-red-900/50 text-red-400",
+      "border-transparent text-text-muted hover:text-error-foreground hover:border-error-border",
+    count: "bg-error-bg text-error-foreground",
   },
   info: {
-    active: "border-blue-500 text-blue-400",
+    active: "border-info-icon text-info-foreground",
     inactive:
-      "border-transparent text-gray-400 hover:text-blue-300 hover:border-blue-700",
-    count: "bg-blue-900/50 text-blue-400",
+      "border-transparent text-text-muted hover:text-info-foreground hover:border-info-border",
+    count: "bg-info-bg text-info-foreground",
   },
 };
 
@@ -162,7 +165,7 @@ export function CustomersHubTabs({
       role="tablist"
       aria-label="Customer segments"
       className={cn(
-        "flex gap-1 overflow-x-auto border-b border-gray-800 pb-px",
+        "flex gap-1 overflow-x-auto border-b border-border-default pb-px",
         className
       )}
     >
@@ -183,7 +186,7 @@ export function CustomersHubTabs({
             onKeyDown={(e) => handleKeyDown(e, index)}
             className={cn(
               "flex items-center gap-2 whitespace-nowrap border-b-2 px-3 py-2 text-sm font-medium transition-colors",
-              "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500",
+              "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-border-focus",
               isSelected ? styles.active : styles.inactive
             )}
           >
@@ -191,7 +194,7 @@ export function CustomersHubTabs({
             <span
               className={cn(
                 "rounded-full px-1.5 py-0.5 text-xs tabular-nums",
-                isSelected ? styles.count : "bg-gray-800 text-gray-500"
+                isSelected ? styles.count : "bg-bg-muted text-text-muted"
               )}
             >
               {count}

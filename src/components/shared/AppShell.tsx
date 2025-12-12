@@ -10,11 +10,11 @@ interface AppShellProps {
  * AppShell - Main application layout wrapper
  *
  * Provides the sidebar + topbar + main content structure.
- * Uses semantic HTML and DS color tokens.
+ * Uses semantic HTML and design system color tokens for theming.
  */
 export function AppShell({ children }: AppShellProps) {
   return (
-    <div className="flex min-h-screen bg-gray-950 text-gray-50 dark:bg-gray-950 dark:text-gray-50">
+    <div className="flex min-h-screen bg-bg-page text-text-primary">
       <Sidebar />
       <div className="flex min-h-screen flex-1 flex-col">
         <Topbar />

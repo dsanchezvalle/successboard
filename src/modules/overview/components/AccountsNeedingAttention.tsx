@@ -16,15 +16,15 @@ import { cn } from "@/design-system/utils/cn";
 import type { AtRiskAccountViewModel } from "@/modules/api";
 
 function getHealthColor(score: number): string {
-  if (score >= 70) return "text-green-400";
-  if (score >= 50) return "text-amber-400";
-  return "text-red-400";
+  if (score >= 70) return "text-success-icon";
+  if (score >= 50) return "text-warning-icon";
+  return "text-error-icon";
 }
 
 function getHealthBg(score: number): string {
-  if (score >= 70) return "bg-green-500";
-  if (score >= 50) return "bg-amber-500";
-  return "bg-red-500";
+  if (score >= 70) return "bg-success-icon";
+  if (score >= 50) return "bg-warning-icon";
+  return "bg-error-icon";
 }
 
 export interface AccountsNeedingAttentionProps {
@@ -46,12 +46,12 @@ export function AccountsNeedingAttention({
       >
         <h2
           id="attention-heading"
-          className="text-base font-semibold tracking-tight text-gray-100"
+          className="text-base font-semibold tracking-tight text-text-primary"
         >
           Accounts Needing Attention
         </h2>
-        <div className="rounded-xl border border-gray-800 bg-gray-900/60 p-6 text-center">
-          <p className="text-sm text-gray-500">
+        <div className="rounded-xl border border-border-default bg-bg-surface p-6 text-center shadow-sm">
+          <p className="text-sm text-text-muted">
             No accounts need immediate attention. Great job!
           </p>
         </div>
@@ -67,13 +67,13 @@ export function AccountsNeedingAttention({
       <div className="flex items-center justify-between">
         <h2
           id="attention-heading"
-          className="text-base font-semibold tracking-tight text-gray-100"
+          className="text-base font-semibold tracking-tight text-text-primary"
         >
           Accounts Needing Attention
         </h2>
         <Link
           href="/customers?status=at-risk"
-          className="text-xs font-medium text-blue-400 hover:text-blue-300 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500"
+          className="text-xs font-medium text-ds-primary-foreground hover:text-ds-primary-hover transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-border-focus"
         >
           View all →
         </Link>
@@ -85,9 +85,9 @@ export function AccountsNeedingAttention({
             <Link
               href={`/customers/${account.id}`}
               className={cn(
-                "group flex items-center gap-4 rounded-xl border border-gray-800 bg-gray-900/60 p-4",
-                "transition-all duration-200 hover:bg-gray-800/80 hover:border-gray-700",
-                "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500"
+                "group flex items-center gap-4 rounded-xl border border-border-default bg-bg-surface p-4 shadow-sm",
+                "transition-all duration-200 hover:bg-bg-subtle hover:border-border-strong",
+                "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-border-focus"
               )}
             >
               {/* Health Score Indicator */}
@@ -95,12 +95,12 @@ export function AccountsNeedingAttention({
                 <div
                   className={cn(
                     "flex h-10 w-10 items-center justify-center rounded-full text-sm font-bold",
-                    "bg-gray-800 ring-2",
+                    "bg-bg-subtle ring-2",
                     account.healthScore >= 70
-                      ? "ring-green-500/50"
+                      ? "ring-success-icon/50"
                       : account.healthScore >= 50
-                      ? "ring-amber-500/50"
-                      : "ring-red-500/50"
+                      ? "ring-warning-icon/50"
+                      : "ring-error-icon/50"
                   )}
                 >
                   <span className={getHealthColor(account.healthScore)}>
@@ -112,29 +112,29 @@ export function AccountsNeedingAttention({
               {/* Account Info */}
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2">
-                  <h3 className="text-sm font-medium text-gray-200 group-hover:text-gray-50 truncate">
+                  <h3 className="text-sm font-medium text-text-primary group-hover:text-text-primary truncate">
                     {account.name}
                   </h3>
-                  <span className="flex-shrink-0 text-xs text-gray-500">
+                  <span className="flex-shrink-0 text-xs text-text-muted">
                     {account.mrrFormatted}/mo
                   </span>
                 </div>
-                <p className="mt-0.5 text-xs text-gray-500">
+                <p className="mt-0.5 text-xs text-text-muted">
                   {account.riskReason}
                 </p>
               </div>
 
               {/* Days Since Contact */}
               <div className="flex-shrink-0 text-right">
-                <div className="text-xs text-gray-500">Last contact</div>
+                <div className="text-xs text-text-muted">Last contact</div>
                 <div
                   className={cn(
                     "text-sm font-medium",
                     account.daysSinceContact > 30
-                      ? "text-red-400"
+                      ? "text-error-icon"
                       : account.daysSinceContact > 14
-                      ? "text-amber-400"
-                      : "text-gray-300"
+                      ? "text-warning-icon"
+                      : "text-text-secondary"
                   )}
                 >
                   {account.daysSinceContact}d ago
@@ -143,7 +143,7 @@ export function AccountsNeedingAttention({
 
               {/* Arrow */}
               <div
-                className="flex-shrink-0 text-gray-600 group-hover:text-gray-400 transition-transform group-hover:translate-x-0.5"
+                className="flex-shrink-0 text-text-disabled group-hover:text-text-muted transition-transform group-hover:translate-x-0.5"
                 aria-hidden="true"
               >
                 →
