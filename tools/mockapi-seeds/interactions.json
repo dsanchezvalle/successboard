@@ -1,7 +1,7 @@
 [
   {
-    "id": "int_001",
-    "customerId": "cust_001",
+    "id": "1",
+    "customerId": "1",
     "type": "qbr",
     "channel": "video",
     "date": "2024-12-05T14:30:00Z",
@@ -9,9 +9,12 @@
     "notes": "Customer expressed strong interest in new analytics features. Discussed potential expansion to additional departments.",
     "sentiment": "positive",
     "durationMinutes": 60,
-    "ownerId": "csm_001",
+    "ownerId": "4",
     "ownerName": "Sarah Chen",
-    "customerAttendees": ["John Smith", "Emily Davis"],
+    "customerAttendees": [
+      "John Smith",
+      "Emily Davis"
+    ],
     "actionItems": [
       "Send 2025 roadmap deck",
       "Schedule follow-up with product team"
@@ -21,8 +24,8 @@
     "updatedAt": "2024-12-05T15:30:00Z"
   },
   {
-    "id": "int_002",
-    "customerId": "cust_002",
+    "id": "2",
+    "customerId": "2",
     "type": "onboarding-call",
     "channel": "video",
     "date": "2024-12-08T11:00:00Z",
@@ -30,9 +33,11 @@
     "notes": "CEO is very engaged and excited about the platform. Small team so implementation should be straightforward.",
     "sentiment": "positive",
     "durationMinutes": 45,
-    "ownerId": "csm_002",
+    "ownerId": "5",
     "ownerName": "Michael Torres",
-    "customerAttendees": ["Lisa Wong"],
+    "customerAttendees": [
+      "Lisa Wong"
+    ],
     "actionItems": [
       "Send onboarding checklist",
       "Schedule technical setup session"
@@ -42,8 +47,8 @@
     "updatedAt": "2024-12-08T12:00:00Z"
   },
   {
-    "id": "int_003",
-    "customerId": "cust_003",
+    "id": "3",
+    "customerId": "3",
     "type": "executive-briefing",
     "channel": "in-person",
     "date": "2024-12-10T09:00:00Z",
@@ -51,18 +56,26 @@
     "notes": "CTO is supportive of expansion. Need to present to CFO next week. Strong ROI case based on current usage.",
     "sentiment": "positive",
     "durationMinutes": 90,
-    "ownerId": "csm_001",
+    "ownerId": "4",
     "ownerName": "Sarah Chen",
-    "customerAttendees": ["Robert Martinez", "Amanda Foster"],
-    "actionItems": ["Prepare CFO presentation", "Draft expansion contract"],
+    "customerAttendees": [
+      "Robert Martinez",
+      "Amanda Foster"
+    ],
+    "actionItems": [
+      "Prepare CFO presentation",
+      "Draft expansion contract"
+    ],
     "requiresFollowUp": true,
-    "relatedDocumentIds": ["doc_003"],
+    "relatedDocumentIds": [
+      "3"
+    ],
     "createdAt": "2024-12-10T11:00:00Z",
     "updatedAt": "2024-12-10T11:00:00Z"
   },
   {
-    "id": "int_004",
-    "customerId": "cust_004",
+    "id": "4",
+    "customerId": "4",
     "type": "escalation",
     "channel": "video",
     "date": "2024-11-20T16:00:00Z",
@@ -70,9 +83,11 @@
     "notes": "Customer frustrated with adoption rates. Key champion left the company last month. They are evaluating a competitor.",
     "sentiment": "negative",
     "durationMinutes": 45,
-    "ownerId": "csm_003",
+    "ownerId": "6",
     "ownerName": "Jennifer Park",
-    "customerAttendees": ["Mark Thompson"],
+    "customerAttendees": [
+      "Mark Thompson"
+    ],
     "actionItems": [
       "Create adoption improvement plan",
       "Schedule executive sponsor meeting",
@@ -83,8 +98,8 @@
     "updatedAt": "2024-11-20T17:00:00Z"
   },
   {
-    "id": "int_005",
-    "customerId": "cust_005",
+    "id": "5",
+    "customerId": "5",
     "type": "meeting",
     "channel": "video",
     "date": "2024-12-02T13:00:00Z",
@@ -92,17 +107,21 @@
     "notes": "Customer is satisfied overall. Need to ensure compliance features are ready for their audit in Q2.",
     "sentiment": "neutral",
     "durationMinutes": 30,
-    "ownerId": "csm_002",
+    "ownerId": "5",
     "ownerName": "Michael Torres",
-    "customerAttendees": ["James Wilson"],
-    "actionItems": ["Send compliance feature documentation"],
+    "customerAttendees": [
+      "James Wilson"
+    ],
+    "actionItems": [
+      "Send compliance feature documentation"
+    ],
     "requiresFollowUp": false,
     "createdAt": "2024-12-02T14:00:00Z",
     "updatedAt": "2024-12-02T14:00:00Z"
   },
   {
-    "id": "int_006",
-    "customerId": "cust_006",
+    "id": "6",
+    "customerId": "6",
     "type": "call",
     "channel": "phone",
     "date": "2024-12-09T10:00:00Z",
@@ -110,17 +129,22 @@
     "notes": "Founder is impressed with the platform. Budget approval expected by end of week.",
     "sentiment": "positive",
     "durationMinutes": 20,
-    "ownerId": "csm_004",
+    "ownerId": "7",
     "ownerName": "Alex Rivera",
-    "customerAttendees": ["Sophie Anderson"],
-    "actionItems": ["Send pricing proposal", "Schedule conversion call"],
+    "customerAttendees": [
+      "Sophie Anderson"
+    ],
+    "actionItems": [
+      "Send pricing proposal",
+      "Schedule conversion call"
+    ],
     "requiresFollowUp": true,
     "createdAt": "2024-12-09T10:30:00Z",
     "updatedAt": "2024-12-09T10:30:00Z"
   },
   {
-    "id": "int_007",
-    "customerId": "cust_007",
+    "id": "7",
+    "customerId": "7",
     "type": "support-ticket",
     "channel": "support-portal",
     "date": "2024-11-28T15:00:00Z",
@@ -128,9 +152,11 @@
     "notes": "Customer received incorrect invoice. Finance team is investigating. COO is frustrated with response time.",
     "sentiment": "negative",
     "durationMinutes": 15,
-    "ownerId": "csm_003",
+    "ownerId": "6",
     "ownerName": "Jennifer Park",
-    "customerAttendees": ["Carlos Mendez"],
+    "customerAttendees": [
+      "Carlos Mendez"
+    ],
     "actionItems": [
       "Coordinate with finance",
       "Provide invoice correction",
@@ -141,8 +167,8 @@
     "updatedAt": "2024-11-28T15:30:00Z"
   },
   {
-    "id": "int_008",
-    "customerId": "cust_008",
+    "id": "8",
+    "customerId": "8",
     "type": "training",
     "channel": "video",
     "date": "2024-12-06T14:00:00Z",
@@ -150,17 +176,22 @@
     "notes": "Team is eager to use advanced analytics. Good engagement during the session.",
     "sentiment": "positive",
     "durationMinutes": 60,
-    "ownerId": "csm_004",
+    "ownerId": "7",
     "ownerName": "Alex Rivera",
-    "customerAttendees": ["Rachel Green"],
-    "actionItems": ["Send training materials", "Schedule follow-up Q&A"],
+    "customerAttendees": [
+      "Rachel Green"
+    ],
+    "actionItems": [
+      "Send training materials",
+      "Schedule follow-up Q&A"
+    ],
     "requiresFollowUp": false,
     "createdAt": "2024-12-06T15:00:00Z",
     "updatedAt": "2024-12-06T15:00:00Z"
   },
   {
-    "id": "int_009",
-    "customerId": "cust_009",
+    "id": "9",
+    "customerId": "9",
     "type": "ebr",
     "channel": "in-person",
     "date": "2024-12-04T11:00:00Z",
@@ -168,21 +199,26 @@
     "notes": "CEO wants to explore deeper integration. Discussed potential co-development opportunities.",
     "sentiment": "positive",
     "durationMinutes": 120,
-    "ownerId": "csm_001",
+    "ownerId": "4",
     "ownerName": "Sarah Chen",
-    "customerAttendees": ["Dr. Alan Wright", "Maria Santos"],
+    "customerAttendees": [
+      "Dr. Alan Wright",
+      "Maria Santos"
+    ],
     "actionItems": [
       "Draft partnership proposal",
       "Schedule product roadmap alignment"
     ],
     "requiresFollowUp": true,
-    "relatedDocumentIds": ["doc_009"],
+    "relatedDocumentIds": [
+      "9"
+    ],
     "createdAt": "2024-12-04T14:00:00Z",
     "updatedAt": "2024-12-04T14:00:00Z"
   },
   {
-    "id": "int_010",
-    "customerId": "cust_010",
+    "id": "10",
+    "customerId": "10",
     "type": "meeting",
     "channel": "video",
     "date": "2024-12-07T16:00:00Z",
@@ -190,9 +226,12 @@
     "notes": "Operations Director is championing expansion to sustainability and compliance teams.",
     "sentiment": "positive",
     "durationMinutes": 45,
-    "ownerId": "csm_002",
+    "ownerId": "5",
     "ownerName": "Michael Torres",
-    "customerAttendees": ["Thomas Brown", "Nina Patel"],
+    "customerAttendees": [
+      "Thomas Brown",
+      "Nina Patel"
+    ],
     "actionItems": [
       "Create expansion proposal",
       "Schedule demos for new departments"
@@ -202,8 +241,8 @@
     "updatedAt": "2024-12-07T17:00:00Z"
   },
   {
-    "id": "int_011",
-    "customerId": "cust_013",
+    "id": "11",
+    "customerId": "13",
     "type": "call",
     "channel": "phone",
     "date": "2024-11-15T14:00:00Z",
@@ -211,9 +250,11 @@
     "notes": "VP mentioned significant budget reductions for next year. Renewal at risk.",
     "sentiment": "negative",
     "durationMinutes": 25,
-    "ownerId": "csm_003",
+    "ownerId": "6",
     "ownerName": "Jennifer Park",
-    "customerAttendees": ["Daniel Lee"],
+    "customerAttendees": [
+      "Daniel Lee"
+    ],
     "actionItems": [
       "Prepare cost-reduction proposal",
       "Identify essential features"
@@ -223,8 +264,8 @@
     "updatedAt": "2024-11-15T14:30:00Z"
   },
   {
-    "id": "int_012",
-    "customerId": "cust_012",
+    "id": "12",
+    "customerId": "12",
     "type": "qbr",
     "channel": "video",
     "date": "2024-12-03T09:00:00Z",
@@ -232,21 +273,26 @@
     "notes": "Customer needs additional security certifications for FDA compliance. Discussed timeline.",
     "sentiment": "neutral",
     "durationMinutes": 75,
-    "ownerId": "csm_001",
+    "ownerId": "4",
     "ownerName": "Sarah Chen",
-    "customerAttendees": ["Dr. Helen Chang", "Steven Moore"],
+    "customerAttendees": [
+      "Dr. Helen Chang",
+      "Steven Moore"
+    ],
     "actionItems": [
       "Provide security certification roadmap",
       "Schedule compliance deep-dive"
     ],
     "requiresFollowUp": true,
-    "relatedDocumentIds": ["doc_012"],
+    "relatedDocumentIds": [
+      "12"
+    ],
     "createdAt": "2024-12-03T10:30:00Z",
     "updatedAt": "2024-12-03T10:30:00Z"
   },
   {
-    "id": "int_013",
-    "customerId": "cust_014",
+    "id": "13",
+    "customerId": "14",
     "type": "implementation",
     "channel": "video",
     "date": "2024-12-10T11:00:00Z",
@@ -254,17 +300,22 @@
     "notes": "Technical setup completed ahead of schedule. Team is ready for user onboarding phase.",
     "sentiment": "positive",
     "durationMinutes": 40,
-    "ownerId": "csm_004",
+    "ownerId": "7",
     "ownerName": "Alex Rivera",
-    "customerAttendees": ["Michelle Taylor"],
-    "actionItems": ["Begin user onboarding", "Schedule admin training"],
+    "customerAttendees": [
+      "Michelle Taylor"
+    ],
+    "actionItems": [
+      "Begin user onboarding",
+      "Schedule admin training"
+    ],
     "requiresFollowUp": true,
     "createdAt": "2024-12-10T12:00:00Z",
     "updatedAt": "2024-12-10T12:00:00Z"
   },
   {
-    "id": "int_014",
-    "customerId": "cust_015",
+    "id": "14",
+    "customerId": "15",
     "type": "product-feedback",
     "channel": "email",
     "date": "2024-12-01T15:00:00Z",
@@ -272,17 +323,22 @@
     "notes": "CDO submitted detailed requirements for media-specific analytics. Forwarded to product team.",
     "sentiment": "neutral",
     "durationMinutes": 0,
-    "ownerId": "csm_002",
+    "ownerId": "5",
     "ownerName": "Michael Torres",
-    "customerAttendees": ["Jessica Adams"],
-    "actionItems": ["Share with product team", "Provide timeline estimate"],
+    "customerAttendees": [
+      "Jessica Adams"
+    ],
+    "actionItems": [
+      "Share with product team",
+      "Provide timeline estimate"
+    ],
     "requiresFollowUp": true,
     "createdAt": "2024-12-01T15:00:00Z",
     "updatedAt": "2024-12-01T15:00:00Z"
   },
   {
-    "id": "int_015",
-    "customerId": "cust_001",
+    "id": "15",
+    "customerId": "1",
     "type": "email",
     "channel": "email",
     "date": "2024-11-28T09:00:00Z",
@@ -290,16 +346,18 @@
     "notes": "Shared agenda and pre-read materials for upcoming QBR.",
     "sentiment": "neutral",
     "durationMinutes": 0,
-    "ownerId": "csm_001",
+    "ownerId": "4",
     "ownerName": "Sarah Chen",
-    "customerAttendees": ["John Smith"],
+    "customerAttendees": [
+      "John Smith"
+    ],
     "requiresFollowUp": false,
     "createdAt": "2024-11-28T09:00:00Z",
     "updatedAt": "2024-11-28T09:00:00Z"
   },
   {
-    "id": "int_016",
-    "customerId": "cust_003",
+    "id": "16",
+    "customerId": "3",
     "type": "renewal-discussion",
     "channel": "video",
     "date": "2024-11-25T14:00:00Z",
@@ -307,9 +365,11 @@
     "notes": "Customer interested in 3-year commitment for better pricing. Need to prepare proposal.",
     "sentiment": "positive",
     "durationMinutes": 30,
-    "ownerId": "csm_001",
+    "ownerId": "4",
     "ownerName": "Sarah Chen",
-    "customerAttendees": ["Robert Martinez"],
+    "customerAttendees": [
+      "Robert Martinez"
+    ],
     "actionItems": [
       "Prepare multi-year proposal",
       "Get finance approval for discount"

@@ -475,7 +475,7 @@ export function getMockOverviewData(): OverviewDashboardData {
     },
     accountsNeedingAttention: [
       {
-        id: "cust_001",
+        id: "1",
         name: "Acme Corporation",
         healthScore: 35,
         riskReason: "No engagement in 30+ days",
@@ -484,7 +484,7 @@ export function getMockOverviewData(): OverviewDashboardData {
         mrrFormatted: "$2,500",
       },
       {
-        id: "cust_002",
+        id: "2",
         name: "TechStart Inc",
         healthScore: 42,
         riskReason: "Support escalation active",
@@ -493,7 +493,7 @@ export function getMockOverviewData(): OverviewDashboardData {
         mrrFormatted: "$1,800",
       },
       {
-        id: "cust_003",
+        id: "3",
         name: "Global Services Ltd",
         healthScore: 28,
         riskReason: "Renewal discussion pending",
