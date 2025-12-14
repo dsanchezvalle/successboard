@@ -307,7 +307,7 @@ function calculateSegmentationSummary(
 function getMockCustomers(): CustomerHubListItem[] {
   const mockData: CustomerHubListItem[] = [
     {
-      id: "cust_001",
+      id: "1",
       name: "Acme Corporation",
       companyName: "Acme Corp",
       tier: "enterprise",
@@ -331,7 +331,7 @@ function getMockCustomers(): CustomerHubListItem[] {
       segment: "active",
     },
     {
-      id: "cust_002",
+      id: "2",
       name: "TechStart Inc",
       companyName: "TechStart Inc",
       tier: "mid-market",
@@ -355,7 +355,7 @@ function getMockCustomers(): CustomerHubListItem[] {
       segment: "at-risk",
     },
     {
-      id: "cust_003",
+      id: "3",
       name: "Global Services Ltd",
       companyName: "Global Services Ltd",
       tier: "strategic",
@@ -379,7 +379,7 @@ function getMockCustomers(): CustomerHubListItem[] {
       segment: "vip",
     },
     {
-      id: "cust_004",
+      id: "4",
       name: "StartupXYZ",
       companyName: "StartupXYZ",
       tier: "smb",
@@ -402,7 +402,7 @@ function getMockCustomers(): CustomerHubListItem[] {
       segment: "onboarding",
     },
     {
-      id: "cust_005",
+      id: "5",
       name: "MegaCorp Industries",
       companyName: "MegaCorp Industries",
       tier: "enterprise",
@@ -426,7 +426,7 @@ function getMockCustomers(): CustomerHubListItem[] {
       segment: "active",
     },
     {
-      id: "cust_006",
+      id: "6",
       name: "CloudFirst Solutions",
       companyName: "CloudFirst Solutions",
       tier: "mid-market",
@@ -449,7 +449,7 @@ function getMockCustomers(): CustomerHubListItem[] {
       segment: "trial",
     },
     {
-      id: "cust_007",
+      id: "7",
       name: "DataDriven Co",
       companyName: "DataDriven Co",
       tier: "enterprise",
@@ -473,7 +473,7 @@ function getMockCustomers(): CustomerHubListItem[] {
       segment: "at-risk",
     },
     {
-      id: "cust_008",
+      id: "8",
       name: "InnovateTech",
       companyName: "InnovateTech",
       tier: "smb",

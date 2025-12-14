@@ -620,7 +620,15 @@ export async function getTemplateById(id: string): Promise<Template> {
  * ```
  */
 export async function getOverviewMetrics(): Promise<MetricsSummary> {
-  return fetchJson<MetricsSummary>("/metrics");
+  const data = await fetchJson<MetricsSummary | MetricsSummary[]>("/metrics");
+  // MockAPI returns an array; extract the first (snapshot) record
+  if (Array.isArray(data)) {
+    if (data.length === 0) {
+      throw new MockApiError("No metrics data available", 404, "NO_DATA");
+    }
+    return data[0];
+  }
+  return data;
 }
 
 // =============================================================================
