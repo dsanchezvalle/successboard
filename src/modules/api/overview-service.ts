@@ -160,6 +160,41 @@ function getFallbackData(): OverviewDashboardData {
 }
 
 // =============================================================================
+// HELPERS
+// =============================================================================
+
+/**
+ * Helper to extract count from breakdown (handles both array and object formats)
+ * MockAPI may return breakdowns as objects like { "active": 22 } or arrays of SegmentMetric
+ */
+function getBreakdownCount(
+  breakdown: unknown,
+  ...keys: string[]
+): number | undefined {
+  if (!breakdown) return undefined;
+
+  // Handle array format (frontend expected)
+  if (Array.isArray(breakdown)) {
+    const found = breakdown.find(
+      (s) =>
+        keys.includes(s.segmentId) ||
+        keys.some((k) => s.segmentName?.toLowerCase().includes(k.toLowerCase()))
+    );
+    return found?.customerCount;
+  }
+
+  // Handle object format (MockAPI actual)
+  if (typeof breakdown === "object") {
+    for (const key of keys) {
+      const value = (breakdown as Record<string, unknown>)[key];
+      if (typeof value === "number") return value;
+    }
+  }
+
+  return undefined;
+}
+
+// =============================================================================
 // MAPPERS
 // =============================================================================
 
@@ -174,25 +209,17 @@ function mapMetricsToKpis(metrics: MetricsSummary): OverviewKpisViewModel {
       ? "warning"
       : "success";
 
-  // Find segment counts from breakdown
-  const activeSegment = metrics.lifecycleBreakdown?.find(
-    (s) => s.segmentId === "active" || s.segmentName.toLowerCase() === "active"
+  // Extract segment counts from breakdown (handles both array and object formats)
+  const activeCount = getBreakdownCount(
+    metrics.lifecycleBreakdown,
+    "active",
+    "adoption"
   );
-  const atRiskSegment = metrics.lifecycleBreakdown?.find(
-    (s) =>
-      s.segmentId === "at-risk" || s.segmentName.toLowerCase().includes("risk")
+  const onboardingCount = getBreakdownCount(
+    metrics.lifecycleBreakdown,
+    "onboarding"
   );
-  const vipSegment = metrics.tierBreakdown?.find(
-    (s) => s.segmentId === "strategic" || s.segmentName.toLowerCase() === "vip"
-  );
-  const onboardingSegment = metrics.lifecycleBreakdown?.find(
-    (s) =>
-      s.segmentId === "onboarding" ||
-      s.segmentName.toLowerCase() === "onboarding"
-  );
-  const trialSegment = metrics.lifecycleBreakdown?.find(
-    (s) => s.segmentId === "trial" || s.segmentName.toLowerCase() === "trial"
-  );
+  const trialCount = getBreakdownCount(metrics.lifecycleBreakdown, "trial");
 
   return {
     mrr: metrics.totalMrr,
@@ -214,13 +241,11 @@ function mapMetricsToKpis(metrics: MetricsSummary): OverviewKpisViewModel {
     healthStatus: getHealthStatus(metrics.avgHealthScore),
     healthTrend: metrics.healthTrend,
 
-    activeCustomers:
-      activeSegment?.customerCount ?? Math.round(metrics.totalCustomers * 0.6),
+    activeCustomers: activeCount ?? Math.round(metrics.totalCustomers * 0.6),
     atRiskCustomers: metrics.atRiskCount,
     vipCustomers: metrics.vipCount,
-    onboardingCustomers:
-      onboardingSegment?.customerCount ?? metrics.onboardingCount,
-    trialCustomers: trialSegment?.customerCount ?? metrics.trialCount,
+    onboardingCustomers: onboardingCount ?? metrics.onboardingCount,
+    trialCustomers: trialCount ?? metrics.trialCount,
 
     nrr: metrics.netRevenueRetention,
     nrrFormatted: formatPercent(metrics.netRevenueRetention),
@@ -237,19 +262,21 @@ function mapMetricsToHealthDistribution(
 ): HealthDistributionViewModel {
   const total = metrics.totalCustomers;
 
-  // Use lifecycle breakdown if available, otherwise estimate
-  const activeSegment = metrics.lifecycleBreakdown?.find(
-    (s) => s.segmentId === "active" || s.segmentName.toLowerCase() === "active"
+  // Use lifecycle breakdown if available (handles both array and object formats)
+  const activeCount = getBreakdownCount(
+    metrics.lifecycleBreakdown,
+    "active",
+    "adoption"
   );
-  const onboardingSegment = metrics.lifecycleBreakdown?.find(
-    (s) => s.segmentId === "onboarding"
+  const onboardingCount = getBreakdownCount(
+    metrics.lifecycleBreakdown,
+    "onboarding"
   );
 
-  const active = activeSegment?.customerCount ?? Math.round(total * 0.6);
+  const active = activeCount ?? Math.round(total * 0.6);
   const atRisk = metrics.atRiskCount;
   const vip = metrics.vipCount;
-  const onboarding =
-    onboardingSegment?.customerCount ?? metrics.onboardingCount;
+  const onboarding = onboardingCount ?? metrics.onboardingCount;
 
   return {
     total,
@@ -448,7 +475,7 @@ export function getMockOverviewData(): OverviewDashboardData {
     },
     accountsNeedingAttention: [
       {
-        id: "cust_001",
+        id: "1",
         name: "Acme Corporation",
         healthScore: 35,
         riskReason: "No engagement in 30+ days",
@@ -457,7 +484,7 @@ export function getMockOverviewData(): OverviewDashboardData {
         mrrFormatted: "$2,500",
       },
       {
-        id: "cust_002",
+        id: "2",
         name: "TechStart Inc",
         healthScore: 42,
         riskReason: "Support escalation active",
@@ -466,7 +493,7 @@ export function getMockOverviewData(): OverviewDashboardData {
         mrrFormatted: "$1,800",
       },
       {
-        id: "cust_003",
+        id: "3",
         name: "Global Services Ltd",
         healthScore: 28,
         riskReason: "Renewal discussion pending",

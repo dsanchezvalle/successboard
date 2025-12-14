@@ -1,6 +1,6 @@
 [
   {
-    "id": "cust_001",
+    "id": "1",
     "name": "Acme Corporation",
     "companyName": "Acme Corp",
     "customerType": "enterprise",
@@ -11,8 +11,8 @@
     "lifecycleStage": "active",
     "healthScore": 82,
     "healthTrend": "up",
-    "primaryFrameworkId": "fw_enterprise",
-    "csmId": "csm_001",
+    "primaryFrameworkId": "4",
+    "csmId": "4",
     "csmName": "Sarah Chen",
     "keyContacts": [
       {
@@ -43,7 +43,7 @@
     "updatedAt": "2024-12-05T14:30:00Z"
   },
   {
-    "id": "cust_002",
+    "id": "2",
     "name": "TechStart Inc",
     "companyName": "TechStart Inc",
     "customerType": "paying",
@@ -54,8 +54,8 @@
     "lifecycleStage": "onboarding",
     "healthScore": 65,
     "healthTrend": "up",
-    "primaryFrameworkId": "fw_onboarding",
-    "csmId": "csm_002",
+    "primaryFrameworkId": "3",
+    "csmId": "5",
     "csmName": "Michael Torres",
     "keyContacts": [
       {
@@ -80,7 +80,7 @@
     "updatedAt": "2024-12-08T11:00:00Z"
   },
   {
-    "id": "cust_003",
+    "id": "3",
     "name": "Global Finance Partners",
     "companyName": "Global Finance Partners LLC",
     "customerType": "strategic",
@@ -91,8 +91,8 @@
     "lifecycleStage": "expanding",
     "healthScore": 91,
     "healthTrend": "up",
-    "primaryFrameworkId": "fw_strategic",
-    "csmId": "csm_001",
+    "primaryFrameworkId": "5",
+    "csmId": "4",
     "csmName": "Sarah Chen",
     "keyContacts": [
       {
@@ -129,7 +129,7 @@
     "updatedAt": "2024-12-10T09:00:00Z"
   },
   {
-    "id": "cust_004",
+    "id": "4",
     "name": "RetailMax",
     "companyName": "RetailMax Holdings",
     "customerType": "enterprise",
@@ -140,8 +140,8 @@
     "lifecycleStage": "at-risk",
     "healthScore": 38,
     "healthTrend": "down",
-    "primaryFrameworkId": "fw_atrisk",
-    "csmId": "csm_003",
+    "primaryFrameworkId": "1",
+    "csmId": "6",
     "csmName": "Jennifer Park",
     "keyContacts": [
       {
@@ -154,7 +154,11 @@
     "lastInteractionAt": "2024-11-20T16:00:00Z",
     "nextActionDueAt": "2024-12-12T10:00:00Z",
     "nextActionDescription": "Urgent: Address adoption concerns",
-    "riskFlags": ["low-adoption", "champion-left", "competitor-threat"],
+    "riskFlags": [
+      "low-adoption",
+      "champion-left",
+      "competitor-threat"
+    ],
     "industry": "Retail",
     "website": "https://retailmax.com",
     "employeeCount": 3200,
@@ -165,7 +169,7 @@
     "updatedAt": "2024-11-20T16:00:00Z"
   },
   {
-    "id": "cust_005",
+    "id": "5",
     "name": "HealthFirst Medical",
     "companyName": "HealthFirst Medical Group",
     "customerType": "enterprise",
@@ -176,8 +180,8 @@
     "lifecycleStage": "active",
     "healthScore": 74,
     "healthTrend": "flat",
-    "primaryFrameworkId": "fw_enterprise",
-    "csmId": "csm_002",
+    "primaryFrameworkId": "4",
+    "csmId": "5",
     "csmName": "Michael Torres",
     "keyContacts": [
       {
@@ -208,7 +212,7 @@
     "updatedAt": "2024-12-02T13:00:00Z"
   },
   {
-    "id": "cust_006",
+    "id": "6",
     "name": "CloudNine Solutions",
     "companyName": "CloudNine Solutions Ltd",
     "customerType": "paying",
@@ -219,7 +223,7 @@
     "lifecycleStage": "trial",
     "healthScore": 55,
     "healthTrend": "up",
-    "csmId": "csm_004",
+    "csmId": "7",
     "csmName": "Alex Rivera",
     "keyContacts": [
       {
@@ -241,7 +245,7 @@
     "updatedAt": "2024-12-09T10:00:00Z"
   },
   {
-    "id": "cust_007",
+    "id": "7",
     "name": "Meridian Logistics",
     "companyName": "Meridian Logistics International",
     "customerType": "enterprise",
@@ -252,8 +256,8 @@
     "lifecycleStage": "at-risk",
     "healthScore": 42,
     "healthTrend": "down",
-    "primaryFrameworkId": "fw_atrisk",
-    "csmId": "csm_003",
+    "primaryFrameworkId": "1",
+    "csmId": "6",
     "csmName": "Jennifer Park",
     "keyContacts": [
       {
@@ -267,7 +271,10 @@
     "lastInteractionAt": "2024-11-28T15:00:00Z",
     "nextActionDueAt": "2024-12-13T09:00:00Z",
     "nextActionDescription": "Executive escalation call",
-    "riskFlags": ["billing-issue", "support-escalation"],
+    "riskFlags": [
+      "billing-issue",
+      "support-escalation"
+    ],
     "industry": "Logistics",
     "website": "https://meridianlogistics.com",
     "employeeCount": 890,
@@ -278,7 +285,7 @@
     "updatedAt": "2024-11-28T15:00:00Z"
   },
   {
-    "id": "cust_008",
+    "id": "8",
     "name": "EduLearn Platform",
     "companyName": "EduLearn Inc",
     "customerType": "paying",
@@ -289,8 +296,8 @@
     "lifecycleStage": "active",
     "healthScore": 78,
     "healthTrend": "up",
-    "primaryFrameworkId": "fw_growth",
-    "csmId": "csm_004",
+    "primaryFrameworkId": "2",
+    "csmId": "7",
     "csmName": "Alex Rivera",
     "keyContacts": [
       {
@@ -315,7 +322,7 @@
     "updatedAt": "2024-12-06T14:00:00Z"
   },
   {
-    "id": "cust_009",
+    "id": "9",
     "name": "Quantum Dynamics",
     "companyName": "Quantum Dynamics Corp",
     "customerType": "strategic",
@@ -326,8 +333,8 @@
     "lifecycleStage": "active",
     "healthScore": 88,
     "healthTrend": "flat",
-    "primaryFrameworkId": "fw_strategic",
-    "csmId": "csm_001",
+    "primaryFrameworkId": "5",
+    "csmId": "4",
     "csmName": "Sarah Chen",
     "keyContacts": [
       {
@@ -359,7 +366,7 @@
     "updatedAt": "2024-12-04T11:00:00Z"
   },
   {
-    "id": "cust_010",
+    "id": "10",
     "name": "GreenEnergy Co",
     "companyName": "GreenEnergy Corporation",
     "customerType": "enterprise",
@@ -370,8 +377,8 @@
     "lifecycleStage": "expanding",
     "healthScore": 85,
     "healthTrend": "up",
-    "primaryFrameworkId": "fw_growth",
-    "csmId": "csm_002",
+    "primaryFrameworkId": "2",
+    "csmId": "5",
     "csmName": "Michael Torres",
     "keyContacts": [
       {
@@ -402,7 +409,7 @@
     "updatedAt": "2024-12-07T16:00:00Z"
   },
   {
-    "id": "cust_011",
+    "id": "11",
     "name": "DataVault Systems",
     "companyName": "DataVault Systems Inc",
     "customerType": "paying",
@@ -413,7 +420,7 @@
     "lifecycleStage": "active",
     "healthScore": 71,
     "healthTrend": "flat",
-    "csmId": "csm_004",
+    "csmId": "7",
     "csmName": "Alex Rivera",
     "keyContacts": [
       {
@@ -438,7 +445,7 @@
     "updatedAt": "2024-11-30T10:00:00Z"
   },
   {
-    "id": "cust_012",
+    "id": "12",
     "name": "PharmaCore Labs",
     "companyName": "PharmaCore Laboratories",
     "customerType": "enterprise",
@@ -449,8 +456,8 @@
     "lifecycleStage": "active",
     "healthScore": 79,
     "healthTrend": "up",
-    "primaryFrameworkId": "fw_enterprise",
-    "csmId": "csm_001",
+    "primaryFrameworkId": "4",
+    "csmId": "4",
     "csmName": "Sarah Chen",
     "keyContacts": [
       {
@@ -481,7 +488,7 @@
     "updatedAt": "2024-12-03T09:00:00Z"
   },
   {
-    "id": "cust_013",
+    "id": "13",
     "name": "Urban Mobility",
     "companyName": "Urban Mobility Solutions",
     "customerType": "paying",
@@ -492,8 +499,8 @@
     "lifecycleStage": "at-risk",
     "healthScore": 35,
     "healthTrend": "down",
-    "primaryFrameworkId": "fw_atrisk",
-    "csmId": "csm_003",
+    "primaryFrameworkId": "1",
+    "csmId": "6",
     "csmName": "Jennifer Park",
     "keyContacts": [
       {
@@ -506,7 +513,11 @@
     "lastInteractionAt": "2024-11-15T14:00:00Z",
     "nextActionDueAt": "2024-12-11T10:00:00Z",
     "nextActionDescription": "Critical: Budget discussion",
-    "riskFlags": ["budget-cut", "no-engagement", "delayed-renewal"],
+    "riskFlags": [
+      "budget-cut",
+      "no-engagement",
+      "delayed-renewal"
+    ],
     "industry": "Transportation",
     "website": "https://urbanmobility.com",
     "employeeCount": 320,
@@ -517,7 +528,7 @@
     "updatedAt": "2024-11-15T14:00:00Z"
   },
   {
-    "id": "cust_014",
+    "id": "14",
     "name": "SecureNet Pro",
     "companyName": "SecureNet Professional Services",
     "customerType": "paying",
@@ -528,8 +539,8 @@
     "lifecycleStage": "onboarding",
     "healthScore": 60,
     "healthTrend": "up",
-    "primaryFrameworkId": "fw_onboarding",
-    "csmId": "csm_004",
+    "primaryFrameworkId": "3",
+    "csmId": "7",
     "csmName": "Alex Rivera",
     "keyContacts": [
       {
@@ -553,7 +564,7 @@
     "updatedAt": "2024-12-10T11:00:00Z"
   },
   {
-    "id": "cust_015",
+    "id": "15",
     "name": "MediaStream Global",
     "companyName": "MediaStream Global Inc",
     "customerType": "enterprise",
@@ -564,8 +575,8 @@
     "lifecycleStage": "active",
     "healthScore": 76,
     "healthTrend": "flat",
-    "primaryFrameworkId": "fw_enterprise",
-    "csmId": "csm_002",
+    "primaryFrameworkId": "4",
+    "csmId": "5",
     "csmName": "Michael Torres",
     "keyContacts": [
       {
@@ -596,7 +607,7 @@
     "updatedAt": "2024-12-01T15:00:00Z"
   },
   {
-    "id": "cust_016",
+    "id": "16",
     "name": "FoodChain Direct",
     "companyName": "FoodChain Direct LLC",
     "customerType": "churned",
@@ -607,7 +618,7 @@
     "lifecycleStage": "churned",
     "healthScore": 0,
     "healthTrend": "down",
-    "csmId": "csm_003",
+    "csmId": "6",
     "csmName": "Jennifer Park",
     "keyContacts": [
       {
@@ -618,7 +629,10 @@
       }
     ],
     "lastInteractionAt": "2024-10-15T10:00:00Z",
-    "riskFlags": ["budget-cut", "competitor-threat"],
+    "riskFlags": [
+      "budget-cut",
+      "competitor-threat"
+    ],
     "industry": "Food & Beverage",
     "website": "https://foodchaindirect.com",
     "employeeCount": 85,
