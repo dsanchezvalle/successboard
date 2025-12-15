@@ -1,13 +1,8 @@
 /**
- * Documents Page - Placeholder
+ * Documents Page
  *
- * This is a foundation page for the future Documents module.
- * The layout supports:
- * - Main content area (center)
- * - Future collapsible left panel (document outline)
- * - Future collapsible right panel (AI assistant/contextual tools)
- *
- * NO double sidebar pattern - contextual panels are within the main content area.
+ * Lists all documents with quick access to create new ones.
+ * Documents are the main entity - Frameworks and Templates are metadata only.
  *
  * @accessibility
  * - Semantic heading structure
@@ -15,12 +10,44 @@
  * - Good color contrast with DS tokens
  */
 
+import Link from "next/link";
+import { FileText, Plus, Calendar, User, Tag } from "lucide-react";
 import { Heading, Text } from "@/design-system/primitives";
 
 export const metadata = {
   title: "Documents | SuccessBoard",
   description: "Manage your customer success documents and plans",
 };
+
+const mockDocuments = [
+  {
+    id: "1",
+    title: "Q1 2024 Success Plan",
+    customer: "Acme Corporation",
+    owner: "Sarah Chen",
+    lastUpdated: "March 15, 2024",
+    framework: "MEDDICC",
+    template: "Enterprise Success Plan",
+  },
+  {
+    id: "2",
+    title: "Onboarding Playbook",
+    customer: "TechStart Inc",
+    owner: "Michael Torres",
+    lastUpdated: "March 12, 2024",
+    framework: "SPICED",
+    template: "Onboarding Template",
+  },
+  {
+    id: "3",
+    title: "Renewal Strategy",
+    customer: "Global Finance Partners",
+    owner: "Sarah Chen",
+    lastUpdated: "March 10, 2024",
+    framework: "MEDDICC",
+    template: "Custom",
+  },
+];
 
 export default function DocumentsPage() {
   return (
@@ -37,99 +64,61 @@ export default function DocumentsPage() {
               documentation.
             </Text>
           </div>
-          {/* Future: Action buttons (New Document, etc.) */}
+          <button className="flex h-9 items-center gap-2 rounded-md bg-brand-primary px-4 text-sm font-medium text-white transition-colors hover:bg-brand-primary-hover">
+            <Plus className="h-4 w-4" />
+            <span>New Document</span>
+          </button>
         </div>
       </header>
 
-      {/* Main Content Area - supports future contextual panels */}
-      <div className="flex flex-1 overflow-hidden">
-        {/* 
-          Future: Left Contextual Panel (Document Outline)
-          This will be a collapsible panel, NOT a second sidebar.
-          It lives within the main content area and can be toggled.
-          
-          <DocumentOutlinePanel collapsed={isOutlineCollapsed} />
-        */}
-
-        {/* Center Content */}
-        <main className="flex-1 overflow-auto">
-          <div className="mx-auto max-w-4xl px-6 py-12">
-            {/* Coming Soon State */}
-            <div className="rounded-xl border border-border-default bg-bg-surface p-8 text-center shadow-sm">
-              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-info-bg">
-                <svg
-                  className="h-8 w-8 text-info-icon"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={1.5}
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"
-                  />
-                </svg>
-              </div>
-              <Heading level={2} className="text-text-primary">
-                Coming Soon
-              </Heading>
-              <Text
-                variant="body"
-                color="muted"
-                className="mx-auto mt-2 max-w-md text-text-muted"
+      {/* Main Content */}
+      <main className="flex-1 overflow-auto">
+        <div className="mx-auto max-w-5xl px-6 py-8">
+          {/* Document List */}
+          <div className="space-y-3">
+            {mockDocuments.map((doc) => (
+              <Link
+                key={doc.id}
+                href={`/documents/${doc.id}`}
+                className="group flex items-start gap-4 rounded-lg border border-border-default bg-bg-surface p-4 transition-all hover:border-brand-primary/30 hover:shadow-sm"
               >
-                The Documents module is under development. You&apos;ll be able
-                to create success plans, playbooks, and collaborative documents
-                for your customers.
-              </Text>
-
-              {/* Feature Preview */}
-              <div className="mt-8 grid gap-4 text-left sm:grid-cols-3">
-                <FeaturePreview
-                  title="Success Plans"
-                  description="Create structured plans with objectives, metrics, and action items."
-                />
-                <FeaturePreview
-                  title="Playbooks"
-                  description="Build reusable templates for common customer scenarios."
-                />
-                <FeaturePreview
-                  title="AI Assistant"
-                  description="Get intelligent suggestions to improve your documents."
-                />
-              </div>
-            </div>
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-brand-primary/10 text-brand-primary">
+                  <FileText className="h-5 w-5" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <h3 className="font-semibold text-text-primary group-hover:text-brand-primary">
+                        {doc.title}
+                      </h3>
+                      <p className="mt-0.5 text-sm text-text-muted">
+                        {doc.customer}
+                      </p>
+                    </div>
+                    <span className="inline-flex shrink-0 items-center rounded-full border border-brand-primary/30 bg-brand-primary/10 px-2.5 py-0.5 text-xs font-medium text-brand-primary">
+                      {doc.framework}
+                    </span>
+                  </div>
+                  <div className="mt-3 flex flex-wrap items-center gap-4 text-xs text-text-muted">
+                    <span className="flex items-center gap-1">
+                      <User className="h-3.5 w-3.5" />
+                      {doc.owner}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <Calendar className="h-3.5 w-3.5" />
+                      {doc.lastUpdated}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <Tag className="h-3.5 w-3.5" />
+                      {doc.template}
+                    </span>
+                  </div>
+                </div>
+              </Link>
+            ))}
           </div>
-        </main>
-
-        {/* 
-          Future: Right Contextual Panel (AI Assistant)
-          This will be a collapsible panel for contextual tools.
-          It lives within the main content area and can be toggled.
-          
-          <AIAssistantPanel collapsed={isAssistantCollapsed} />
-        */}
-      </div>
-    </div>
-  );
-}
-
-/**
- * Feature preview card for the coming soon state
- */
-function FeaturePreview({
-  title,
-  description,
-}: {
-  title: string;
-  description: string;
-}) {
-  return (
-    <div className="rounded-lg border border-border-default bg-bg-subtle p-4">
-      <h3 className="text-sm font-semibold text-text-primary">{title}</h3>
-      <p className="mt-1 text-xs text-text-muted">{description}</p>
+        </div>
+      </main>
     </div>
   );
 }
