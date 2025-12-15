@@ -1,5 +1,6 @@
 "use client";
 
+import { FileText, Layers, CheckCircle } from "lucide-react";
 import type { DocumentType, DocumentStatus } from "@/modules/api";
 
 interface StatusBadgeProps {
@@ -27,8 +28,9 @@ const statusStyles: Record<DocumentStatus, string> = {
 export function StatusBadge({ status, label }: StatusBadgeProps) {
   return (
     <span
-      className={`inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-medium ${statusStyles[status]}`}
+      className={`inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-xs font-medium ${statusStyles[status]}`}
     >
+      <CheckCircle className="h-3 w-3" />
       {label}
     </span>
   );
@@ -41,7 +43,8 @@ interface TypeBadgeProps {
 
 export function TypeBadge({ type, label }: TypeBadgeProps) {
   return (
-    <span className="inline-flex items-center rounded-md bg-bg-subtle px-2 py-0.5 text-xs font-medium text-text-secondary border border-border-default/50">
+    <span className="inline-flex items-center gap-1 rounded-md bg-bg-subtle px-2 py-0.5 text-xs font-medium text-text-secondary border border-border-default/50">
+      <FileText className="h-3 w-3" />
       {label}
     </span>
   );
@@ -55,7 +58,8 @@ export function FrameworkBadge({ name }: FrameworkBadgeProps) {
   if (name === "None") return null;
 
   return (
-    <span className="inline-flex items-center rounded-md bg-brand-primary/10 px-2 py-0.5 text-xs font-medium text-brand-primary border border-brand-primary/20">
+    <span className="inline-flex items-center gap-1 rounded-md bg-brand-primary/10 px-2 py-0.5 text-xs font-medium text-brand-primary border border-brand-primary/20">
+      <Layers className="h-3 w-3" />
       {name}
     </span>
   );

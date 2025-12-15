@@ -54,7 +54,7 @@ export function DocumentOutlinePanel({
                   onClick={() => onSectionClick?.(item.id)}
                   className={`flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-left text-sm transition-colors ${
                     isActive
-                      ? "bg-brand-primary/10 text-brand-primary font-medium"
+                      ? "bg-bg-subtle text-brand-primary font-medium"
                       : "text-text-secondary hover:bg-bg-subtle hover:text-text-primary"
                   }`}
                 >

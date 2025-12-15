@@ -1,6 +1,7 @@
 "use client";
 
-import { Search, X, ChevronDown } from "lucide-react";
+import { useState } from "react";
+import { Search, X, ChevronDown, Filter } from "lucide-react";
 import type { DocumentType, DocumentStatus } from "@/modules/api";
 import type { SortField, SortOrder } from "../data/documents-service";
 
@@ -58,6 +59,7 @@ export function DocumentsFilters({
   frameworks,
   customers,
 }: DocumentsFiltersProps) {
+  const [showFilters, setShowFilters] = useState(false);
   const hasActiveFilters = documentType || status || frameworkId || customerId;
 
   const handleSortChange = (value: string) => {
@@ -78,7 +80,7 @@ export function DocumentsFilters({
       {/* Search and Sort Row */}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         {/* Search */}
-        <div className="relative flex-1 max-w-md">
+        <div className="relative w-full sm:flex-1 sm:max-w-md">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-text-muted" />
           <input
             type="text"
@@ -97,25 +99,48 @@ export function DocumentsFilters({
           )}
         </div>
 
-        {/* Sort */}
-        <div className="flex items-center gap-2">
-          <span className="text-xs text-text-muted">Sort by:</span>
-          <select
-            value={`${sortField}-${sortOrder}`}
-            onChange={(e) => handleSortChange(e.target.value)}
-            className="h-8 rounded-md border border-border-default bg-bg-surface px-2 pr-7 text-sm text-text-primary focus:border-brand-primary focus:outline-none focus:ring-1 focus:ring-brand-primary appearance-none cursor-pointer"
+        {/* Filters Toggle and Sort */}
+        <div className="flex items-center justify-between gap-2 w-full sm:w-auto sm:justify-end">
+          {/* Show/Hide Filters Button - Mobile */}
+          <button
+            onClick={() => setShowFilters(!showFilters)}
+            className="sm:hidden flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-medium text-text-secondary bg-bg-subtle hover:bg-bg-subtle/80 transition-colors"
           >
-            {sortOptions.map((opt) => (
-              <option key={opt.value} value={opt.value}>
-                {opt.label}
-              </option>
-            ))}
-          </select>
+            <Filter className="h-3.5 w-3.5" />
+            {showFilters ? "Hide filters" : "Show filters"}
+            {hasActiveFilters && (
+              <span className="ml-1 h-2 w-2 rounded-full bg-brand-primary"></span>
+            )}
+          </button>
+
+          {/* Sort */}
+          <div className="flex items-center gap-2">
+            <span className="text-xs text-text-muted">Sort by:</span>
+            <select
+              value={`${sortField}-${sortOrder}`}
+              onChange={(e) => handleSortChange(e.target.value)}
+              className="h-8 rounded-md border border-border-default bg-bg-surface px-2 pr-7 text-sm text-text-primary focus:border-brand-primary focus:outline-none focus:ring-1 focus:ring-brand-primary appearance-none cursor-pointer"
+            >
+              {sortOptions.map((opt) => (
+                <option
+                  key={opt.value}
+                  value={opt.value}
+                  className="bg-bg-surface text-text-primary"
+                >
+                  {opt.label}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
       </div>
 
-      {/* Filter Chips Row */}
-      <div className="flex flex-wrap items-center gap-2">
+      {/* Filter Chips Row - Collapsible on Mobile */}
+      <div
+        className={`${
+          showFilters ? "flex" : "hidden"
+        } sm:flex flex-wrap items-center gap-2`}
+      >
         <FilterSelect
           label="Type"
           value={documentType}
@@ -184,13 +209,19 @@ function FilterSelect({
         onChange={(e) => onChange(e.target.value)}
         className={`h-8 rounded-full border px-3 pr-7 text-xs font-medium appearance-none cursor-pointer transition-colors focus:outline-none focus:ring-1 focus:ring-brand-primary ${
           value
-            ? "border-brand-primary/30 bg-brand-primary/10 text-brand-primary"
+            ? "border-brand-primary/30 bg-brand-primary/10 text-text-primary"
             : "border-border-default bg-bg-surface text-text-secondary hover:border-border-strong"
         }`}
       >
-        <option value="">{placeholder}</option>
+        <option value="" className="bg-bg-surface text-text-primary">
+          {placeholder}
+        </option>
         {options.map((opt) => (
-          <option key={opt.value} value={opt.value}>
+          <option
+            key={opt.value}
+            value={opt.value}
+            className="bg-bg-surface text-text-primary"
+          >
             {opt.label} {opt.count !== undefined && `(${opt.count})`}
           </option>
         ))}

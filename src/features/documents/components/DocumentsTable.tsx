@@ -13,19 +13,19 @@ interface DocumentsTableProps {
 }
 
 interface ColumnDef {
-  id: SortField | "actions";
+  id: SortField | "actions" | "framework" | "status";
   label: string;
   sortable: boolean;
   className?: string;
 }
 
 const columns: ColumnDef[] = [
-  { id: "title", label: "Document", sortable: true, className: "w-[35%]" },
-  { id: "documentType", label: "Type", sortable: true },
-  { id: "title", label: "Framework", sortable: false },
-  { id: "title", label: "Status", sortable: false },
-  { id: "createdAt", label: "Created", sortable: true },
-  { id: "customerName", label: "Owner", sortable: false },
+  { id: "title", label: "DOCUMENT", sortable: true, className: "w-[35%]" },
+  { id: "documentType", label: "TYPE", sortable: true },
+  { id: "framework", label: "FRAMEWORK", sortable: false },
+  { id: "status", label: "STATUS", sortable: false },
+  { id: "createdAt", label: "CREATED", sortable: true },
+  { id: "customerName", label: "OWNER", sortable: false },
   { id: "actions", label: "", sortable: false, className: "w-12" },
 ];
 
@@ -91,17 +91,17 @@ function SortIndicator({
   return (
     <span
       className={`flex flex-col ${
-        active ? "text-brand-primary" : "text-text-muted/50"
+        active ? "text-brand-primary" : "text-text-secondary"
       }`}
     >
       <ChevronUp
         className={`h-3 w-3 -mb-1 ${
-          active && order === "asc" ? "opacity-100" : "opacity-30"
+          active && order === "asc" ? "opacity-100" : "opacity-60"
         }`}
       />
       <ChevronDown
         className={`h-3 w-3 ${
-          active && order === "desc" ? "opacity-100" : "opacity-30"
+          active && order === "desc" ? "opacity-100" : "opacity-60"
         }`}
       />
     </span>
