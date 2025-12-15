@@ -48,7 +48,7 @@ export function CustomersHubHeader({
 
       {/* Quick Stats */}
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-        <div className="rounded-lg border border-border-default bg-bg-surface px-3 py-2 shadow-sm">
+        <div className="flex h-full flex-col justify-center rounded-lg border border-border-default bg-bg-surface px-3 py-3 shadow-sm">
           <div className="text-xs font-medium text-text-muted">
             Total Customers
           </div>
@@ -56,13 +56,13 @@ export function CustomersHubHeader({
             {summary.total}
           </div>
         </div>
-        <div className="rounded-lg border border-border-default bg-bg-surface px-3 py-2 shadow-sm">
+        <div className="flex h-full flex-col justify-center rounded-lg border border-border-default bg-bg-surface px-3 py-3 shadow-sm">
           <div className="text-xs font-medium text-text-muted">Total MRR</div>
           <div className="mt-0.5 text-xl font-semibold tabular-nums text-text-primary">
             {summary.totalMrrFormatted}
           </div>
         </div>
-        <div className="rounded-lg border border-warning-border bg-warning-bg px-3 py-2 shadow-sm">
+        <div className="flex h-full flex-col justify-center rounded-lg border border-warning-border bg-warning-bg px-3 py-3 shadow-sm">
           <div className="text-xs font-medium text-warning-foreground">
             At-Risk
           </div>
@@ -70,7 +70,7 @@ export function CustomersHubHeader({
             {atRiskSegment?.count ?? 0}
           </div>
         </div>
-        <div className="rounded-lg border border-info-border bg-info-bg px-3 py-2 shadow-sm">
+        <div className="flex h-full flex-col justify-center rounded-lg border border-info-border bg-info-bg px-3 py-3 shadow-sm">
           <div className="text-xs font-medium text-info-foreground">VIP</div>
           <div className="mt-0.5 text-xl font-semibold tabular-nums text-info-foreground">
             {vipSegment?.count ?? 0}
