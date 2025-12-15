@@ -10,7 +10,6 @@
  * - Good color contrast with DS tokens
  */
 
-import { Plus } from "lucide-react";
 import { Heading, Text } from "@/design-system/primitives";
 import { DocumentsHub } from "@/features/documents/components/DocumentsHub";
 import { getDocumentsHubData } from "@/features/documents/data/documents-service";
@@ -24,31 +23,29 @@ export default async function DocumentsPage() {
   const data = await getDocumentsHubData();
 
   return (
-    <div className="flex h-full flex-col">
+    <div className="w-full max-w-7xl mx-auto px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
       {/* Page Header */}
-      <header className="border-b border-border-default bg-bg-surface px-6 py-5">
-        <div className="flex items-center justify-between">
+      <header className="space-y-4">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div className="space-y-1">
             <Heading level={1} className="text-text-primary">
               Documents
             </Heading>
-            <Text variant="body" color="muted" className="text-text-muted">
+            <Text
+              variant="body"
+              color="muted"
+              className="max-w-2xl text-text-muted"
+            >
               Create and manage customer success plans, playbooks, and
               documentation.
             </Text>
           </div>
-          <button className="flex h-9 items-center gap-2 rounded-lg bg-brand-primary px-4 text-sm font-medium text-white shadow-sm transition-colors hover:bg-brand-primary-hover">
-            <Plus className="h-4 w-4" />
-            <span>New Document</span>
-          </button>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 overflow-auto bg-bg-page">
-        <div className="mx-auto max-w-7xl px-6 py-6">
-          <DocumentsHub initialData={data} />
-        </div>
+      <main className="bg-bg-page mt-6">
+        <DocumentsHub initialData={data} />
       </main>
     </div>
   );

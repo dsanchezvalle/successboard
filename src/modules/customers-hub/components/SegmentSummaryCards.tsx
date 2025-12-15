@@ -106,7 +106,7 @@ export function SegmentSummaryCards({
             onClick={() => onSegmentClick?.(segment.segment)}
             disabled={!isClickable}
             className={cn(
-              "group relative overflow-hidden rounded-xl border p-4 text-left transition-all",
+              "group relative flex h-full flex-col overflow-hidden rounded-xl border p-4 text-left transition-all",
               config.bgColor,
               config.borderColor,
               isClickable &&
