@@ -117,7 +117,11 @@ export function CustomerDocumentsSection({
       {!loading && !error && documents.length > 0 && (
         <div className="grid gap-4 sm:grid-cols-2">
           {documents.map((doc) => (
-            <CustomerDocumentCard key={doc.id} document={doc} />
+            <CustomerDocumentCard
+              key={doc.id}
+              document={doc}
+              customerId={String(customerId)}
+            />
           ))}
         </div>
       )}

@@ -16,6 +16,10 @@ interface DocumentTopBarProps {
   subtitle?: string;
   metadata: DocumentMetadata;
   lastSaved?: string;
+  /** Document description (shown on desktop/tablet, hidden on mobile) */
+  description?: string;
+  /** Back navigation href (defaults to /documents) */
+  backHref?: string;
   onToggleAI?: () => void;
   isAIPanelOpen?: boolean;
 }
@@ -25,18 +29,20 @@ export function DocumentTopBar({
   subtitle,
   metadata,
   lastSaved = "2 minutes ago",
+  description,
+  backHref = "/documents",
   onToggleAI,
   isAIPanelOpen,
 }: DocumentTopBarProps) {
   return (
     <header className="sticky top-0 z-30 border-b border-border-default bg-bg-surface">
-      <div className="flex h-14 items-center justify-between px-4">
-        {/* Left: Back + Title */}
-        <div className="flex items-center gap-3">
+      <div className="flex min-h-14 items-center justify-between gap-4 px-4 py-2">
+        {/* Left: Back + Title + Last Saved + Description */}
+        <div className="flex items-center gap-3 min-w-0 flex-1">
           <Link
-            href="/documents"
-            className="flex h-8 w-8 items-center justify-center rounded-md text-text-muted transition-colors hover:bg-bg-subtle hover:text-text-primary"
-            aria-label="Back to documents"
+            href={backHref}
+            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-text-muted transition-colors hover:bg-bg-subtle hover:text-text-primary"
+            aria-label="Back"
           >
             <ChevronLeft className="h-5 w-5" />
           </Link>
@@ -47,6 +53,12 @@ export function DocumentTopBar({
             <span className="text-xs text-text-muted">
               Last saved {lastSaved}
             </span>
+            {/* Description - desktop/tablet only */}
+            {description && (
+              <p className="hidden sm:block text-xs text-text-muted mt-0.5 truncate max-w-md">
+                {description}
+              </p>
+            )}
           </div>
         </div>
 

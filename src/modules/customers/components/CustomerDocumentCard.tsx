@@ -3,7 +3,6 @@
 import Link from "next/link";
 import {
   FileText,
-  Calendar,
   ClipboardList,
   Presentation,
   BookOpen,
@@ -30,6 +29,8 @@ export interface CustomerDocumentCardData {
 
 interface CustomerDocumentCardProps {
   document: CustomerDocumentCardData;
+  /** Customer ID for back navigation context */
+  customerId?: string;
 }
 
 const documentTypeIcons: Record<DocumentType, typeof FileText> = {
@@ -49,20 +50,13 @@ const documentTypeIcons: Record<DocumentType, typeof FileText> = {
 };
 
 const statusStyles: Record<DocumentStatus, string> = {
-  draft:
-    "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20",
-  "in-review":
-    "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20",
-  approved:
-    "bg-green-500/10 text-green-600 dark:text-green-400 border-green-500/20",
-  shared:
-    "bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/20",
-  signed:
-    "bg-green-500/10 text-green-600 dark:text-green-400 border-green-500/20",
-  archived:
-    "bg-gray-500/10 text-gray-600 dark:text-gray-400 border-gray-500/20",
-  superseded:
-    "bg-gray-500/10 text-gray-600 dark:text-gray-400 border-gray-500/20",
+  draft: "bg-warning-bg text-warning-foreground border-warning-border",
+  "in-review": "bg-info-bg text-info-foreground border-info-border",
+  approved: "bg-success-bg text-success-foreground border-success-border",
+  shared: "bg-primary-subtle text-primary-foreground border-primary-muted",
+  signed: "bg-success-bg text-success-foreground border-success-border",
+  archived: "bg-bg-subtle text-text-muted border-border-default",
+  superseded: "bg-bg-subtle text-text-muted border-border-default",
 };
 
 function formatRelativeDate(isoDate: string): string {
@@ -83,48 +77,68 @@ function formatRelativeDate(isoDate: string): string {
   });
 }
 
-export function CustomerDocumentCard({ document }: CustomerDocumentCardProps) {
+export function CustomerDocumentCard({
+  document,
+  customerId,
+}: CustomerDocumentCardProps) {
   const Icon = documentTypeIcons[document.documentType] || FileText;
+  const href = customerId
+    ? `/documents/${document.id}?fromCustomerId=${customerId}`
+    : `/documents/${document.id}`;
 
   return (
     <Link
-      href={`/documents/${document.id}`}
-      className="group flex flex-col rounded-xl border border-border-default bg-bg-surface p-4 transition-all duration-200 hover:border-brand-primary/30 hover:shadow-md hover:shadow-black/5 dark:hover:shadow-black/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-border-focus"
+      href={href}
+      className="group flex items-start gap-3 rounded-lg border border-border-default bg-bg-surface p-3 transition-all duration-150 hover:border-border-strong hover:bg-bg-subtle hover:shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-border-focus active:scale-[0.99]"
     >
-      {/* Header with icon and title */}
-      <div className="flex items-start gap-3">
-        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-brand-primary/10 to-brand-primary/5 text-brand-primary">
-          <Icon className="h-4 w-4" />
-        </div>
-        <div className="min-w-0 flex-1">
-          <h4 className="font-medium text-text-primary leading-snug line-clamp-2 group-hover:text-brand-primary transition-colors">
-            {document.title}
-          </h4>
+      {/* Icon */}
+      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-primary-subtle text-primary-foreground">
+        <Icon className="h-4 w-4" />
+      </div>
+
+      {/* Content */}
+      <div className="min-w-0 flex-1">
+        {/* Title */}
+        <h4 className="text-sm font-medium text-text-primary leading-tight line-clamp-1 group-hover:text-primary-foreground transition-colors">
+          {document.title}
+        </h4>
+
+        {/* Metadata row: type · status · date */}
+        <div className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs">
+          {/* Type */}
+          <span className="text-text-muted">{document.documentTypeLabel}</span>
+
+          <span className="text-text-disabled">·</span>
+
+          {/* Status badge */}
+          <span
+            className={`inline-flex items-center rounded-full border px-1.5 py-0.5 text-xs font-medium leading-none ${
+              statusStyles[document.status]
+            }`}
+          >
+            {document.statusLabel}
+          </span>
+
+          <span className="text-text-disabled">·</span>
+
+          {/* Date */}
+          <span className="text-text-muted">
+            {formatRelativeDate(document.updatedAt)}
+          </span>
         </div>
       </div>
 
-      {/* Badges and metadata */}
-      <div className="mt-3 flex flex-wrap items-center gap-2">
-        {/* Type badge */}
-        <span className="inline-flex items-center gap-1 rounded-md bg-bg-subtle px-2 py-0.5 text-xs font-medium text-text-secondary border border-border-default/50">
-          <FileText className="h-3 w-3" />
-          {document.documentTypeLabel}
-        </span>
-
-        {/* Status badge */}
-        <span
-          className={`inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-medium ${
-            statusStyles[document.status]
-          }`}
+      {/* Chevron indicator for clickability */}
+      <div className="flex h-8 items-center text-text-disabled group-hover:text-text-muted transition-colors">
+        <svg
+          className="h-4 w-4"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth={2}
         >
-          {document.statusLabel}
-        </span>
-      </div>
-
-      {/* Footer with date */}
-      <div className="mt-3 flex items-center gap-1.5 text-xs text-text-muted">
-        <Calendar className="h-3 w-3" />
-        <span>Updated {formatRelativeDate(document.updatedAt)}</span>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+        </svg>
       </div>
     </Link>
   );
@@ -132,19 +146,13 @@ export function CustomerDocumentCard({ document }: CustomerDocumentCardProps) {
 
 export function CustomerDocumentCardSkeleton() {
   return (
-    <div className="flex flex-col rounded-xl border border-border-default bg-bg-surface p-4 animate-pulse">
-      <div className="flex items-start gap-3">
-        <div className="h-9 w-9 rounded-lg bg-bg-subtle" />
-        <div className="flex-1 space-y-2">
-          <div className="h-4 w-3/4 rounded bg-bg-subtle" />
-          <div className="h-4 w-1/2 rounded bg-bg-subtle" />
-        </div>
+    <div className="flex items-start gap-3 rounded-lg border border-border-default bg-bg-surface p-3 animate-pulse">
+      <div className="h-8 w-8 shrink-0 rounded-md bg-bg-subtle" />
+      <div className="min-w-0 flex-1 space-y-2">
+        <div className="h-4 w-3/4 rounded bg-bg-subtle" />
+        <div className="h-3 w-1/2 rounded bg-bg-subtle" />
       </div>
-      <div className="mt-3 flex gap-2">
-        <div className="h-5 w-20 rounded-md bg-bg-subtle" />
-        <div className="h-5 w-16 rounded-full bg-bg-subtle" />
-      </div>
-      <div className="mt-3 h-3 w-24 rounded bg-bg-subtle" />
+      <div className="h-8 w-4 rounded bg-bg-subtle" />
     </div>
   );
 }
