@@ -30,6 +30,8 @@ export interface Document {
   id: string;
   title: string;
   subtitle?: string;
+  /** Document description or summary */
+  description?: string;
   metadata: DocumentMetadata;
   sections: DocumentSection[];
 }

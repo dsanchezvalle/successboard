@@ -1,28 +1,36 @@
 "use client";
 
 import { useState } from "react";
-import type { Document, AIAction } from "../types";
+import type { AIAction } from "../types";
+import type { DocumentDetail } from "@/features/documents/data/document-detail-service";
+import { formatRelativeDate } from "@/features/documents/data/document-detail-service";
+import { mockDocument } from "@/features/documents/data/mock-document";
 import { DocumentTopBar } from "./DocumentTopBar";
 import { DocumentOutlinePanel } from "./DocumentOutlinePanel";
 import { AIAssistantPanel } from "./AIAssistantPanel";
 import { DocumentContent } from "./DocumentContent";
 
 interface DocumentDetailViewProps {
-  document: Document;
+  document: DocumentDetail;
   aiActions: AIAction[];
   outlineItems: { id: string; title: string }[];
+  /** Back navigation href (defaults to /documents) */
+  backHref?: string;
 }
 
 export function DocumentDetailView({
   document,
   aiActions,
   outlineItems,
+  backHref,
 }: DocumentDetailViewProps) {
   const [isAIPanelOpen, setIsAIPanelOpen] = useState(true);
   const [isOutlineOpen, setIsOutlineOpen] = useState(true);
   const [activeSection, setActiveSection] = useState<string>(
     outlineItems[0]?.id
   );
+
+  console.log(document.title);
 
   const handleSectionClick = (sectionId: string) => {
     setActiveSection(sectionId);
@@ -41,8 +49,15 @@ export function DocumentDetailView({
     <div className="flex h-full flex-col">
       <DocumentTopBar
         title={document.title}
-        subtitle={document.subtitle}
-        metadata={document.metadata}
+        subtitle={document.ownerName || undefined}
+        metadata={{
+          owner: document.ownerName || "—",
+          lastUpdated: formatRelativeDate(document.updatedAt),
+          framework: document.type || "—",
+          template: document.templateName || "—",
+        }}
+        description={document.description || undefined}
+        backHref={backHref}
         onToggleAI={() => setIsAIPanelOpen(!isAIPanelOpen)}
         isAIPanelOpen={isAIPanelOpen}
       />

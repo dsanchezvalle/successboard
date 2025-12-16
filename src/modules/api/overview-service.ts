@@ -395,6 +395,7 @@ export async function getOverviewDashboardData(options?: {
         customersResult.reason
       );
       // Continue with empty list - metrics are more important
+      atRiskCustomers = []; // Explicitly set to empty array
     }
 
     // Map to view models

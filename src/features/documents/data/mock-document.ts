@@ -10,6 +10,8 @@ export const mockDocument: Document = {
   id: "1",
   title: "Q1 2024 Success Plan",
   subtitle: "Acme Corporation",
+  description:
+    "Strategic objectives and key milestones for Acme Corporation's Q1 2024 engagement",
   metadata: {
     owner: "Sarah Chen",
     lastUpdated: "March 15, 2024",
