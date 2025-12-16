@@ -63,20 +63,37 @@ export function DocumentDetailView({
       />
 
       <div className="flex flex-1 overflow-hidden">
-        {/* Left: Document Outline */}
-        <DocumentOutlinePanel
-          items={outlineItems}
-          activeSection={activeSection}
-          onSectionClick={handleSectionClick}
-          collapsed={!isOutlineOpen}
-        />
+        {/* Left: Document Outline - hidden on mobile when AI is expanded */}
+        <div className={isAIPanelOpen ? "hidden sm:contents" : "contents"}>
+          <DocumentOutlinePanel
+            items={outlineItems}
+            activeSection={activeSection}
+            onSectionClick={handleSectionClick}
+            collapsed={!isOutlineOpen}
+          />
+        </div>
 
-        {/* Center: Main Content */}
-        <main className="flex-1 overflow-auto bg-bg-page">
+        {/* Mobile: AI Assistant workspace takeover (replaces entire content area when expanded) */}
+        {isAIPanelOpen && (
+          <AIAssistantPanel
+            actions={aiActions}
+            onActionClick={handleAIAction}
+            onClose={() => setIsAIPanelOpen(false)}
+            collapsed={false}
+            mobileWorkspaceTakeover={true}
+          />
+        )}
+
+        {/* Center: Main Content - hidden on mobile when AI is open */}
+        <main
+          className={`flex-1 overflow-auto bg-bg-page ${
+            isAIPanelOpen ? "hidden sm:block" : ""
+          }`}
+        >
           <DocumentContent document={document} />
         </main>
 
-        {/* Right: AI Assistant */}
+        {/* Right: AI Assistant (desktop/tablet side panel) */}
         <AIAssistantPanel
           actions={aiActions}
           onActionClick={handleAIAction}

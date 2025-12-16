@@ -1,7 +1,10 @@
 "use client";
 
 import type { DocumentDetail } from "@/features/documents/data/document-detail-service";
-import { formatDate } from "@/features/documents/data/document-detail-service";
+import {
+  formatDate,
+  formatDateCompact,
+} from "@/features/documents/data/document-detail-service";
 import { DocumentSection } from "./DocumentSection";
 import { DocumentMetadataBar } from "./DocumentMetadataBar";
 import { mockDocument } from "@/features/documents/data/mock-document";
@@ -18,6 +21,7 @@ export function DocumentContent({ document }: DocumentContentProps) {
         <DocumentMetadataBar
           owner={document.ownerName || "—"}
           lastUpdated={formatDate(document.updatedAt)}
+          lastUpdatedCompact={formatDateCompact(document.updatedAt)}
           type={document.type}
           status={document.status}
           framework={document.framework}
