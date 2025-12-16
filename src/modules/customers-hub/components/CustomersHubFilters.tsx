@@ -58,7 +58,7 @@ export function CustomersHubFilters({
   return (
     <div
       className={cn(
-        "flex flex-col gap-3 rounded-xl border border-border-default bg-bg-surface p-4 shadow-sm sm:flex-row sm:items-end",
+        "flex flex-col gap-3 rounded-xl border border-border-default bg-bg-surface p-4 shadow-sm sm:flex-row sm:items-end lg:gap-4",
         className
       )}
     >

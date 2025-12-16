@@ -38,7 +38,7 @@ export function CustomersHubHeader({
           <Text
             variant="body"
             color="muted"
-            className="max-w-2xl text-text-muted"
+            className="max-w-full text-text-muted sm:max-w-xl lg:max-w-2xl"
           >
             Manage your customer portfolio, track health scores, and identify
             opportunities.
@@ -47,8 +47,8 @@ export function CustomersHubHeader({
       </div>
 
       {/* Quick Stats */}
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-        <div className="flex h-full flex-col justify-center rounded-lg border border-border-default bg-bg-surface px-3 py-3 shadow-sm">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="flex h-full flex-col justify-center rounded-lg border border-border-default bg-bg-surface px-3 py-3 shadow-sm hidden sm:flex">
           <div className="text-xs font-medium text-text-muted">
             Total Customers
           </div>
@@ -62,15 +62,15 @@ export function CustomersHubHeader({
             {summary.totalMrrFormatted}
           </div>
         </div>
-        <div className="flex h-full flex-col justify-center rounded-lg border border-warning-border bg-warning-bg px-3 py-3 shadow-sm">
-          <div className="text-xs font-medium text-warning-foreground">
+        <div className="flex h-full flex-col justify-center rounded-lg border border-error-border bg-error-bg px-3 py-3 shadow-sm hidden sm:flex">
+          <div className="text-xs font-medium text-error-foreground">
             At-Risk
           </div>
-          <div className="mt-0.5 text-xl font-semibold tabular-nums text-warning-foreground">
+          <div className="mt-0.5 text-xl font-semibold tabular-nums text-error-foreground">
             {atRiskSegment?.count ?? 0}
           </div>
         </div>
-        <div className="flex h-full flex-col justify-center rounded-lg border border-info-border bg-info-bg px-3 py-3 shadow-sm">
+        <div className="flex h-full flex-col justify-center rounded-lg border border-info-border bg-info-bg px-3 py-3 shadow-sm hidden sm:flex">
           <div className="text-xs font-medium text-info-foreground">VIP</div>
           <div className="mt-0.5 text-xl font-semibold tabular-nums text-info-foreground">
             {vipSegment?.count ?? 0}

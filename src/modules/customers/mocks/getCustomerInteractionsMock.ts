@@ -25,9 +25,12 @@ const CHANNELS: InteractionChannel[] = [
 const BASE_TIME = Date.parse("2024-01-01T00:00:00.000Z");
 
 export function getCustomerInteractionsMock(
-  customerId: number
+  customerId: string | number
 ): CustomerInteraction[] {
-  const rand = seededRandom(customerId || 1);
+  // Convert string to number for seeding
+  const numericId =
+    typeof customerId === "string" ? parseInt(customerId, 10) || 1 : customerId;
+  const rand = seededRandom(numericId || 1);
 
   const count = 4 + Math.floor(rand() * 4); // 4–7 interactions
 
@@ -38,10 +41,10 @@ export function getCustomerInteractionsMock(
 
     const daysAgo = 5 + Math.floor(rand() * 90); // up to ~3 months back
     const occurredAt = new Date(
-      BASE_TIME + (customerId * 13 + i * 7 - daysAgo) * 24 * 60 * 60 * 1000
+      BASE_TIME + (numericId * 13 + i * 7 - daysAgo) * 24 * 60 * 60 * 1000
     ).toISOString();
 
-    const id = `${customerId}-${i + 1}`;
+    const id = `${numericId}-${i + 1}`;
 
     let title: string;
     let description: string | undefined;
@@ -79,7 +82,7 @@ export function getCustomerInteractionsMock(
 
     interactions.push({
       id,
-      customerId,
+      customerId: numericId,
       occurredAt,
       channel,
       title,
