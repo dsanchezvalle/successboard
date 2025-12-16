@@ -146,6 +146,15 @@ export function formatDate(isoDate: string): string {
   });
 }
 
+/** Compact date format for mobile (e.g., "Jan 10") */
+export function formatDateCompact(isoDate: string): string {
+  const date = new Date(isoDate);
+  return date.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+  });
+}
+
 export function formatRelativeDate(isoDate: string): string {
   const date = new Date(isoDate);
   const now = new Date();
