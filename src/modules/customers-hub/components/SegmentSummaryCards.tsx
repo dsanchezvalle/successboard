@@ -90,7 +90,12 @@ export function SegmentSummaryCards({
   className,
 }: SegmentSummaryCardsProps) {
   return (
-    <div className={cn("grid gap-4 sm:grid-cols-2 lg:grid-cols-5", className)}>
+    <div
+      className={cn(
+        "grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5",
+        className
+      )}
+    >
       {summary.segments.map((segment) => {
         const config =
           segmentConfig[segment.segment as Exclude<CustomerSegmentTab, "all">];
@@ -99,6 +104,22 @@ export function SegmentSummaryCards({
         const isSelected = selectedSegment === segment.segment;
         const isClickable = !!onSegmentClick;
 
+        // Determine responsive visibility class for mobile
+        // - When "all" selected: hide all cards on mobile, show on tablet+
+        // - When specific segment selected: show only that segment on mobile, all on tablet+
+        const getMobileVisibility = () => {
+          if (selectedSegment === "all") {
+            return "hidden sm:flex"; // Hide all on mobile when "all" selected
+          }
+          if (selectedSegment && isSelected) {
+            return "flex"; // Show selected segment on all viewports
+          }
+          if (selectedSegment && !isSelected) {
+            return "hidden sm:flex"; // Hide non-selected on mobile, show on tablet+
+          }
+          return "flex"; // Default: show all
+        };
+
         return (
           <button
             key={segment.segment}
@@ -106,7 +127,8 @@ export function SegmentSummaryCards({
             onClick={() => onSegmentClick?.(segment.segment)}
             disabled={!isClickable}
             className={cn(
-              "group relative flex h-full flex-col overflow-hidden rounded-xl border p-4 text-left transition-all",
+              "group relative h-full flex-col overflow-hidden rounded-xl border p-4 text-left transition-all",
+              getMobileVisibility(),
               config.bgColor,
               config.borderColor,
               isClickable &&

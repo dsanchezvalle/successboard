@@ -14,6 +14,7 @@ import {
   type LifecycleStage,
   type CustomerTier,
   type TrendDirection,
+  type RiskFlag,
   formatCurrency,
   formatCurrencyCompact,
   getHealthStatus,
@@ -302,6 +303,7 @@ function calculateSegmentationSummary(
  *
  * This function tries MockAPI first, then falls back to local mock data.
  * It normalizes ID comparisons to handle string vs number differences.
+ * Returns the raw Customer type for detail page usage.
  *
  * @param id - Customer ID (string or number)
  * @returns Customer data or null if not found
@@ -318,37 +320,14 @@ function calculateSegmentationSummary(
  */
 export async function getCustomerById(
   id: string | number
-): Promise<CustomerHubListItem | null> {
+): Promise<Customer | null> {
   const targetId = String(id);
 
   // Try MockAPI first if configured
   if (isApiConfigured()) {
     try {
       const customer = await mockapi.getCustomerById(targetId);
-      // Map API Customer to CustomerHubListItem format
-      return {
-        id: customer.id,
-        name: customer.name,
-        companyName: customer.companyName || customer.name,
-        tier: customer.tier,
-        tierLabel: getTierLabel(customer.tier),
-        lifecycleStage: customer.lifecycleStage,
-        lifecycleLabel: getLifecycleLabel(customer.lifecycleStage),
-        healthScore: customer.healthScore,
-        healthStatus: getHealthStatus(customer.healthScore),
-        healthTrend: customer.healthTrend || "stable",
-        mrr: customer.mrr || 0,
-        mrrFormatted: formatCurrency(customer.mrr || 0),
-        csmName: customer.csmName || "Unassigned",
-        lastInteractionAt:
-          customer.lastInteractionAt || new Date().toISOString(),
-        daysSinceContact: customer.daysSinceContact || 0,
-        daysUntilRenewal: customer.daysUntilRenewal || 30,
-        riskFlags: customer.riskFlags || [],
-        riskFlagCount: customer.riskFlags?.length || 0,
-        hasRiskFlags: (customer.riskFlags?.length || 0) > 0,
-        segment: customer.lifecycleStage,
-      };
+      return customer;
     } catch (error) {
       console.warn(
         "[customers-service] MockAPI getCustomerById failed, falling back to mock data:",
@@ -358,11 +337,38 @@ export async function getCustomerById(
     }
   }
 
-  // Fallback to local mock data
+  // Fallback to local mock data - convert CustomerHubListItem to Customer
   const mockCustomers = getMockCustomers();
-  return (
-    mockCustomers.find((customer) => String(customer.id) === targetId) || null
+  const found = mockCustomers.find(
+    (customer) => String(customer.id) === targetId
   );
+
+  if (!found) {
+    return null;
+  }
+
+  // Convert CustomerHubListItem to Customer type (minimal mapping for fallback)
+  return {
+    id: found.id,
+    name: found.name,
+    companyName: found.companyName,
+    customerType: "enterprise" as const, // Default fallback
+    tier: found.tier,
+    mrr: found.mrr,
+    arr: found.mrr * 12, // Calculate ARR from MRR for fallback
+    currency: "USD" as const,
+    lifecycleStage: found.lifecycleStage,
+    healthScore: found.healthScore,
+    healthTrend: found.healthTrend,
+    csmId: "csm_1", // Default fallback
+    csmName: found.csmName,
+    keyContacts: [], // Empty array for fallback
+    riskFlags: found.riskFlags as RiskFlag[],
+    lastInteractionAt: found.lastInteractionAt,
+    daysUntilRenewal: found.daysUntilRenewal,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  };
 }
 
 // =============================================================================

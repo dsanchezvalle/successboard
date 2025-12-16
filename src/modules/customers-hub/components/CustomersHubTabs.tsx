@@ -165,7 +165,7 @@ export function CustomersHubTabs({
       role="tablist"
       aria-label="Customer segments"
       className={cn(
-        "flex gap-1 overflow-x-auto border-b border-border-default pb-px",
+        "flex gap-1 overflow-x-auto border-b border-border-default pb-px scrollbar-thin scrollbar-thumb-border-muted scrollbar-track-transparent",
         className
       )}
     >
