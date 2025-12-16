@@ -160,49 +160,94 @@ export function CustomersHubTabs({
   };
 
   return (
-    <div
-      ref={tabsRef}
-      role="tablist"
-      aria-label="Customer segments"
-      className={cn(
-        "flex gap-1 overflow-x-auto border-b border-border-default pb-px scrollbar-thin scrollbar-thumb-border-muted scrollbar-track-transparent",
-        className
-      )}
-    >
-      {TABS.map((tab, index) => {
-        const isSelected = value === tab.id;
-        const count = getCount(tab.id);
-        const styles = colorStyles[tab.color];
-
-        return (
-          <button
-            key={tab.id}
-            role="tab"
-            aria-selected={isSelected}
-            aria-controls={`tabpanel-${tab.id}`}
-            id={`tab-${tab.id}`}
-            tabIndex={isSelected ? 0 : -1}
-            onClick={() => onChange(tab.id)}
-            onKeyDown={(e) => handleKeyDown(e, index)}
+    <>
+      {/* Mobile Segment Select - visible only on mobile */}
+      <div className={cn("sm:hidden", className)}>
+        <label htmlFor="mobile-segment-select" className="sr-only">
+          Segment
+        </label>
+        <div className="relative">
+          <select
+            id="mobile-segment-select"
+            value={value}
+            onChange={(e) => onChange(e.target.value as CustomerSegmentTab)}
+            aria-label="Select customer segment"
             className={cn(
-              "flex items-center gap-2 whitespace-nowrap border-b-2 px-3 py-2 text-sm font-medium transition-colors",
-              "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-border-focus",
-              isSelected ? styles.active : styles.inactive
+              "block w-full appearance-none rounded-xl border border-border-default bg-bg-surface px-4 py-3 pr-10 text-sm font-medium text-text-primary",
+              "focus:border-border-focus focus:outline-none focus:ring-1 focus:ring-border-focus",
+              "transition-colors shadow-sm"
             )}
           >
-            <span>{tab.label}</span>
-            <span
+            {TABS.map((tab) => {
+              const count = getCount(tab.id);
+              return (
+                <option key={tab.id} value={tab.id}>
+                  {tab.label} ({count})
+                </option>
+              );
+            })}
+          </select>
+          <svg
+            className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-text-muted"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M19 9l-7 7-7-7"
+            />
+          </svg>
+        </div>
+      </div>
+
+      {/* Desktop/Tablet Tabs - hidden on mobile */}
+      <div
+        ref={tabsRef}
+        role="tablist"
+        aria-label="Customer segments"
+        className={cn(
+          "hidden sm:flex gap-1 overflow-x-auto border-b border-border-default pb-px scrollbar-thin scrollbar-thumb-border-muted scrollbar-track-transparent",
+          className
+        )}
+      >
+        {TABS.map((tab, index) => {
+          const isSelected = value === tab.id;
+          const count = getCount(tab.id);
+          const styles = colorStyles[tab.color];
+
+          return (
+            <button
+              key={tab.id}
+              role="tab"
+              aria-selected={isSelected}
+              aria-controls={`tabpanel-${tab.id}`}
+              id={`tab-${tab.id}`}
+              tabIndex={isSelected ? 0 : -1}
+              onClick={() => onChange(tab.id)}
+              onKeyDown={(e) => handleKeyDown(e, index)}
               className={cn(
-                "rounded-full px-1.5 py-0.5 text-xs tabular-nums",
-                isSelected ? styles.count : "bg-bg-muted text-text-muted"
+                "flex items-center gap-2 whitespace-nowrap border-b-2 px-3 py-2 text-sm font-medium transition-colors",
+                "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-border-focus",
+                isSelected ? styles.active : styles.inactive
               )}
             >
-              {count}
-            </span>
-          </button>
-        );
-      })}
-    </div>
+              <span>{tab.label}</span>
+              <span
+                className={cn(
+                  "rounded-full px-1.5 py-0.5 text-xs tabular-nums",
+                  isSelected ? styles.count : "bg-bg-muted text-text-muted"
+                )}
+              >
+                {count}
+              </span>
+            </button>
+          );
+        })}
+      </div>
+    </>
   );
 }
 
