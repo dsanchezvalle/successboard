@@ -18,6 +18,8 @@ const labelToStatus: Record<string, DocumentStatus> = {
 interface DocumentMetadataBarProps {
   owner: string;
   lastUpdated: string;
+  /** Compact date for mobile display */
+  lastUpdatedCompact?: string;
   type?: string | null;
   status?: string | null;
   framework?: string | null;
@@ -27,6 +29,7 @@ interface DocumentMetadataBarProps {
 export function DocumentMetadataBar({
   owner,
   lastUpdated,
+  lastUpdatedCompact,
   type,
   status,
   framework,
@@ -40,10 +43,17 @@ export function DocumentMetadataBar({
         <span>{owner}</span>
       </div>
 
-      {/* Date */}
+      {/* Date - compact on mobile, full on desktop */}
       <div className="flex items-center gap-1.5 text-text-secondary">
         <Calendar className="h-4 w-4 text-text-muted" />
-        <span>{lastUpdated}</span>
+        {lastUpdatedCompact ? (
+          <>
+            <span className="sm:hidden">{lastUpdatedCompact}</span>
+            <span className="hidden sm:inline">{lastUpdated}</span>
+          </>
+        ) : (
+          <span>{lastUpdated}</span>
+        )}
       </div>
 
       {/* Type Badge */}
