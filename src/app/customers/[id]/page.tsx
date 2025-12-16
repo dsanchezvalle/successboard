@@ -7,6 +7,7 @@ import { getCustomerInteractionsMock } from "@/modules/customers/mocks/getCustom
 import { CustomerInteractionsTimeline } from "@/modules/customers/components/CustomerInteractionsTimeline";
 import { CustomerDetailCard } from "@/modules/customers/components/CustomerDetailCard";
 import { AccountHealthGauge } from "@/modules/customers/components/AccountHealthGauge";
+import { CustomerDocumentsSection } from "@/modules/customers/components/CustomerDocumentsSection";
 import type { Customer } from "@/modules/api";
 import { Heading, Text } from "@/design-system/primitives";
 import Link from "next/link";
@@ -23,9 +24,9 @@ interface PageProps {
 export default function Page({ params }: PageProps) {
   const [customer, setCustomer] = useState<Customer | null>(null);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<"overview" | "timeline">(
-    "overview"
-  );
+  const [activeTab, setActiveTab] = useState<
+    "overview" | "timeline" | "documents"
+  >("overview");
   const router = useRouter();
 
   useEffect(() => {
@@ -74,6 +75,7 @@ export default function Page({ params }: PageProps) {
   const tabs = [
     { id: "overview", label: "Overview" },
     { id: "timeline", label: "Timeline" },
+    { id: "documents", label: "Documents" },
   ] as const;
 
   return (
@@ -270,6 +272,10 @@ export default function Page({ params }: PageProps) {
             <CustomerInteractionsTimeline interactions={interactions} />
           </CustomerDetailCard>
         )}
+
+        {activeTab === "documents" && (
+          <CustomerDocumentsSection customerId={customer.id} wrapInCard />
+        )}
       </div>
 
       {/* Desktop/Tablet Layout - Natural flow without tabs */}
@@ -354,6 +360,20 @@ export default function Page({ params }: PageProps) {
               </Heading>
               <CustomerDetailCard title="Interactions">
                 <CustomerInteractionsTimeline interactions={interactions} />
+              </CustomerDetailCard>
+            </section>
+
+            {/* Documents Section */}
+            <section>
+              <Heading
+                level={2}
+                visualLevel={4}
+                className="text-foreground mb-4"
+              >
+                Documents
+              </Heading>
+              <CustomerDetailCard title="Customer Documents">
+                <CustomerDocumentsSection customerId={customer.id} />
               </CustomerDetailCard>
             </section>
           </div>

@@ -84,7 +84,10 @@ export class MockApiError extends Error {
    * Create from API error response
    */
   static fromResponse(status: number, body: ApiError): MockApiError {
-    return new MockApiError(body.message, status, body.code, body.details);
+    // Safely handle missing or malformed message
+    const message = body?.message || `HTTP ${status} error`;
+    const code = body?.code || `HTTP_${status}`;
+    return new MockApiError(message, status, code, body?.details);
   }
 
   /**
@@ -120,7 +123,9 @@ function buildUrl(
     });
   }
 
-  return url.toString();
+  const finalUrl = url.toString();
+  console.log(`[mockapi] Built URL: ${finalUrl}`);
+  return finalUrl;
 }
 
 /**
@@ -166,8 +171,14 @@ async function fetchJson<T>(
     if (!response.ok) {
       let errorBody: ApiError;
       try {
-        errorBody = await response.json();
-      } catch {
+        const text = await response.text();
+        console.log(`[mockapi] Error response body: ${text}`);
+        errorBody = JSON.parse(text);
+      } catch (parseError) {
+        console.warn(
+          `[mockapi] Failed to parse error response as JSON:`,
+          parseError
+        );
         errorBody = {
           code: `HTTP_${response.status}`,
           message: response.statusText || "Request failed",

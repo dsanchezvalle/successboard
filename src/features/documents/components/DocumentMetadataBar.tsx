@@ -1,29 +1,68 @@
 "use client";
 
-import { User, Calendar, Tag } from "lucide-react";
-import type { DocumentMetadata } from "../types";
+import { User, Calendar } from "lucide-react";
+import { StatusBadge, TypeBadge, FrameworkBadge } from "./DocumentBadges";
+import type { DocumentType, DocumentStatus } from "@/modules/api";
+
+// Map status labels back to status values for proper color styling
+const labelToStatus: Record<string, DocumentStatus> = {
+  Draft: "draft",
+  "In Review": "in-review",
+  Approved: "approved",
+  Shared: "shared",
+  Signed: "signed",
+  Archived: "archived",
+  Superseded: "superseded",
+};
 
 interface DocumentMetadataBarProps {
-  metadata: DocumentMetadata;
+  owner: string;
+  lastUpdated: string;
+  type?: string | null;
+  status?: string | null;
+  framework?: string | null;
+  template?: string | null;
 }
 
-export function DocumentMetadataBar({ metadata }: DocumentMetadataBarProps) {
+export function DocumentMetadataBar({
+  owner,
+  lastUpdated,
+  type,
+  status,
+  framework,
+  template,
+}: DocumentMetadataBarProps) {
   return (
-    <div className="flex flex-wrap items-center gap-4 text-sm text-text-secondary">
-      <div className="flex items-center gap-1.5">
+    <div className="flex flex-wrap items-center gap-4 text-sm">
+      {/* Owner */}
+      <div className="flex items-center gap-1.5 text-text-secondary">
         <User className="h-4 w-4 text-text-muted" />
-        <span>{metadata.owner}</span>
+        <span>{owner}</span>
       </div>
-      <div className="flex items-center gap-1.5">
+
+      {/* Date */}
+      <div className="flex items-center gap-1.5 text-text-secondary">
         <Calendar className="h-4 w-4 text-text-muted" />
-        <span>{metadata.lastUpdated}</span>
+        <span>{lastUpdated}</span>
       </div>
-      <div className="flex items-center gap-1.5">
-        <Tag className="h-4 w-4 text-text-muted" />
-        <span className="inline-flex items-center rounded-full border border-brand-primary/30 bg-brand-primary/10 px-2.5 py-0.5 text-xs font-medium text-brand-primary">
-          {metadata.framework}
+
+      {/* Type Badge */}
+      {type && <TypeBadge type={"success-plan" as DocumentType} label={type} />}
+
+      {/* Framework Badge */}
+      {framework && framework !== "None" && <FrameworkBadge name={framework} />}
+
+      {/* Status Badge */}
+      {status && (
+        <StatusBadge status={labelToStatus[status] || "draft"} label={status} />
+      )}
+
+      {/* Template Badge (fallback if no framework/status) */}
+      {template && !framework && !status && (
+        <span className="inline-flex items-center gap-1 rounded-md bg-bg-subtle px-2 py-0.5 text-xs font-medium text-text-secondary border border-border-default/50">
+          {template}
         </span>
-      </div>
+      )}
     </div>
   );
 }
