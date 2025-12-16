@@ -1,10 +1,10 @@
-import { getCustomerDetail } from "@/modules/customers/get-customer-detail";
+import { getCustomerById } from "@/modules/api/customers-service";
 import { getCustomerSuccessMetricsMock } from "@/modules/customers/mocks/getCustomerSuccessMetrics";
 import { CustomerSuccessPanel } from "@/modules/customers/components/CustomerSuccessPanel";
 import { getCustomerInteractionsMock } from "@/modules/customers/mocks/getCustomerInteractionsMock";
 import { CustomerInteractionsTimeline } from "@/modules/customers/components/CustomerInteractionsTimeline";
 import { CustomerDetailCard } from "@/modules/customers/components/CustomerDetailCard";
-import { redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 
 export const dynamic = "force-dynamic";
 
@@ -22,26 +22,15 @@ export default async function Page({ params }: PageProps) {
 
   console.log("[customers/[id]] route params", resolvedParams);
 
-  const { customer, error, notFound } = await getCustomerDetail(id);
+  // Use robust getCustomerById function
+  const customer = await getCustomerById(id);
 
-  if (notFound) {
-    redirect("/customers");
+  // Handle not found case with proper notFound() instead of redirect
+  if (!customer) {
+    notFound();
   }
 
-  if (error || !customer) {
-    return (
-      <main className="min-h-screen w-full flex justify-center px-4 py-8">
-        <div className="w-full max-w-4xl space-y-4">
-          <h1 className="text-2xl font-semibold">Customer</h1>
-          <div className="rounded-md border border-red-300 bg-red-50 p-4 text-sm text-red-800">
-            <p className="font-medium mb-1">Failed to load customer.</p>
-            <p className="mb-0">{error ?? "Customer not found."}</p>
-          </div>
-        </div>
-      </main>
-    );
-  }
-
+  // Get mock data for metrics and interactions (these are already mocked)
   const metrics = getCustomerSuccessMetricsMock(customer.id);
   const interactions = getCustomerInteractionsMock(customer.id);
 
@@ -49,10 +38,8 @@ export default async function Page({ params }: PageProps) {
     <main className="min-h-screen w-full flex justify-center px-4 py-8">
       <div className="w-full max-w-5xl space-y-6">
         <header className="sticky top-16 z-10 space-y-1 bg-slate-950/80 pb-2 pt-1 backdrop-blur">
-          <h1 className="text-3xl font-semibold">{customer.fullName}</h1>
-          <p className="text-sm text-slate-400">
-            {customer.city ?? "Unknown city"}
-          </p>
+          <h1 className="text-3xl font-semibold">{customer.name}</h1>
+          <p className="text-sm text-slate-400">{customer.companyName}</p>
         </header>
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)]">
@@ -65,37 +52,32 @@ export default async function Page({ params }: PageProps) {
           <CustomerDetailCard title="Account details">
             <dl className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2 text-sm">
               <div>
-                <dt className="font-medium text-slate-300">Address</dt>
-                <dd className="text-slate-50">
-                  {customer.address ?? "No address available"}
-                </dd>
+                <dt className="font-medium text-slate-300">Company</dt>
+                <dd className="text-slate-50">{customer.companyName}</dd>
               </div>
               <div>
-                <dt className="font-medium text-slate-300">Telephone</dt>
-                <dd className="text-slate-50">
-                  {customer.telephone ?? "No phone available"}
-                </dd>
+                <dt className="font-medium text-slate-300">Tier</dt>
+                <dd className="text-slate-50">{customer.tierLabel}</dd>
+              </div>
+              <div>
+                <dt className="font-medium text-slate-300">Health Score</dt>
+                <dd className="text-slate-50">{customer.healthScore}</dd>
+              </div>
+              <div>
+                <dt className="font-medium text-slate-300">MRR</dt>
+                <dd className="text-slate-50">{customer.mrrFormatted}</dd>
+              </div>
+              <div>
+                <dt className="font-medium text-slate-300">CSM</dt>
+                <dd className="text-slate-50">{customer.csmName}</dd>
+              </div>
+              <div>
+                <dt className="font-medium text-slate-300">Lifecycle Stage</dt>
+                <dd className="text-slate-50">{customer.lifecycleLabel}</dd>
               </div>
             </dl>
           </CustomerDetailCard>
         </div>
-
-        <CustomerDetailCard title="Pets">
-          {customer.pets.length === 0 ? (
-            <p className="text-sm text-slate-400">No pets registered.</p>
-          ) : (
-            <ul className="space-y-1 text-sm text-slate-50">
-              {customer.pets.map((pet) => (
-                <li key={pet.id} className="flex items-baseline gap-2">
-                  <span className="font-medium text-slate-50">{pet.name}</span>
-                  <span className="text-slate-400 text-xs">
-                    ({pet.type} · {pet.birthDate})
-                  </span>
-                </li>
-              ))}
-            </ul>
-          )}
-        </CustomerDetailCard>
 
         <CustomerDetailCard title="Recent interactions">
           <CustomerInteractionsTimeline interactions={interactions} />

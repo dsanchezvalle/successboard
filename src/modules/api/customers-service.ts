@@ -297,6 +297,74 @@ function calculateSegmentationSummary(
   };
 }
 
+/**
+ * Get a single customer by ID with robust fallback handling
+ *
+ * This function tries MockAPI first, then falls back to local mock data.
+ * It normalizes ID comparisons to handle string vs number differences.
+ *
+ * @param id - Customer ID (string or number)
+ * @returns Customer data or null if not found
+ *
+ * @example
+ * ```ts
+ * const customer = await getCustomerById("1");
+ * if (customer) {
+ *   console.log(customer.name);
+ * } else {
+ *   notFound();
+ * }
+ * ```
+ */
+export async function getCustomerById(
+  id: string | number
+): Promise<CustomerHubListItem | null> {
+  const targetId = String(id);
+
+  // Try MockAPI first if configured
+  if (isApiConfigured()) {
+    try {
+      const customer = await mockapi.getCustomerById(targetId);
+      // Map API Customer to CustomerHubListItem format
+      return {
+        id: customer.id,
+        name: customer.name,
+        companyName: customer.companyName || customer.name,
+        tier: customer.tier,
+        tierLabel: getTierLabel(customer.tier),
+        lifecycleStage: customer.lifecycleStage,
+        lifecycleLabel: getLifecycleLabel(customer.lifecycleStage),
+        healthScore: customer.healthScore,
+        healthStatus: getHealthStatus(customer.healthScore),
+        healthTrend: customer.healthTrend || "stable",
+        mrr: customer.mrr || 0,
+        mrrFormatted: formatCurrency(customer.mrr || 0),
+        csmName: customer.csmName || "Unassigned",
+        lastInteractionAt:
+          customer.lastInteractionAt || new Date().toISOString(),
+        daysSinceContact: customer.daysSinceContact || 0,
+        daysUntilRenewal: customer.daysUntilRenewal || 30,
+        riskFlags: customer.riskFlags || [],
+        riskFlagCount: customer.riskFlags?.length || 0,
+        hasRiskFlags: (customer.riskFlags?.length || 0) > 0,
+        segment: customer.lifecycleStage,
+      };
+    } catch (error) {
+      console.warn(
+        "[customers-service] MockAPI getCustomerById failed, falling back to mock data:",
+        error
+      );
+      // Fall through to mock data
+    }
+  }
+
+  // Fallback to local mock data
+  const mockCustomers = getMockCustomers();
+  return (
+    mockCustomers.find((customer) => String(customer.id) === targetId) || null
+  );
+}
+
 // =============================================================================
 // FALLBACK DATA
 // =============================================================================
