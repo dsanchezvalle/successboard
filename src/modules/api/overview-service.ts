@@ -367,8 +367,6 @@ export async function getOverviewDashboardData(options?: {
       mockapi.getOverviewMetrics(),
       mockapi.getCustomers({
         lifecycleStage: "at-risk",
-        sortBy: "healthScore",
-        sortOrder: "asc",
         limit: atRiskLimit,
       }),
     ]);
@@ -388,7 +386,10 @@ export async function getOverviewDashboardData(options?: {
     // Handle at-risk customers
     let atRiskCustomers: Customer[] = [];
     if (customersResult.status === "fulfilled") {
-      atRiskCustomers = customersResult.value.data;
+      // Sort by healthScore ascending (lowest first) since MockAPI doesn't support combined filtering + sorting
+      atRiskCustomers = customersResult.value.data.sort(
+        (a, b) => a.healthScore - b.healthScore
+      );
     } else {
       console.warn(
         "[overview-service] Failed to fetch at-risk customers:",
