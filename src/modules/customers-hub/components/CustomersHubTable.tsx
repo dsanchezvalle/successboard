@@ -79,46 +79,46 @@ export function CustomersHubTable({
   return (
     <div
       className={cn(
-        "overflow-x-auto rounded-xl border border-border-default bg-bg-surface shadow-sm",
+        "overflow-x-auto rounded-xl border border-border-default bg-bg-surface shadow-sm scrollbar-thin scrollbar-thumb-border-muted scrollbar-track-transparent",
         className
       )}
     >
-      <table className="min-w-full text-left text-sm">
+      <table className="w-full text-left text-sm">
         <thead className="border-b border-border-default bg-bg-subtle">
           <tr>
             <th
               scope="col"
-              className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-text-muted"
+              className="px-2 py-3 text-xs font-semibold uppercase tracking-wide text-text-muted sm:px-3 lg:px-4"
             >
               Customer
             </th>
             <th
               scope="col"
-              className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-text-muted"
+              className="px-2 py-3 text-xs font-semibold uppercase tracking-wide text-text-muted sm:px-3 lg:px-4 hidden sm:table-cell"
             >
               Segment
             </th>
             <th
               scope="col"
-              className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-text-muted"
+              className="px-2 py-3 text-xs font-semibold uppercase tracking-wide text-text-muted sm:px-3 lg:px-4"
             >
               Health
             </th>
             <th
               scope="col"
-              className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-text-muted"
+              className="px-2 py-3 text-xs font-semibold uppercase tracking-wide text-text-muted sm:px-3 lg:px-4"
             >
               MRR
             </th>
             <th
               scope="col"
-              className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-text-muted"
+              className="px-2 py-3 text-xs font-semibold uppercase tracking-wide text-text-muted sm:px-3 lg:px-4 hidden lg:table-cell"
             >
               Last Contact
             </th>
             <th
               scope="col"
-              className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-text-muted"
+              className="px-2 py-3 text-xs font-semibold uppercase tracking-wide text-text-muted sm:px-3 lg:px-4 hidden xl:table-cell"
             >
               Tier
             </th>
@@ -136,7 +136,7 @@ export function CustomersHubTable({
               >
                 {/* Customer Name */}
                 {/* TODO: Customer detail page navigation will be handled in a future batch */}
-                <td className="px-4 py-3">
+                <td className="px-2 py-3 sm:px-3 lg:px-4">
                   <Link
                     href={`/customers/${customer.id}`}
                     className={cn(
@@ -152,7 +152,7 @@ export function CustomersHubTable({
                 </td>
 
                 {/* Segment Badge */}
-                <td className="px-4 py-3">
+                <td className="px-2 py-3 sm:px-3 lg:px-4 hidden sm:table-cell">
                   <span
                     className={cn(
                       "inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium",
@@ -165,7 +165,7 @@ export function CustomersHubTable({
                 </td>
 
                 {/* Health Score */}
-                <td className="px-4 py-3">
+                <td className="px-2 py-3 sm:px-3 lg:px-4">
                   <div className="flex items-center gap-2">
                     <div className="h-8 w-8 relative">
                       {/* Background circle */}
@@ -204,7 +204,7 @@ export function CustomersHubTable({
                 </td>
 
                 {/* MRR */}
-                <td className="px-4 py-3">
+                <td className="px-2 py-3 sm:px-3 lg:px-4">
                   <span className="font-medium tabular-nums text-text-primary">
                     {customer.mrrFormatted}
                   </span>
@@ -212,7 +212,7 @@ export function CustomersHubTable({
                 </td>
 
                 {/* Last Contact */}
-                <td className="px-4 py-3">
+                <td className="px-2 py-3 sm:px-3 lg:px-4 hidden lg:table-cell">
                   <span
                     className={cn(
                       "text-sm",
@@ -228,7 +228,7 @@ export function CustomersHubTable({
                 </td>
 
                 {/* Tier */}
-                <td className="px-4 py-3 text-text-muted">
+                <td className="px-2 py-3 sm:px-3 lg:px-4 text-text-muted hidden xl:table-cell">
                   {customer.tierLabel}
                 </td>
               </tr>

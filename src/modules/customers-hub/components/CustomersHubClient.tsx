@@ -139,13 +139,12 @@ export function CustomersHubClient({
         aria-labelledby={`tab-${filters.segment}`}
         className="space-y-4"
       >
-        {/* Segment Summary Cards (shown for "all" segment) */}
-        {filters.segment === "all" && (
-          <SegmentSummaryCards
-            summary={summary}
-            onSegmentClick={handleSegmentChange}
-          />
-        )}
+        {/* Segment Summary Cards - always rendered, visibility controlled by component */}
+        <SegmentSummaryCards
+          summary={summary}
+          selectedSegment={filters.segment}
+          onSegmentClick={handleSegmentChange}
+        />
 
         {/* Filters */}
         <CustomersHubFilters value={filters} onChange={setFilters} />

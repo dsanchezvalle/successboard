@@ -18,19 +18,19 @@ export function CustomerDetailCard({
   return (
     <Card
       className={cn(
-        "rounded-2xl border border-slate-800/80 bg-slate-900/80 text-slate-50 shadow-sm backdrop-blur-sm",
+        "rounded-xl border border-border-default bg-bg-surface shadow-sm",
         className
       )}
     >
       <CardHeader className="pb-3 flex flex-row items-baseline justify-between gap-2">
-        <CardTitle className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-300">
+        <CardTitle className="text-xs font-semibold uppercase tracking-[0.14em] text-text-muted">
           {title}
         </CardTitle>
         {subtitle ? (
-          <p className="text-[11px] text-slate-500">{subtitle}</p>
+          <p className="text-[11px] text-text-muted/70">{subtitle}</p>
         ) : null}
       </CardHeader>
-      <CardContent className="pt-0 text-sm text-slate-100">
+      <CardContent className="pt-0 text-sm text-text-primary">
         {children}
       </CardContent>
     </Card>
