@@ -26,6 +26,8 @@ import { CustomersHubTabs } from "./CustomersHubTabs";
 import { CustomersHubFilters } from "./CustomersHubFilters";
 import { CustomersHubTable } from "./CustomersHubTable";
 import { SegmentSummaryCards } from "./SegmentSummaryCards";
+import { MobileCollapsibleFilters } from "./MobileCollapsibleFilters";
+import { MobileCustomerCards } from "./MobileCustomerCards";
 
 /**
  * Filter state for the Customers Hub
@@ -125,7 +127,7 @@ export function CustomersHubClient({
       {/* Header with summary metrics */}
       <CustomersHubHeader summary={summary} />
 
-      {/* Segment Tabs */}
+      {/* Segment Tabs - Mobile: first-level control, always visible */}
       <CustomersHubTabs
         value={filters.segment}
         onChange={handleSegmentChange}
@@ -137,7 +139,7 @@ export function CustomersHubClient({
         role="tabpanel"
         id={`tabpanel-${filters.segment}`}
         aria-labelledby={`tab-${filters.segment}`}
-        className="space-y-4"
+        className="space-y-4 -mt-2 sm:mt-0"
       >
         {/* Segment Summary Cards - always rendered, visibility controlled by component */}
         <SegmentSummaryCards
@@ -146,8 +148,27 @@ export function CustomersHubClient({
           onSegmentClick={handleSegmentChange}
         />
 
-        {/* Filters */}
-        <CustomersHubFilters value={filters} onChange={setFilters} />
+        {/* Mobile Collapsible Filters - visible only on mobile */}
+        <div className="sm:hidden">
+          <MobileCollapsibleFilters
+            hasActiveFilters={
+              filters.searchQuery !== "" ||
+              filters.healthRange !== "all" ||
+              filters.mrrRange !== "all"
+            }
+          >
+            <CustomersHubFilters
+              value={filters}
+              onChange={setFilters}
+              className="border-0 p-0 shadow-none"
+            />
+          </MobileCollapsibleFilters>
+        </div>
+
+        {/* Desktop/Tablet Filters - hidden on mobile */}
+        <div className="hidden sm:block">
+          <CustomersHubFilters value={filters} onChange={setFilters} />
+        </div>
 
         {/* Results count */}
         <div className="flex items-center justify-between text-sm text-text-muted">
@@ -164,8 +185,15 @@ export function CustomersHubClient({
           </span>
         </div>
 
-        {/* Table */}
-        <CustomersHubTable customers={filteredCustomers} />
+        {/* Mobile Customer Cards - visible only on mobile */}
+        <div className="sm:hidden">
+          <MobileCustomerCards customers={filteredCustomers} />
+        </div>
+
+        {/* Desktop/Tablet Table - hidden on mobile */}
+        <div className="hidden sm:block">
+          <CustomersHubTable customers={filteredCustomers} />
+        </div>
       </div>
     </div>
   );

@@ -9,6 +9,8 @@ import { CustomerDetailCard } from "@/modules/customers/components/CustomerDetai
 import { AccountHealthGauge } from "@/modules/customers/components/AccountHealthGauge";
 import type { Customer } from "@/modules/api";
 import { Heading, Text } from "@/design-system/primitives";
+import Link from "next/link";
+import { ChevronLeft } from "lucide-react";
 
 type PageParams = {
   id: string;
@@ -76,14 +78,31 @@ export default function Page({ params }: PageProps) {
 
   return (
     <div className="w-full max-w-7xl mx-auto px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
-      {/* Page Header - Clean and minimal */}
-      <header className="space-y-1 mb-8">
-        <Heading level={1} className="text-foreground">
-          {customer.name}
-        </Heading>
-        <Text variant="body" color="muted">
-          {customer.companyName}
-        </Text>
+      {/* Page Header with Back Navigation */}
+      <header className="flex items-start gap-3 sm:gap-4 mb-8">
+        {/* Back Button - left of title */}
+        <Link
+          href="/customers"
+          className="shrink-0 mt-1 group focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-border-focus rounded-lg"
+        >
+          {/* Mobile: Icon-only with large tap target */}
+          <span
+            className="flex h-11 w-11 items-center justify-center rounded-full text-text-muted hover:text-text-primary hover:bg-bg-subtle transition-colors"
+            aria-label="Back to Customers"
+          >
+            <ChevronLeft className="h-6 w-6" />
+          </span>
+        </Link>
+
+        {/* Title */}
+        <div className="space-y-1 min-w-0">
+          <Heading level={1} className="text-foreground">
+            {customer.name}
+          </Heading>
+          <Text variant="body" color="muted">
+            {customer.companyName}
+          </Text>
+        </div>
       </header>
 
       {/* Mobile Tab Navigation - Hidden on tablet and desktop */}
