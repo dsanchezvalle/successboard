@@ -31,6 +31,8 @@ interface CustomerDocumentCardProps {
   document: CustomerDocumentCardData;
   /** Customer ID for back navigation context */
   customerId?: string;
+  /** Variant for different viewport sizes */
+  variant?: "default" | "desktop";
 }
 
 const documentTypeIcons: Record<DocumentType, typeof FileText> = {
@@ -80,7 +82,9 @@ function formatRelativeDate(isoDate: string): string {
 export function CustomerDocumentCard({
   document,
   customerId,
+  variant = "default",
 }: CustomerDocumentCardProps) {
+  const isDesktop = variant === "desktop";
   const Icon = documentTypeIcons[document.documentType] || FileText;
   const href = customerId
     ? `/documents/${document.id}?fromCustomerId=${customerId}`
@@ -89,22 +93,36 @@ export function CustomerDocumentCard({
   return (
     <Link
       href={href}
-      className="group flex items-start gap-3 rounded-lg border border-border-default bg-bg-surface p-3 transition-all duration-150 hover:border-border-strong hover:bg-bg-subtle hover:shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-border-focus active:scale-[0.99]"
+      className={`group flex items-start rounded-lg border border-border-default bg-bg-surface transition-all duration-150 hover:border-border-strong hover:bg-bg-subtle hover:shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-border-focus active:scale-[0.99] ${
+        isDesktop ? "gap-4 p-4" : "gap-3 p-3"
+      }`}
     >
       {/* Icon */}
-      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-primary-subtle text-primary-foreground">
-        <Icon className="h-4 w-4" />
+      <div
+        className={`shrink-0 flex items-center justify-center rounded-md bg-primary-subtle text-text-secondary ${
+          isDesktop ? "h-10 w-10" : "h-8 w-8"
+        }`}
+      >
+        <Icon className={isDesktop ? "h-5 w-5" : "h-4 w-4"} />
       </div>
 
       {/* Content */}
       <div className="min-w-0 flex-1">
         {/* Title */}
-        <h4 className="text-sm font-medium text-text-primary leading-tight line-clamp-1 group-hover:text-primary-foreground transition-colors">
+        <h4
+          className={`font-medium text-text-primary leading-tight line-clamp-1 group-hover:text-text-secondary transition-colors ${
+            isDesktop ? "text-base" : "text-sm"
+          }`}
+        >
           {document.title}
         </h4>
 
         {/* Metadata row: type · status · date */}
-        <div className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs">
+        <div
+          className={`mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 ${
+            isDesktop ? "text-sm" : "text-xs"
+          }`}
+        >
           {/* Type */}
           <span className="text-text-muted">{document.documentTypeLabel}</span>
 
@@ -112,9 +130,9 @@ export function CustomerDocumentCard({
 
           {/* Status badge */}
           <span
-            className={`inline-flex items-center rounded-full border px-1.5 py-0.5 text-xs font-medium leading-none ${
+            className={`inline-flex items-center rounded-full border font-medium leading-none ${
               statusStyles[document.status]
-            }`}
+            } ${isDesktop ? "px-2 py-1 text-sm" : "px-1.5 py-0.5 text-xs"}`}
           >
             {document.statusLabel}
           </span>
@@ -129,9 +147,13 @@ export function CustomerDocumentCard({
       </div>
 
       {/* Chevron indicator for clickability */}
-      <div className="flex h-8 items-center text-text-disabled group-hover:text-text-muted transition-colors">
+      <div
+        className={`flex items-center text-text-disabled group-hover:text-text-muted transition-colors ${
+          isDesktop ? "h-10" : "h-8"
+        }`}
+      >
         <svg
-          className="h-4 w-4"
+          className={isDesktop ? "h-5 w-5" : "h-4 w-4"}
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"

@@ -6,6 +6,7 @@ import { User, Settings, LogOut, HelpCircle } from "lucide-react";
 import { ThemeSwitcher } from "@/modules/theme";
 import { appConfig } from "@/config";
 import { cn } from "@/design-system/utils/cn";
+import { useTheme } from "@/modules/theme";
 import {
   Tooltip,
   TooltipTrigger,
@@ -172,6 +173,7 @@ function EnvironmentBadge() {
 }
 
 export function Topbar() {
+  const { resolvedTheme } = useTheme();
   return (
     <header
       className={cn(
@@ -185,7 +187,11 @@ export function Topbar() {
       {/* Left zone - Logo on mobile */}
       <div className="flex items-center gap-3">
         <Image
-          src="/logo-sm.png"
+          src={
+            resolvedTheme === "light"
+              ? "/logo-sm-light.png"
+              : "/logo-sm-dark.png"
+          }
           alt="SuccessBoard"
           width={32}
           height={32}
