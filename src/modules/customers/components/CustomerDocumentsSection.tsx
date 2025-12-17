@@ -15,6 +15,8 @@ interface CustomerDocumentsSectionProps {
   customerId: string | number;
   /** Whether to wrap in a CustomerDetailCard (used for mobile tab) */
   wrapInCard?: boolean;
+  /** Variant for different viewport sizes */
+  variant?: "default" | "desktop";
 }
 
 const documentTypeLabels: Record<string, string> = {
@@ -58,7 +60,9 @@ function transformToCardData(doc: Document): CustomerDocumentCardData {
 export function CustomerDocumentsSection({
   customerId,
   wrapInCard = false,
+  variant = "default",
 }: CustomerDocumentsSectionProps) {
+  const isDesktop = variant === "desktop";
   const [documents, setDocuments] = useState<CustomerDocumentCardData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -82,11 +86,15 @@ export function CustomerDocumentsSection({
     fetchDocuments();
   }, [customerId]);
 
+  const gridClasses = isDesktop
+    ? "grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+    : "grid gap-4 sm:grid-cols-2";
+
   const content = (
     <>
       {/* Loading state */}
       {loading && (
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className={gridClasses}>
           <CustomerDocumentCardSkeleton />
           <CustomerDocumentCardSkeleton />
           <CustomerDocumentCardSkeleton />
@@ -95,19 +103,37 @@ export function CustomerDocumentsSection({
 
       {/* Error state */}
       {!loading && error && (
-        <div className="flex items-center gap-2 rounded-lg border border-error-border bg-error-bg/50 p-3 text-sm text-error-icon">
-          <AlertCircle className="h-4 w-4 shrink-0" />
+        <div
+          className={`flex items-center gap-2 rounded-lg border border-error-border bg-error-bg/50 p-3 text-error-icon ${
+            isDesktop ? "text-base" : "text-sm"
+          }`}
+        >
+          <AlertCircle
+            className={isDesktop ? "h-5 w-5 shrink-0" : "h-4 w-4 shrink-0"}
+          />
           <span>{error}</span>
         </div>
       )}
 
       {/* Empty state */}
       {!loading && !error && documents.length === 0 && (
-        <div className="flex flex-col items-center justify-center py-8 text-center">
-          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-bg-subtle text-text-muted">
-            <FileText className="h-6 w-6" />
+        <div
+          className={`flex flex-col items-center justify-center text-center ${
+            isDesktop ? "py-12" : "py-8"
+          }`}
+        >
+          <div
+            className={`flex items-center justify-center rounded-full bg-bg-subtle text-text-muted ${
+              isDesktop ? "h-16 w-16" : "h-12 w-12"
+            }`}
+          >
+            <FileText className={isDesktop ? "h-8 w-8" : "h-6 w-6"} />
           </div>
-          <p className="mt-3 text-sm text-text-muted">
+          <p
+            className={`mt-3 text-text-muted ${
+              isDesktop ? "text-base" : "text-sm"
+            }`}
+          >
             No documents for this customer
           </p>
         </div>
@@ -115,12 +141,13 @@ export function CustomerDocumentsSection({
 
       {/* Documents grid */}
       {!loading && !error && documents.length > 0 && (
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className={gridClasses}>
           {documents.map((doc) => (
             <CustomerDocumentCard
               key={doc.id}
               document={doc}
               customerId={String(customerId)}
+              variant={variant}
             />
           ))}
         </div>

@@ -109,12 +109,12 @@ export default function Page({ params }: PageProps) {
 
       {/* Mobile Tab Navigation - Hidden on tablet and desktop */}
       <div className="md:hidden border-b border-border mb-6">
-        <nav className="flex space-x-6" aria-label="Tabs">
+        <nav className="flex justify-between" aria-label="Tabs">
           {tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`py-3 border-b-2 text-sm font-medium transition-colors ${
+              className={`flex-1 py-3 border-b-2 text-sm font-medium transition-colors cursor-pointer ${
                 activeTab === tab.id
                   ? "border-primary text-foreground"
                   : "border-transparent text-muted-foreground hover:text-foreground"
@@ -280,10 +280,10 @@ export default function Page({ params }: PageProps) {
 
       {/* Desktop/Tablet Layout - Natural flow without tabs */}
       <div className="hidden md:block">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Main Column - Timeline */}
-          <div className="lg:col-span-2 space-y-6">
-            {/* Customer Success Overview - Full width on main column */}
+        {/* Tablet Layout - Side by side Account Health and Account Details */}
+        <div className="md:grid md:grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
+          {/* Account Health Card - Takes more space on desktop (2/3), fixed on tablet */}
+          <div className="lg:col-span-2 h-full">
             <CustomerDetailCard title="Account Health">
               <div className="flex flex-wrap items-center gap-8">
                 {/* Health Gauge */}
@@ -348,87 +348,54 @@ export default function Page({ params }: PageProps) {
                 </div>
               </div>
             </CustomerDetailCard>
-
-            {/* Timeline */}
-            <section>
-              <Heading
-                level={2}
-                visualLevel={4}
-                className="text-foreground mb-4"
-              >
-                Recent Activity
-              </Heading>
-              <CustomerDetailCard title="Interactions">
-                <CustomerInteractionsTimeline interactions={interactions} />
-              </CustomerDetailCard>
-            </section>
-
-            {/* Documents Section */}
-            <section>
-              <Heading
-                level={2}
-                visualLevel={4}
-                className="text-foreground mb-4"
-              >
-                Documents
-              </Heading>
-              <CustomerDetailCard title="Customer Documents">
-                <CustomerDocumentsSection customerId={customer.id} />
-              </CustomerDetailCard>
-            </section>
           </div>
 
-          {/* Sidebar - Account Details */}
-          <div className="space-y-6">
-            {/* Ownership */}
-            <CustomerDetailCard title="Ownership">
-              <div>
-                <Text variant="small" color="muted" className="block mb-1">
-                  Customer Success Manager
-                </Text>
-                <div className="text-sm font-medium text-foreground">
-                  {customer.csmName}
-                </div>
-              </div>
-            </CustomerDetailCard>
-
-            {/* Account Details */}
+          {/* Account Details Card - Takes less space on desktop (1/3), remaining on tablet */}
+          <div className="lg:col-span-1 h-full">
             <CustomerDetailCard title="Account Details">
               <dl className="space-y-4">
                 <div>
-                  <dt className="text-xs text-muted-foreground uppercase tracking-wide mb-1">
+                  <dt className="text-xs text-text-muted uppercase tracking-wide mb-1">
+                    Customer Success Manager
+                  </dt>
+                  <dd className="text-sm font-medium text-text-primary">
+                    {customer.csmName}
+                  </dd>
+                </div>
+                <div className="border-t border-border-default pt-4">
+                  <dt className="text-xs text-text-muted uppercase tracking-wide mb-1">
                     Customer Type
                   </dt>
-                  <dd className="text-sm font-medium text-foreground capitalize">
+                  <dd className="text-sm font-medium text-text-primary capitalize">
                     {customer.customerType}
                   </dd>
                 </div>
                 {customer.industry && (
                   <div>
-                    <dt className="text-xs text-muted-foreground uppercase tracking-wide mb-1">
+                    <dt className="text-xs text-text-muted uppercase tracking-wide mb-1">
                       Industry
                     </dt>
-                    <dd className="text-sm font-medium text-foreground">
+                    <dd className="text-sm font-medium text-text-primary">
                       {customer.industry}
                     </dd>
                   </div>
                 )}
                 {customer.employeeCount && (
                   <div>
-                    <dt className="text-xs text-muted-foreground uppercase tracking-wide mb-1">
+                    <dt className="text-xs text-text-muted uppercase tracking-wide mb-1">
                       Company Size
                     </dt>
-                    <dd className="text-sm font-medium text-foreground">
+                    <dd className="text-sm font-medium text-text-primary">
                       {customer.employeeCount.toLocaleString()} employees
                     </dd>
                   </div>
                 )}
                 {customer.website && (
                   <div>
-                    <dt className="text-xs text-muted-foreground uppercase tracking-wide mb-1">
+                    <dt className="text-xs text-text-muted uppercase tracking-wide mb-1">
                       Website
                     </dt>
-                    <dd className="text-sm font-medium text-foreground">
+                    <dd className="text-sm font-medium text-text-primary">
                       <a
                         href={customer.website}
                         target="_blank"
@@ -440,55 +407,114 @@ export default function Page({ params }: PageProps) {
                     </dd>
                   </div>
                 )}
+                {customer.renewalDate && (
+                  <div>
+                    <dt className="text-xs text-text-muted uppercase tracking-wide mb-1">
+                      Renewal Date
+                    </dt>
+                    <dd className="text-sm font-medium text-text-primary">
+                      {new Date(customer.renewalDate).toLocaleDateString(
+                        "en-US",
+                        {
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                        }
+                      )}
+                      {customer.daysUntilRenewal !== undefined && (
+                        <span className="text-text-muted ml-2">
+                          ({customer.daysUntilRenewal} days)
+                        </span>
+                      )}
+                    </dd>
+                  </div>
+                )}
               </dl>
             </CustomerDetailCard>
+          </div>
+        </div>
 
-            {/* Renewal */}
-            {customer.renewalDate && (
-              <CustomerDetailCard title="Renewal">
-                <div>
-                  <div className="text-lg font-semibold text-foreground">
-                    {new Date(customer.renewalDate).toLocaleDateString(
-                      "en-US",
-                      {
-                        month: "short",
-                        day: "numeric",
-                        year: "numeric",
-                      }
-                    )}
-                  </div>
-                  {customer.daysUntilRenewal !== undefined && (
-                    <Text variant="small" color="muted">
-                      {customer.daysUntilRenewal > 0
-                        ? `${customer.daysUntilRenewal} days remaining`
-                        : customer.daysUntilRenewal === 0
-                        ? "Due today"
-                        : `${Math.abs(customer.daysUntilRenewal)} days overdue`}
-                    </Text>
-                  )}
-                </div>
+        {/* Desktop Layout - Full width content below */}
+        <div className="hidden lg:block mt-6">
+          <div className="space-y-8">
+            {/* Timeline - Full width */}
+            <section>
+              <Heading
+                level={2}
+                visualLevel={4}
+                className="text-foreground mb-4"
+              >
+                Recent Activity
+              </Heading>
+              <CustomerDetailCard title="Interactions">
+                <CustomerInteractionsTimeline
+                  interactions={interactions}
+                  variant="desktop"
+                />
               </CustomerDetailCard>
-            )}
+            </section>
 
-            {/* Risk Flags */}
+            {/* Documents Section - Full width */}
+            <section>
+              <Heading
+                level={2}
+                visualLevel={4}
+                className="text-foreground mb-4"
+              >
+                Documents
+              </Heading>
+              <CustomerDetailCard title="Customer Documents">
+                <CustomerDocumentsSection
+                  customerId={customer.id}
+                  variant="desktop"
+                />
+              </CustomerDetailCard>
+            </section>
+
+            {/* Risk Flags - Only if present */}
             {customer.riskFlags && customer.riskFlags.length > 0 && (
-              <CustomerDetailCard title="Risk Indicators">
-                <ul className="space-y-2">
-                  {customer.riskFlags.map((flag, index) => (
-                    <li
-                      key={index}
-                      className="flex items-center gap-2 text-sm text-error-icon"
-                    >
-                      <span className="w-1.5 h-1.5 rounded-full bg-error-icon flex-shrink-0" />
-                      <span className="capitalize">
-                        {flag.replace(/-/g, " ")}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </CustomerDetailCard>
+              <section>
+                <CustomerDetailCard title="Risk Indicators">
+                  <ul className="flex flex-wrap gap-4">
+                    {customer.riskFlags.map((flag, index) => (
+                      <li
+                        key={index}
+                        className="flex items-center gap-2 text-sm text-error-icon"
+                      >
+                        <span className="w-2 h-2 rounded-full bg-error-icon flex-shrink-0" />
+                        <span className="capitalize">
+                          {flag.replace(/-/g, " ")}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </CustomerDetailCard>
+              </section>
             )}
           </div>
+        </div>
+
+        {/* Tablet Layout - Timeline and Documents stacked below */}
+        <div className="lg:hidden mt-6 space-y-6">
+          {/* Timeline */}
+          <section>
+            <Heading level={2} visualLevel={4} className="text-foreground mb-4">
+              Recent Activity
+            </Heading>
+            <CustomerDetailCard title="Interactions">
+              <CustomerInteractionsTimeline interactions={interactions} />
+            </CustomerDetailCard>
+          </section>
+
+          {/* Documents Section */}
+          <section>
+            <Heading level={2} visualLevel={4} className="text-foreground mb-4">
+              Documents
+            </Heading>
+            <CustomerDetailCard title="Customer Documents">
+              <CustomerDocumentsSection customerId={customer.id} />
+            </CustomerDetailCard>
+          </section>
         </div>
       </div>
     </div>

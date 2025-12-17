@@ -18,7 +18,7 @@ export function CustomerDetailCard({
   return (
     <Card
       className={cn(
-        "rounded-xl border border-border-default bg-bg-surface shadow-sm",
+        "rounded-xl border border-border-default bg-bg-surface shadow-sm h-full",
         className
       )}
     >

@@ -14,6 +14,8 @@ import { Badge } from "@/components/ui/badge";
 
 interface CustomerInteractionsTimelineProps {
   interactions: CustomerInteraction[];
+  /** Variant for different viewport sizes */
+  variant?: "default" | "desktop";
 }
 
 function formatDate(iso: string): string {
@@ -83,49 +85,77 @@ function channelConfig(channel: InteractionChannel) {
 
 export function CustomerInteractionsTimeline({
   interactions,
+  variant = "default",
 }: CustomerInteractionsTimelineProps) {
+  const isDesktop = variant === "desktop";
+
   if (!interactions.length) {
     return (
-      <p className="text-sm text-text-muted">
+      <p className={`text-text-muted ${isDesktop ? "text-base" : "text-sm"}`}>
         No recent interactions recorded.
       </p>
     );
   }
 
   return (
-    <ol className="space-y-4">
+    <ol className={isDesktop ? "space-y-6" : "space-y-4"}>
       {interactions.map((interaction, index) => {
         const {
           label,
           icon: Icon,
-          variant,
+          variant: badgeVariant,
           className,
         } = channelConfig(interaction.channel);
 
         return (
-          <li key={interaction.id} className="flex gap-3">
+          <li
+            key={interaction.id}
+            className={`flex ${isDesktop ? "gap-4" : "gap-3"}`}
+          >
             <div className="flex flex-col items-center">
-              <span className="mt-1 h-2 w-2 rounded-full bg-border-default" />
+              <span
+                className={`mt-1 rounded-full bg-text-muted ${
+                  isDesktop ? "h-3 w-3" : "h-2 w-2"
+                }`}
+              />
               {index !== interactions.length - 1 && (
-                <span className="mt-1 h-full w-px flex-1 bg-border-default" />
+                <span className="mt-1 h-full w-px flex-1 bg-text-muted" />
               )}
             </div>
             <div className="flex-1 space-y-1">
-              <div className="flex items-center justify-between gap-2">
-                <div className="flex items-center gap-2">
+              <div
+                className={`flex items-center justify-between ${
+                  isDesktop ? "gap-4" : "gap-2"
+                }`}
+              >
+                <div
+                  className={`flex items-center ${
+                    isDesktop ? "gap-3" : "gap-2"
+                  }`}
+                >
                   <Badge
-                    variant={variant}
-                    className={`inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium ${className}`}
+                    variant={badgeVariant}
+                    className={`inline-flex items-center gap-1 font-medium ${className} ${
+                      isDesktop ? "px-3 py-1 text-sm" : "px-2 py-0.5 text-xs"
+                    }`}
                   >
-                    <Icon className="h-3 w-3" />
+                    <Icon className={isDesktop ? "h-4 w-4" : "h-3 w-3"} />
                     <span>{label}</span>
                   </Badge>
-                  <span className="text-xs text-text-muted">
+                  <span
+                    className={`text-text-muted ${
+                      isDesktop ? "text-sm" : "text-xs"
+                    }`}
+                  >
                     {formatDate(interaction.occurredAt)}
                   </span>
                 </div>
                 {interaction.owner && (
-                  <span className="text-xs text-text-muted">
+                  <span
+                    className={`text-text-muted ${
+                      isDesktop ? "text-sm" : "text-xs"
+                    }`}
+                  >
                     Owner:{" "}
                     <span className="font-medium text-text-primary">
                       {interaction.owner}
@@ -134,11 +164,19 @@ export function CustomerInteractionsTimeline({
                 )}
               </div>
               <div>
-                <p className="text-sm font-medium text-text-primary">
+                <p
+                  className={`font-medium text-text-primary ${
+                    isDesktop ? "text-base" : "text-sm"
+                  }`}
+                >
                   {interaction.title}
                 </p>
                 {interaction.description && (
-                  <p className="text-xs text-text-muted mt-0.5">
+                  <p
+                    className={`text-text-muted mt-0.5 ${
+                      isDesktop ? "text-sm" : "text-xs"
+                    }`}
+                  >
                     {interaction.description}
                   </p>
                 )}

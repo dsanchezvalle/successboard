@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/design-system/utils/cn";
+import { useTheme } from "@/modules/theme";
 
 import { Activity, Building2, Files } from "lucide-react";
 
@@ -16,7 +17,7 @@ interface NavItem {
 
 const navItems: NavItem[] = [
   { label: "Pulse", href: "/", icon: Activity },
-  { label: "Accounts", href: "/customers", icon: Building2 },
+  { label: "Customers", href: "/customers", icon: Building2 },
   { label: "Documents", href: "/documents", icon: Files },
 ];
 
@@ -33,6 +34,7 @@ const navItems: NavItem[] = [
  */
 export function Sidebar() {
   const pathname = usePathname();
+  const { resolvedTheme } = useTheme();
 
   const isActive = (href: string) => {
     if (href === "/") return pathname === "/";
@@ -49,7 +51,11 @@ export function Sidebar() {
         {/* Logo */}
         <div className="mb-6 flex items-center justify-center">
           <Image
-            src="/logo-sm.png"
+            src={
+              resolvedTheme === "light"
+                ? "/logo-sm-light.png"
+                : "/logo-sm-dark.png"
+            }
             alt="SuccessBoard"
             width={40}
             height={40}
@@ -103,7 +109,9 @@ export function Sidebar() {
         {/* Logo */}
         <div className="mb-8 flex items-center justify-center">
           <Image
-            src="/logo.png"
+            src={
+              resolvedTheme === "light" ? "/logo-light.png" : "/logo-dark.png"
+            }
             alt="SuccessBoard"
             width={160}
             height={40}
