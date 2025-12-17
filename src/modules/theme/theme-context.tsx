@@ -18,6 +18,7 @@ import {
   useState,
   useCallback,
   useMemo,
+  useRef,
 } from "react";
 
 // =============================================================================
@@ -173,15 +174,13 @@ export function ThemeProvider({
     return forcedTheme ?? resolveTheme(initial);
   });
 
-  const [mounted, setMounted] = useState(false);
+  const mounted = useRef(false);
 
   // Apply theme on mount and when forcedTheme changes
   useEffect(() => {
     applyTheme(resolvedTheme);
-    if (!mounted) {
-      setMounted(true);
-    }
-  }, [resolvedTheme, forcedTheme, mounted]);
+    mounted.current = true;
+  }, [resolvedTheme, forcedTheme]);
 
   // Listen for system preference changes when theme is 'system'
   useEffect(() => {

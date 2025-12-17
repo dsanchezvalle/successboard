@@ -8,6 +8,11 @@
  * import { semanticLight, fontSize, spacing } from '@/design-system/tokens';
  */
 
+// Import for internal use in helper functions
+import { semanticLight, semanticDark } from "./colors";
+import { shadows, shadowsDark } from "./shadows";
+import { interactiveStates } from "./states";
+
 // =============================================================================
 // COLOR TOKENS
 // =============================================================================
