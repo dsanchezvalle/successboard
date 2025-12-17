@@ -56,12 +56,6 @@ function getHealthColor(score: number): string {
   return "text-error-icon";
 }
 
-function getHealthBg(score: number): string {
-  if (score >= 70) return "bg-success-icon";
-  if (score >= 40) return "bg-warning-icon";
-  return "bg-error-icon";
-}
-
 export function CustomersHubTable({
   customers,
   className,

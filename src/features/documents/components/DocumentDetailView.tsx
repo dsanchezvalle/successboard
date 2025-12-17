@@ -4,7 +4,6 @@ import { useState } from "react";
 import type { AIAction } from "../types";
 import type { DocumentDetail } from "@/features/documents/data/document-detail-service";
 import { formatRelativeDate } from "@/features/documents/data/document-detail-service";
-import { mockDocument } from "@/features/documents/data/mock-document";
 import { DocumentTopBar } from "./DocumentTopBar";
 import { DocumentOutlinePanel } from "./DocumentOutlinePanel";
 import { AIAssistantPanel } from "./AIAssistantPanel";

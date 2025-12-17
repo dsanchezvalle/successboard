@@ -8,6 +8,11 @@
  * import { semanticLight, fontSize, spacing } from '@/design-system/tokens';
  */
 
+// Import for internal use in helper functions
+import { semanticLight, semanticDark } from "./colors";
+import { shadows, shadowsDark } from "./shadows";
+import { interactiveStates } from "./states";
+
 // =============================================================================
 // COLOR TOKENS
 // =============================================================================
@@ -159,10 +164,9 @@ export {
 // =============================================================================
 
 /**
- * Get semantic tokens for a specific theme
+ * Get semantic colors for a specific theme
  */
 export const getSemanticColors = (theme: "light" | "dark") => {
-  const { semanticLight, semanticDark } = require("./colors");
   return theme === "dark" ? semanticDark : semanticLight;
 };
 
@@ -170,7 +174,6 @@ export const getSemanticColors = (theme: "light" | "dark") => {
  * Get shadows for a specific theme
  */
 export const getShadows = (theme: "light" | "dark") => {
-  const { shadows, shadowsDark } = require("./shadows");
   return theme === "dark" ? shadowsDark : shadows;
 };
 
@@ -178,6 +181,5 @@ export const getShadows = (theme: "light" | "dark") => {
  * Get interactive states for a specific theme
  */
 export const getInteractiveStates = (theme: "light" | "dark") => {
-  const { interactiveStates } = require("./states");
   return theme === "dark" ? interactiveStates.dark : interactiveStates.light;
 };

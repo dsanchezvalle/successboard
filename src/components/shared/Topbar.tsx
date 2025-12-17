@@ -22,57 +22,6 @@ import {
 
 /**
  * Topbar - Application header bar
- *
- * Premium sticky header with clear left/middle/right zones:
- * - Left: App branding/context (reserved for future use)
- * - Middle: AI feature access (Sparkles)
- * - Right: Environment indicator, theme switcher, user avatar
- *
- * @accessibility
- * - Uses semantic <header> element
- * - All interactive elements are focusable with visible focus rings
- * - Icon-only buttons have aria-labels
- * - Proper keyboard navigation (tab order)
- * - Appropriate hit targets (min 32x32px)
- */
-
-/**
- * IconButton - Reusable icon button with consistent styling
- */
-interface IconButtonProps {
-  onClick?: () => void;
-  ariaLabel: string;
-  children: React.ReactNode;
-  className?: string;
-}
-
-function IconButton({
-  onClick,
-  ariaLabel,
-  children,
-  className,
-}: IconButtonProps) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-label={ariaLabel}
-      className={cn(
-        "inline-flex h-8 w-8 items-center justify-center rounded-md",
-        "bg-transparent hover:bg-bg-subtle",
-        "text-text-muted hover:text-text-primary",
-        "cursor-pointer transition-colors duration-150",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus focus-visible:ring-offset-2 focus-visible:ring-offset-bg-surface",
-        className
-      )}
-    >
-      {children}
-    </button>
-  );
-}
-
-/**
- * UserAvatar - Initial-based avatar component
  */
 interface UserAvatarProps {
   initial: string;
@@ -146,29 +95,6 @@ function UserAvatar({ initial, size = "sm", className }: UserAvatarProps) {
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  );
-}
-
-/**
- * EnvironmentBadge - Shows current environment with appropriate styling
- */
-function EnvironmentBadge() {
-  const { environmentLabel, isProduction } = appConfig;
-
-  // Don't show badge in production
-  if (isProduction) return null;
-
-  return (
-    <span
-      className={cn(
-        "hidden md:inline-flex items-center px-2 py-0.5 rounded-md",
-        "text-xs font-medium",
-        "bg-bg-subtle text-text-muted",
-        "border border-border-default"
-      )}
-    >
-      {environmentLabel}
-    </span>
   );
 }
 

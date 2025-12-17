@@ -10,11 +10,7 @@ import {
   aiActions,
   documentOutline,
 } from "@/features/documents/data/mock-document";
-import {
-  getDocumentDetail,
-  formatRelativeDate,
-} from "@/features/documents/data/document-detail-service";
-import type { DocumentDetail } from "@/features/documents/data/document-detail-service";
+import { getDocumentDetail } from "@/features/documents/data/document-detail-service";
 
 export const metadata = {
   title: "Document | SuccessBoard",

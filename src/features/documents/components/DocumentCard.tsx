@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { FileText, MoreHorizontal, Calendar, User } from "lucide-react";
+import { FileText, Calendar, User } from "lucide-react";
 import type { DocumentListItem } from "../data/documents-service";
 import { DocumentActionsMenu } from "./DocumentActionsMenu";
 import {

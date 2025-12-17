@@ -16,10 +16,8 @@ import {
   formatCurrencyCompact,
   formatPercent,
   getHealthStatus,
-  getTrendColor,
   type HealthStatus,
 } from "./index";
-import { MockApiError } from "./mockapi";
 
 // =============================================================================
 // VIEW MODEL TYPES
