@@ -3,7 +3,6 @@
 import { useState, useMemo, useEffect } from "react";
 import type { DocumentType, DocumentStatus } from "@/modules/api";
 import type {
-  DocumentListItem,
   DocumentsHubData,
   SortField,
   SortOrder,

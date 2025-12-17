@@ -198,23 +198,6 @@ function validateRequired(
   return true;
 }
 
-function validateOptional(
-  file: string,
-  index: number,
-  obj: Record<string, unknown>,
-  field: string,
-  validator: (v: unknown) => boolean,
-  typeName: string
-): boolean {
-  if (field in obj && obj[field] !== undefined && obj[field] !== null) {
-    if (!validator(obj[field])) {
-      addError(file, index, field, `Expected ${typeName}`, obj[field]);
-      return false;
-    }
-  }
-  return true;
-}
-
 function validateEnum<T extends string>(
   file: string,
   index: number,

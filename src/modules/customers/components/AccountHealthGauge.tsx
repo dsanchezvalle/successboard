@@ -132,9 +132,6 @@ export function AccountHealthGauge({
   // Needle polygon points: tip, base1, base2
   const needlePoints = `${tipX},${tipY} ${base1X},${base1Y} ${base2X},${base2Y}`;
 
-  // Hub circle radius
-  const hubRadius = compact ? 6 : 8;
-
   // Helper to create arc path for a segment
   function createArcPath(startPct: number, endPct: number): string {
     // Convert percentage to angle (180° to 0°)
@@ -150,7 +147,6 @@ export function AccountHealthGauge({
     const y2 = center - radius * Math.sin(endAngleRad);
 
     // Large arc flag: 1 if arc spans more than 180°
-    const arcSpan = Math.abs(endAngleDeg - startAngleDeg);
     const largeArc = 0;
     const sweepFlag = 1;
 

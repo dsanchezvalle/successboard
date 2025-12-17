@@ -41,7 +41,7 @@ interface TypeBadgeProps {
   label: string;
 }
 
-export function TypeBadge({ type, label }: TypeBadgeProps) {
+export function TypeBadge({ label }: TypeBadgeProps) {
   return (
     <span className="inline-flex items-center gap-1 rounded-md bg-bg-subtle px-2 py-0.5 text-xs font-medium text-text-secondary border border-border-default/50">
       <FileText className="h-3 w-3" />
@@ -74,13 +74,6 @@ export function HealthScoreBadge({ score }: HealthScoreBadgeProps) {
     if (score >= 80) return "text-green-600 dark:text-green-400";
     if (score >= 60) return "text-amber-600 dark:text-amber-400";
     return "text-red-600 dark:text-red-400";
-  };
-
-  const getScoreLabel = (score: number) => {
-    if (score >= 80) return "Excellent";
-    if (score >= 60) return "Good";
-    if (score >= 40) return "At Risk";
-    return "Critical";
   };
 
   return (
