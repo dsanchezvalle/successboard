@@ -1,138 +1,312 @@
-# SuccessBoard
+![SuccessBoard Logo](public/logo-light.png)
 
-SuccessBoard is a modern Customer Success dashboard built with Next.js 15, TypeScript, TailwindCSS, and shadcn/ui.  
-It is designed as a backend-agnostic and brand-agnostic frontend that can integrate with multiple data sources.
-
-For this proof of concept, SuccessBoard consumes the public APIs and microservices of the **Spring Petclinic Microservices** project. Petclinic provides realistic entities such as owners, pets, and visits, which we reinterpret for Customer Success use cases:
-
-- **Owners → Customers / Accounts**
-- **Pets → Products / Subscriptions**
-- **Visits → Interactions / Touchpoints**
-
-This allows SuccessBoard to demonstrate real API integration, error handling, routing, component design, and dashboard architecture.
+A modern B2B Customer Success dashboard built with Next.js 15, React 19, and TypeScript. Provides Customer Success teams with a unified view of account health, customer interactions, documents, and actionable insights through a cohesive design-system-driven UI.
 
 ---
 
-## About Spring Petclinic (Upstream Project Credit)
+## Product & UX Principles
 
-SuccessBoard uses the **Spring Petclinic Microservices** project as a proof-of-concept backend during development.
-
-**Spring Petclinic** is an open-source sample application built by the Spring team at VMware.  
-Its goal is to demonstrate best practices in building Java microservices using Spring Boot, Spring Cloud, and related technologies.
-
-Petclinic provides several microservices such as:
-
-- Customers Service
-- Vets Service
-- Visits Service
-- API Gateway
-- Discovery Server (Eureka)
-
-These services expose real REST APIs and form a fully functional distributed backend.  
-SuccessBoard consumes these APIs only for educational and demonstration purposes.
-
-### License and Attribution
-
-Spring Petclinic Microservices is licensed under the **Apache License 2.0**.  
-Project source: https://github.com/spring-petclinic/spring-petclinic-microservices
-
-SuccessBoard is **not affiliated** with VMware, the Spring team, or the Petclinic project.  
-All credit for the backend architecture and data model used in this proof of concept belongs to the Petclinic authors.
+- **Design-system-first**: Semantic tokens (colors, typography, spacing, motion) and reusable primitives (`Heading`, `Text`, `Container`, `Section`) ensure visual consistency across all views
+- **Typed-first domain modeling**: All API entities, view models, and service boundaries are strongly typed with TypeScript
+- **Accessibility by default**: WCAG AA color contrast, semantic HTML, ARIA labels, keyboard navigation, and focus management built into core components
+- **Backend-agnostic architecture**: Clean separation between UI, service layer, and data fetching enables integration with any REST backend
+- **Responsive and themeable**: Mobile-first layouts with tablet/desktop breakpoints; light/dark mode with system preference detection
 
 ---
 
-## Customer Success Data (Mocks)
+## Key Capabilities
 
-Petclinic does not provide metrics normally required in Customer Success workflows, such as:
-
-- Health scores
-- Usage analytics
-- Churn risk
-- Subscription tiers (MRR / ARR)
-- Engagement metrics
-
-For these areas, SuccessBoard currently uses **frontend mocks**, cleanly separated from Petclinic data models.  
-All mocks are replaceable with a real backend in a future phase.
-
----
-
-## Goals
-
-- Deliver a clean, modern, production-ready frontend
-- Showcase UI/UX, design systems, and component architecture
-- Provide a realistic Customer Success interface using real APIs
-- Keep the project easily extensible for other companies or backends
+- **Dashboard Overview**: KPIs (Total Customers, ARR, Avg Health Score, At-Risk Accounts), health distribution visualization, accounts needing attention
+- **Customers Hub**: Searchable, sortable customer table with segment filtering, health badges, and lifecycle indicators
+- **Customer Detail**: Health gauge (0-100), key metrics, interactions timeline, documents section, risk indicators
+- **Document Viewer**: Sectioned content with outline navigation and AI assistant panel (presentational)
+- **Theming**: Light/dark mode toggle with localStorage persistence and system preference detection
 
 ---
 
 ## Tech Stack
 
-- **Next.js 15 (App Router)**
-- **React 19 + React Compiler**
-- **TypeScript**
-- **TailwindCSS**
-- **shadcn/ui**
-- **Storybook**
-- **Spring Petclinic Microservices API** as proof-of-concept backend
+| Layer         | Technology                                     |
+| ------------- | ---------------------------------------------- |
+| Framework     | Next.js 16.0.7 (App Router)                    |
+| Runtime       | React 19.2.0 + React Compiler                  |
+| Language      | TypeScript 5                                   |
+| Styling       | TailwindCSS 4, tw-animate-css                  |
+| UI Components | shadcn/ui (generates Radix-based primitives)   |
+| Icons         | Lucide React                                   |
+| Utilities     | clsx, tailwind-merge, class-variance-authority |
+| Linting       | ESLint 9                                       |
+
+---
+
+## Architecture
+
+### Layer Diagram
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                      Browser (Client)                        │
+├─────────────────────────────────────────────────────────────┤
+│  Next.js App Router (RSC + Client Components)               │
+│  ├── src/app/           → Routes & Pages                    │
+│  ├── src/features/      → Feature-specific components       │
+│  ├── src/modules/       → Domain logic & API services       │
+│  ├── src/components/    → Shared UI (shadcn + custom)       │
+│  └── src/design-system/ → Tokens & primitives               │
+├─────────────────────────────────────────────────────────────┤
+│  Service Layer (src/modules/api/)                           │
+│  ├── mockapi.ts         → HTTP client                       │
+│  ├── types.ts           → Domain type definitions           │
+│  ├── mappers.ts         → View model transformations        │
+│  └── *-service.ts       → Data aggregation & filtering      │
+├─────────────────────────────────────────────────────────────┤
+│                   REST Backend (MockAPI.io)                  │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Module Map
+
+| Path                            | Purpose                                                                     |
+| ------------------------------- | --------------------------------------------------------------------------- |
+| `src/app/`                      | Next.js App Router pages                                                    |
+| `src/components/ui/`            | shadcn/ui generated components (Badge, Card, DropdownMenu, Tooltip)         |
+| `src/components/shared/`        | Layout components (AppShell, Sidebar, Topbar)                               |
+| `src/design-system/tokens/`     | Design tokens (colors, typography, spacing, shadows, motion, focus, states) |
+| `src/design-system/primitives/` | Semantic primitives (Heading, Text, Container, Section, VisuallyHidden)     |
+| `src/modules/api/`              | API client, domain types, mappers, service functions                        |
+| `src/modules/overview/`         | Dashboard components and data                                               |
+| `src/modules/customers/`        | Customer detail components                                                  |
+| `src/modules/customers-hub/`    | Customers list/table                                                        |
+| `src/modules/theme/`            | Theme context, provider, switcher                                           |
+| `src/features/documents/`       | Document detail view                                                        |
+| `tools/`                        | MockAPI seed data and validation                                            |
+| `docs/mockapi/`                 | API documentation                                                           |
+
+---
+
+## Backend / Data Layer
+
+### MockAPI.io Integration
+
+The application consumes a MockAPI.io backend configured via environment variable. All endpoints return JSON and follow REST conventions.
+
+**Resources & Endpoints**
+
+| Resource     | Endpoint        | Operations                                     |
+| ------------ | --------------- | ---------------------------------------------- |
+| Customers    | `/customers`    | GET (list), GET/:id, POST, PUT/:id, DELETE/:id |
+| Documents    | `/documents`    | GET, GET/:id, POST, PUT/:id                    |
+| Interactions | `/interactions` | GET, GET/:id, POST                             |
+| Frameworks   | `/frameworks`   | GET, GET/:id                                   |
+| Templates    | `/templates`    | GET, GET/:id                                   |
+| Metrics      | `/metrics`      | GET (overview summary)                         |
+
+**Domain Models**
+
+- **Customer**: Central entity with `id`, `name`, `companyName`, `customerType`, `tier`, `mrr`, `arr`, `lifecycleStage`, `healthScore`, `healthTrend`, `riskFlags[]`, `keyContacts[]`, `csmName`, `renewalDate`, `npsScore`
+- **Document**: `id`, `title`, `documentType`, `status`, `customerId`, `templateId`, `content`
+- **Interaction**: `id`, `customerId`, `type`, `channel`, `title`, `description`, `owner`, `occurredAt`
+- **Framework**: `id`, `name`, `description`, `type`, `criteria`, `matchingCustomerCount`
+- **MetricsSummary**: `totalCustomers`, `totalArr`, `avgHealthScore`, `atRiskCount`, `healthDistribution`
+
+### Demo Fallback Behavior
+
+When `NEXT_PUBLIC_MOCKAPI_BASE_URL` is not set or the API is unreachable:
+
+- The app automatically falls back to built-in demo data
+- A banner is displayed: "Using demo data — Configure NEXT_PUBLIC_MOCKAPI_BASE_URL to connect to your backend"
+- All features remain functional with realistic sample data
+
+### Seeds & Validation
+
+```
+tools/
+├── mockapi-seeds/
+│   ├── customers.json
+│   ├── documents.json
+│   ├── interactions.json
+│   ├── frameworks.json
+│   ├── templates.json
+│   └── metrics.json
+└── validate-seeds.ts    # Validates seed data integrity
+```
+
+---
+
+## Frontend
+
+### Routing (App Router)
+
+| Route             | Description                         |
+| ----------------- | ----------------------------------- |
+| `/`               | Overview dashboard                  |
+| `/customers`      | Customers hub (list with filtering) |
+| `/customers/[id]` | Customer detail                     |
+| `/documents`      | Documents list                      |
+| `/documents/[id]` | Document detail with viewer         |
+
+### UI System
+
+**Design Tokens** (`src/design-system/tokens/`)
+
+- `colors.ts` — Semantic color palette with WCAG AA contrast ratios documented
+- `typography.ts` — Font scales, weights, line heights
+- `spacing.ts` — Consistent spacing scale
+- `shadows.ts` — Elevation system
+- `motion.ts` — Animation durations and easings
+- `focus.ts` — Focus ring styles
+- `states.ts` — Interactive state styles
+
+**Primitives** (`src/design-system/primitives/`)
+
+- `Heading` — Semantic headings with visual level override
+- `Text` — Typography component with variants
+- `Container` — Max-width content wrapper
+- `Section` — Semantic section wrapper
+- `VisuallyHidden` — Accessibility helper for screen readers
+
+**shadcn/ui Components** (`src/components/ui/`)
+
+Generated via shadcn/ui CLI (`components.json` config), built on Radix UI primitives:
+
+- `Badge` — Status and category indicators
+- `Card` — Content containers
+- `DropdownMenu` — Action menus (Radix DropdownMenu)
+- `Tooltip` — Hover information (Radix Tooltip)
+
+### Theming
+
+- **Light/Dark mode**: Toggle via `ThemeSwitcher` component
+- **System preference**: Detects and respects `prefers-color-scheme`
+- **Persistence**: Theme choice stored in localStorage
+- **Implementation**: CSS custom properties (`--bg-page`, `--text-primary`, `--border-default`, etc.) swap on `.dark` class
+
+### Accessibility
+
+**Implemented**:
+
+- Semantic HTML structure
+- ARIA labels on interactive elements
+- Keyboard navigation support
+- Focus visible states
+- Color contrast compliance (WCAG AA)
+- `VisuallyHidden` component for screen reader content
+- Theme-aware custom scrollbars
+
+**Gaps (TODO)**:
+
+- Skip navigation links
+- Comprehensive focus trapping in modals
+- ARIA live regions for dynamic content
 
 ---
 
 ## Getting Started
 
-Install dependencies:
+### Prerequisites
+
+- Node.js 18+
+- npm 9+
+
+### Install
 
 ```bash
+git clone <repository-url>
+cd successboard
 npm install
 ```
 
-Run the local development server:
+### Environment Variables
+
+Create `.env.local` from the example:
+
+```bash
+cp .env.example .env.local
+```
+
+| Variable                       | Required | Description                                                                                      |
+| ------------------------------ | -------- | ------------------------------------------------------------------------------------------------ |
+| `NEXT_PUBLIC_MOCKAPI_BASE_URL` | No       | MockAPI.io base URL (e.g., `https://64abc123.mockapi.io/api/v1`). If not set, demo data is used. |
+
+### Run
 
 ```bash
 npm run dev
 ```
 
-The app will be available at:
+Open [http://localhost:3000](http://localhost:3000)
 
-```
-http://localhost:3000
-```
+---
 
-Make sure the Petclinic backend is running:
+## Scripts
+
+| Script  | Command      | Description              |
+| ------- | ------------ | ------------------------ |
+| `dev`   | `next dev`   | Start development server |
+| `build` | `next build` | Production build         |
+| `start` | `next start` | Start production server  |
+| `lint`  | `eslint`     | Run ESLint               |
+
+---
+
+## Testing & Quality
+
+| Tool       | Status         |
+| ---------- | -------------- |
+| ESLint     | ✅ Configured  |
+| TypeScript | ✅ Strict mode |
+| Unit Tests | 🗓️ Planned     |
+| E2E Tests  | 🗓️ Planned     |
+
+---
+
+## Deployment
+
+### Vercel (Recommended)
+
+1. Connect repository to Vercel
+2. Set environment variables in Vercel dashboard:
+   - `NEXT_PUBLIC_MOCKAPI_BASE_URL` (optional)
+3. Deploy
+
+### Manual
 
 ```bash
-docker compose up
+npm run build
+npm run start
 ```
 
-API Gateway (default):
-
-```
-http://localhost:8080
-```
+The app runs on port 3000 by default. Configure via `PORT` environment variable if needed.
 
 ---
 
-## Project Structure (planned)
+## Roadmap
 
-```
-src/
-  app/
-  components/
-    ui/
-    shared/
-  features/
-    customers/
-      api/
-      mocks/
-      components/
-      types.ts
-  lib/
-```
+- 📝 **AI Agent integrations**: Integrate AI agents and tools for intelligent document generation and content assistance
+- 📝 **Design System consolidation**: Harden and unify the design system with comprehensive token coverage and component API standardization
+- 📝 **Storybook implementation**: Add Storybook for isolated component development, visual documentation, and interaction testing
+- 📝 **Onboarding Wizard**: Create an interactive wizard to guide users through app features and maximize value based on their specific needs
+- 📝 **Signals & Tasks**: Introduce Signals as first-class entities visible across the platform (not just in documents) and Tasks as actionable units for customer relationship tracking
+- 📝 **Framework & Template generation**: Enable dynamic creation of CS frameworks and document templates driven by Signals and Tasks data
 
 ---
 
-## Future Work
+## Contributing
 
-- Replace Customer Success mocks with a real data source
-- Add multi-brand theming and configuration
-- Introduce authentication, roles, and permissions
-- Add subscription analytics and a customer health scoring engine
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+Please ensure:
+
+- TypeScript strict mode passes
+- ESLint reports no errors
+- New components follow design-system patterns
+
+---
+
+## Author
+
+**David Sánchez Valle** - [LinkedIn](https://www.linkedin.com/in/dsanchezvalle) | [GitHub](https://github.com/dsanchezvalle)
