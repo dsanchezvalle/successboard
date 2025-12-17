@@ -20,6 +20,8 @@ export interface OverviewHeaderProps {
   subtitle?: string;
   /** Optional right-side content (actions, filters) */
   actions?: React.ReactNode;
+  /** Maximum width for content container */
+  maxWidth?: "sm" | "md" | "lg" | "xl" | "2xl" | "full";
   /** Additional CSS classes */
   className?: string;
 }
@@ -28,16 +30,32 @@ export function OverviewHeader({
   title,
   subtitle,
   actions,
+  maxWidth,
   className,
 }: OverviewHeaderProps) {
+  const maxWidthClasses = {
+    sm: "max-w-sm",
+    md: "max-w-md",
+    lg: "max-w-lg",
+    xl: "max-w-xl",
+    "2xl": "max-w-2xl",
+    full: "max-w-full",
+  };
+
   return (
     <header
       className={cn(
-        "flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between",
+        "flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between w-full",
         className
       )}
     >
-      <div className="space-y-1">
+      <div
+        className={cn(
+          "space-y-1",
+          maxWidth && maxWidthClasses[maxWidth],
+          "flex-1"
+        )}
+      >
         <Heading level={1} className="text-text-primary">
           {title}
         </Heading>
@@ -45,7 +63,7 @@ export function OverviewHeader({
           <Text
             variant="body"
             color="muted"
-            className="max-w-2xl text-text-muted"
+            className="max-w-none text-text-muted"
           >
             {subtitle}
           </Text>

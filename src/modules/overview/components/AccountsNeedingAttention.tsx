@@ -72,7 +72,7 @@ export function AccountsNeedingAttention({
           Accounts Needing Attention
         </h2>
         <Link
-          href="/customers?status=at-risk"
+          href="/customers?status=at-risk&segment=at-risk"
           className="text-xs font-medium text-ds-primary-foreground hover:text-ds-primary-hover transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-border-focus"
         >
           View all →
