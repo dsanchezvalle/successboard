@@ -39,31 +39,6 @@ import { focusRing } from "./focus";
 // =============================================================================
 
 /**
- * Convert a nested object to flat CSS custom properties
- */
-const flattenToCSSVars = (
-  obj: Record<string, unknown>,
-  prefix: string = ""
-): Record<string, string> => {
-  const result: Record<string, string> = {};
-
-  for (const [key, value] of Object.entries(obj)) {
-    const varName = prefix ? `${prefix}-${key}` : key;
-
-    if (typeof value === "object" && value !== null && !Array.isArray(value)) {
-      Object.assign(
-        result,
-        flattenToCSSVars(value as Record<string, unknown>, varName)
-      );
-    } else if (typeof value === "string" || typeof value === "number") {
-      result[`--${varName}`] = String(value);
-    }
-  }
-
-  return result;
-};
-
-/**
  * Convert CSS variable object to CSS string
  */
 const toCSSString = (vars: Record<string, string>): string => {

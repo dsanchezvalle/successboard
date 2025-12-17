@@ -193,15 +193,11 @@ interface FilterSelectProps {
 }
 
 function FilterSelect({
-  label,
   value,
   onChange,
   options,
   placeholder,
 }: FilterSelectProps) {
-  const selectedOption = options.find((o) => o.value === value);
-  const displayLabel = selectedOption ? selectedOption.label : placeholder;
-
   return (
     <div className="relative">
       <select

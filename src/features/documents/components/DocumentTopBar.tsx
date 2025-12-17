@@ -40,8 +40,6 @@ interface DocumentTopBarProps {
 
 export function DocumentTopBar({
   title,
-  subtitle,
-  metadata,
   lastSaved = "2 minutes ago",
   description,
   backHref = "/documents",

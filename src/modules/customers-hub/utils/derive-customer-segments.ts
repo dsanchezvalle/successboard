@@ -36,7 +36,6 @@ function deriveSegment(
   mrr: number
 ): CustomerSegment {
   const { healthScore, lifetimeValue } = metrics;
-  const petsCount = customer.petsCount ?? 0;
 
   // VIP: High health + high value OR many pets (high engagement)
   if (healthScore >= 80 && (lifetimeValue >= 30000 || mrr >= 3000)) {
