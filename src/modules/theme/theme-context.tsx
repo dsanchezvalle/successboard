@@ -158,23 +158,30 @@ export function ThemeProvider({
   defaultTheme = DEFAULT_THEME,
   forcedTheme,
 }: ThemeProviderProps) {
-  // Initialize with default to avoid hydration mismatch
-  const [theme, setThemeState] = useState<Theme>(defaultTheme);
-  const [resolvedTheme, setResolvedTheme] = useState<ResolvedTheme>(
-    forcedTheme ?? resolveTheme(defaultTheme)
-  );
-  const [mounted, setMounted] = useState(false);
+  // Initialize with lazy initializer to avoid setState in effect
+  const [theme, setThemeState] = useState<Theme>(() => {
+    if (typeof window === "undefined") return defaultTheme;
+    const stored = getStoredTheme();
+    return stored ?? defaultTheme;
+  });
 
-  // Initialize theme from storage/system on mount
-  useEffect(() => {
+  const [resolvedTheme, setResolvedTheme] = useState<ResolvedTheme>(() => {
+    if (typeof window === "undefined")
+      return forcedTheme ?? resolveTheme(defaultTheme);
     const stored = getStoredTheme();
     const initial = stored ?? defaultTheme;
-    setThemeState(initial);
-    const resolved = forcedTheme ?? resolveTheme(initial);
-    setResolvedTheme(resolved);
-    applyTheme(resolved);
-    setMounted(true);
-  }, [defaultTheme, forcedTheme]);
+    return forcedTheme ?? resolveTheme(initial);
+  });
+
+  const [mounted, setMounted] = useState(false);
+
+  // Apply theme on mount and when forcedTheme changes
+  useEffect(() => {
+    applyTheme(resolvedTheme);
+    if (!mounted) {
+      setMounted(true);
+    }
+  }, [resolvedTheme, forcedTheme, mounted]);
 
   // Listen for system preference changes when theme is 'system'
   useEffect(() => {
