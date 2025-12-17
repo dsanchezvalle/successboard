@@ -57,7 +57,7 @@ export default async function HomePage() {
         {/* Two-column layout for Actions and Attention */}
         <div className="grid gap-6 lg:grid-cols-2">
           {/* Quick Actions */}
-          <QuickActions atRiskCount={kpis.atRiskCustomers} />
+          <QuickActions />
 
           {/* Accounts Needing Attention */}
           <AccountsNeedingAttention accounts={accountsNeedingAttention} />
