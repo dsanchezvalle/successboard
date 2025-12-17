@@ -1,4 +1,4 @@
-![SuccessBoard Logo](public/logo-light.png)
+![SuccessBoard Logo](public/logo-bg.png)
 
 A modern B2B Customer Success dashboard built with Next.js 15, React 19, and TypeScript. Provides Customer Success teams with a unified view of account health, customer interactions, documents, and actionable insights through a cohesive design-system-driven UI.
 
