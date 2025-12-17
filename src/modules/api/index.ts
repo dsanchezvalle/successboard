@@ -50,9 +50,8 @@
  *   - Add `mockapi.getInteractionsByCustomer()` for timeline
  *   - Add `mockapi.getDocumentsByCustomer()` for documents
  *
- * - [ ] Segmentation (`src/app/segmentation/page.tsx`)
- *   - Replace frontend segmentation with `mockapi.getFrameworks()`
- *   - Use `mockapi.getCustomersByFramework()` for segment members
+ * - [x] Segmentation (REMOVED - integrated into Customers/Accounts)
+ *   - Segmentation UI now lives in CustomersHubClient with segment tabs/cards
  */
 
 // =============================================================================

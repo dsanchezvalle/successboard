@@ -121,8 +121,7 @@ export function DocumentTopBar({
                 key={action.id}
                 icon={action.icon}
                 onClick={() => handleAction(action.id)}
-                aria-label={action.label}
-                title={action.label}
+                ariaLabel={action.label}
               />
             ))}
           </div>
