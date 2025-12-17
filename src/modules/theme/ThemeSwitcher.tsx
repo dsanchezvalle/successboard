@@ -109,14 +109,13 @@ export function ThemeSwitcher({
       type="button"
       onClick={toggleTheme}
       aria-label={label}
-      title={label}
       className={`
-        inline-flex items-center justify-center rounded-md
+        inline-flex items-center justify-center rounded-full
         ${sizeClasses[size]}
         bg-bg-subtle hover:bg-bg-muted
         text-text-secondary hover:text-text-primary
         border border-border-default
-        transition-colors duration-150
+        transition-colors duration-150 cursor-pointer
         focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus focus-visible:ring-offset-2 focus-visible:ring-offset-bg-page
         ${className}
       `.trim()}
