@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { User, Settings, LogOut, HelpCircle } from "lucide-react";
 import { ThemeSwitcher } from "@/modules/theme";
 import { appConfig } from "@/config";
@@ -181,9 +182,15 @@ export function Topbar() {
         "px-4 sm:px-6"
       )}
     >
-      {/* Left zone - Reserved for breadcrumbs/context */}
+      {/* Left zone - Logo on mobile */}
       <div className="flex items-center gap-3">
-        {/* Future: Breadcrumbs or page context */}
+        <Image
+          src="/logo-sm.png"
+          alt="SuccessBoard"
+          width={32}
+          height={32}
+          className="md:hidden object-contain"
+        />
       </div>
 
       {/* Middle zone - Reserved for future features */}
