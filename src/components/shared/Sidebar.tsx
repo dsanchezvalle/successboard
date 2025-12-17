@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/design-system/utils/cn";
@@ -45,11 +46,15 @@ export function Sidebar() {
         className="hidden md:flex lg:hidden w-20 shrink-0 flex-col border-r border-border-default bg-bg-surface/80 px-2 py-4 sticky top-0 h-screen"
         aria-label="Main navigation"
       >
-        {/* Logo placeholder */}
+        {/* Logo */}
         <div className="mb-6 flex items-center justify-center">
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 text-lg font-bold text-white shadow-md">
-            SB
-          </div>
+          <Image
+            src="/logo-sm.png"
+            alt="SuccessBoard"
+            width={40}
+            height={40}
+            className="object-contain"
+          />
         </div>
 
         <nav aria-label="Primary">
@@ -95,11 +100,15 @@ export function Sidebar() {
         className="hidden lg:flex w-52 shrink-0 flex-col border-r border-border-default bg-bg-surface/80 px-3 py-4 text-sm sticky top-0 h-screen"
         aria-label="Main navigation"
       >
-        {/* Logo placeholder */}
+        {/* Logo */}
         <div className="mb-8 flex items-center justify-center">
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 text-lg font-bold text-white shadow-md">
-            SB
-          </div>
+          <Image
+            src="/logo.png"
+            alt="SuccessBoard"
+            width={160}
+            height={40}
+            className="object-contain"
+          />
         </div>
 
         <nav aria-label="Primary">
