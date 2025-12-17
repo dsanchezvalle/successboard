@@ -69,12 +69,34 @@ export function CustomersHubClient({
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  // Initialize segment from URL or prop
+  // Initialize segment from URL query params
+  // Support both ?segment=at-risk and ?status=at-risk for deep linking from Pulse
   const urlSegment = searchParams.get("segment") as CustomerSegmentTab | null;
+  const urlStatus = searchParams.get("status");
+
+  // Determine initial segment: status param takes precedence for at-risk deep links
+  const resolvedSegment = React.useMemo(() => {
+    if (urlSegment) return urlSegment;
+    if (urlStatus === "at-risk") return "at-risk" as CustomerSegmentTab;
+    return initialSegment;
+  }, [urlSegment, urlStatus, initialSegment]);
+
   const [filters, setFilters] = React.useState<CustomersHubFilterState>({
     ...DEFAULT_FILTERS,
-    segment: urlSegment || initialSegment,
+    segment: resolvedSegment,
   });
+
+  // Sync segment when URL changes (for direct navigation / refresh)
+  React.useEffect(() => {
+    const newSegment =
+      urlSegment || (urlStatus === "at-risk" ? "at-risk" : null);
+    if (newSegment && newSegment !== filters.segment) {
+      setFilters((prev) => ({
+        ...prev,
+        segment: newSegment as CustomerSegmentTab,
+      }));
+    }
+  }, [urlSegment, urlStatus]);
 
   // Update URL when segment changes
   const handleSegmentChange = (segment: CustomerSegmentTab) => {

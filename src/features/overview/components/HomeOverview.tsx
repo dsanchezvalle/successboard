@@ -11,7 +11,8 @@ export function HomeOverview() {
   return (
     <OverviewHeader
       title="Welcome to SuccessBoard"
-      subtitle="Your customer success command center. Monitor health metrics, track engagement, and identify opportunities across your entire customer portfolio."
+      subtitle="Drive proactive success with AI-powered actionable insights. Elevate every customer journey through real-time health monitoring and strategic growth opportunities across your portfolio."
+      maxWidth="2xl"
     />
   );
 }

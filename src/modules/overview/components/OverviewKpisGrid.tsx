@@ -15,7 +15,6 @@ import type {
   HealthDistributionViewModel,
 } from "@/modules/api";
 import { MetricCard } from "./MetricCard";
-import { MetricsSection } from "./MetricsSection";
 import { CustomerHealthSummary } from "./CustomerHealthSummary";
 import { RevenueHighlight } from "./RevenueHighlight";
 
@@ -43,8 +42,8 @@ export function OverviewKpisGrid({
       : "danger";
 
   return (
-    <div className="space-y-8">
-      {/* Hero Section: Revenue + Key Metrics */}
+    <div className="space-y-6 sm:space-y-8">
+      {/* Hero Section: Revenue + Key Metrics (3-column on desktop) */}
       <div className="grid gap-4 lg:grid-cols-3">
         <RevenueHighlight
           mrr={kpis.mrr}
@@ -83,66 +82,92 @@ export function OverviewKpisGrid({
         vip={healthDistribution.vip}
       />
 
-      {/* Customer Segments */}
-      <MetricsSection
-        title="Customer Segments"
-        subtitle="Breakdown of your customer portfolio by lifecycle stage"
-        columns={4}
-      >
-        <MetricCard
-          title="Active"
-          value={formatNumber(kpis.activeCustomers)}
-          description="Healthy, engaged accounts"
-          status="success"
-        />
-        <MetricCard
-          title="Onboarding"
-          value={formatNumber(kpis.onboardingCustomers)}
-          description="Recently signed customers"
-          status="info"
-        />
-        <MetricCard
-          title="Trial"
-          value={formatNumber(kpis.trialCustomers)}
-          description="Evaluating the product"
-          status="default"
-        />
-        <MetricCard
-          title="VIP"
-          value={formatNumber(kpis.vipCustomers)}
-          description="Strategic accounts"
-          status="info"
-        />
-      </MetricsSection>
-
-      {/* Health & Risk Metrics */}
-      <MetricsSection
-        title="Health & Risk"
-        subtitle="Customer success health indicators"
-        columns={3}
-      >
-        <MetricCard
-          title="At-Risk Customers"
-          value={formatNumber(kpis.atRiskCustomers)}
-          description="Accounts needing attention"
-          status={atRiskStatus}
-        />
-        <MetricCard
-          title="Avg Health Score"
-          value={`${Math.round(kpis.avgHealthScore)}%`}
-          description="Portfolio health average"
-          status={healthScoreStatus}
-          trend={kpis.healthTrend}
-        />
-        {kpis.nrrFormatted && (
+      {/* Customer Segments - 2x2 on mobile, 4 columns on desktop */}
+      <section className="space-y-3" aria-labelledby="segments-heading">
+        <div className="space-y-1">
+          <h2
+            id="segments-heading"
+            className="text-base font-semibold tracking-tight text-text-primary"
+          >
+            Customer Segments
+          </h2>
+          <p className="text-sm text-text-muted hidden sm:block">
+            Breakdown of your customer portfolio by lifecycle stage
+          </p>
+        </div>
+        <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
           <MetricCard
-            title="Net Revenue Retention"
-            value={kpis.nrrFormatted}
-            description="Revenue retention rate"
-            status={kpis.nrr && kpis.nrr >= 1 ? "success" : "warning"}
+            title="Active"
+            value={formatNumber(kpis.activeCustomers)}
+            description="Healthy accounts"
+            status="success"
+            size="compact"
           />
-        )}
-      </MetricsSection>
+          <MetricCard
+            title="Onboarding"
+            value={formatNumber(kpis.onboardingCustomers)}
+            description="New customers"
+            status="info"
+            size="compact"
+          />
+          <MetricCard
+            title="Trial"
+            value={formatNumber(kpis.trialCustomers)}
+            description="Evaluating"
+            status="default"
+            size="compact"
+          />
+          <MetricCard
+            title="VIP"
+            value={formatNumber(kpis.vipCustomers)}
+            description="Strategic"
+            status="info"
+            size="compact"
+          />
+        </div>
+      </section>
+
+      {/* Health & Risk Metrics - responsive grid */}
+      <section className="space-y-3" aria-labelledby="health-risk-heading">
+        <div className="space-y-1">
+          <h2
+            id="health-risk-heading"
+            className="text-base font-semibold tracking-tight text-text-primary"
+          >
+            Health & Risk
+          </h2>
+          <p className="text-sm text-text-muted hidden sm:block">
+            Customer success health indicators
+          </p>
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <MetricCard
+            title="At-Risk"
+            value={formatNumber(kpis.atRiskCustomers)}
+            description="Need attention"
+            status={atRiskStatus}
+            size="compact"
+          />
+          <MetricCard
+            title="Health Score"
+            value={`${Math.round(kpis.avgHealthScore)}%`}
+            description="Portfolio avg"
+            status={healthScoreStatus}
+            trend={kpis.healthTrend}
+            size="compact"
+          />
+          {kpis.nrrFormatted && (
+            <MetricCard
+              title="NRR"
+              value={kpis.nrrFormatted}
+              description="Net retention"
+              status={kpis.nrr && kpis.nrr >= 1 ? "success" : "warning"}
+              size="compact"
+              className="col-span-2 sm:col-span-1"
+            />
+          )}
+        </div>
+      </section>
     </div>
   );
 }
