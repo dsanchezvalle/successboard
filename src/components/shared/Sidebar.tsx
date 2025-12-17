@@ -42,7 +42,7 @@ export function Sidebar() {
     <>
       {/* Tablet sidebar (md to < lg): Collapsed with icon + label below */}
       <aside
-        className="hidden md:flex lg:hidden w-20 shrink-0 flex-col border-r border-border-default bg-bg-surface/80 px-2 py-4"
+        className="hidden md:flex lg:hidden w-20 shrink-0 flex-col border-r border-border-default bg-bg-surface/80 px-2 py-4 sticky top-0 h-screen"
         aria-label="Main navigation"
       >
         {/* Logo placeholder */}
@@ -92,7 +92,7 @@ export function Sidebar() {
 
       {/* Desktop sidebar (>= lg): Expanded with icon + label side by side */}
       <aside
-        className="hidden lg:flex w-52 shrink-0 flex-col border-r border-border-default bg-bg-surface/80 px-3 py-4 text-sm"
+        className="hidden lg:flex w-52 shrink-0 flex-col border-r border-border-default bg-bg-surface/80 px-3 py-4 text-sm sticky top-0 h-screen"
         aria-label="Main navigation"
       >
         {/* Logo placeholder */}
