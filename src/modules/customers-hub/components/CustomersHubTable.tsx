@@ -112,12 +112,6 @@ export function CustomersHubTable({
             </th>
             <th
               scope="col"
-              className="px-2 py-3 text-xs font-semibold uppercase tracking-wide text-text-muted sm:px-3 lg:px-4 hidden lg:table-cell"
-            >
-              Last Contact
-            </th>
-            <th
-              scope="col"
               className="px-2 py-3 text-xs font-semibold uppercase tracking-wide text-text-muted sm:px-3 lg:px-4 hidden xl:table-cell"
             >
               Tier
@@ -209,22 +203,6 @@ export function CustomersHubTable({
                     {customer.mrrFormatted}
                   </span>
                   <span className="text-text-muted">/mo</span>
-                </td>
-
-                {/* Last Contact */}
-                <td className="px-2 py-3 sm:px-3 lg:px-4 hidden lg:table-cell">
-                  <span
-                    className={cn(
-                      "text-sm",
-                      customer.daysSinceContact > 30
-                        ? "text-error-icon"
-                        : customer.daysSinceContact > 14
-                        ? "text-warning-icon"
-                        : "text-text-muted"
-                    )}
-                  >
-                    {customer.daysSinceContact}d ago
-                  </span>
                 </td>
 
                 {/* Tier */}

@@ -133,7 +133,7 @@ export function DocumentTopBar({
           <div className="hidden xl:flex items-center gap-1.5">
             <button
               onClick={onToggleAI}
-              className={`flex h-8 items-center gap-1.5 rounded-md px-2.5 text-sm transition-colors ${
+              className={`flex h-8 items-center gap-1.5 rounded-md px-2.5 text-sm transition-colors cursor-pointer ${
                 isAIPanelOpen
                   ? "bg-brand-primary/10 text-brand-primary"
                   : "text-text-secondary hover:bg-bg-subtle hover:text-text-primary"

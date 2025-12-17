@@ -86,7 +86,7 @@ export function DocumentDetailView({
 
         {/* Center: Main Content - hidden on mobile when AI is open */}
         <main
-          className={`flex-1 overflow-auto bg-bg-page ${
+          className={`flex-1 overflow-auto bg-bg-page custom-scrollbar ${
             isAIPanelOpen ? "hidden sm:block" : ""
           }`}
         >

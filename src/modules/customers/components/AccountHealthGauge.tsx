@@ -89,8 +89,8 @@ export function AccountHealthGauge({
   const colors = zoneColors[zone];
 
   // SVG gauge dimensions
-  const size = compact ? 120 : 160;
-  const strokeWidth = compact ? 12 : 16;
+  const size = compact ? 144 : 160; // 20% larger on mobile (compact mode)
+  const strokeWidth = compact ? 14 : 16; // Slightly adjusted stroke width for larger size
   const radius = (size - strokeWidth) / 2;
   const center = size / 2;
 
